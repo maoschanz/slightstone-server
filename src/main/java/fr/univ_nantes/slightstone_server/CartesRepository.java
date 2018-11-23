@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CartesRepository extends CrudRepository<Carte, Integer> {
 	List<Carte> findByClasseIn(Collection<String> collection);
+	List<Carte> findByClasseOrClasse(String classe1, String classe2);
 }

@@ -6,9 +6,5 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name="id")
 public class Sort extends Carte {
-	
-	
-	
 	protected Sort () {}
-	
 }

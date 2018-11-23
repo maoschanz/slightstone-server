@@ -18,15 +18,15 @@ public class Carte {
 	private String nom;
 	private String description;
 	private String classe = "commun";
-	private String action;
+	private ArrayList<Action> actions;
 	
 	// needed by JPA
 	protected Carte () {}
 	
-	public Carte (String nom, String description) {
+	public Carte (String nom, Integer coutMana, String classe) {
 		this.nom = nom;
-		this.description = description;
-		
+		this.coutMana = coutMana;
+		this.classe = classe;
 	}
 	
 	public String getNom() {
@@ -38,11 +38,27 @@ public class Carte {
 	}
 	
 	public String getDescription() {
-		return this.nom;
+		return this.description;
 	}
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getClasse() {
+		return this.classe;
+	}
+	
+	public void setClasse(String classe) {
+		this.classe = classe;
+	}
+	
+	public Integer getCoutMana() {
+		return this.coutMana;
+	}
+	
+	public void setCoutMana(Integer coutMana) {
+		this.coutMana = coutMana;
 	}
 	
 }
