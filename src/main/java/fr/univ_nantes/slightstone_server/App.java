@@ -19,9 +19,9 @@ public class App {
 	public CommandLineRunner demo(CartesRepository repository) {
 		return (args) -> {
 			// save a couple of customers
-			repository.save(new Carte("Sanglier brocheroc", 1, "commun"));
-			repository.save(new Carte("Yéti noroit", 4,"paladin"));
-			repository.save(new Carte("Métamorphose", 4, "mage"));
+			repository.save(new Carte("Sanglier brocheroc", 1, "commun", true));
+			repository.save(new Carte("Yéti noroit", 4,"paladin", true));
+			repository.save(new Carte("Métamorphose", 4, "mage", true));
 
 			// fetch all cartes
 			System.out.println("Cartes found with findAll():");

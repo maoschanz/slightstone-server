@@ -17,8 +17,8 @@ public class Serviteur extends Carte {
 	
 	protected Serviteur () {}
 	
-	public Serviteur (String nom, Integer coutMana, String classe, Integer pointsDeVie, Integer pointsDeDegats) {
-		super(nom, coutMana, classe);
+	public Serviteur (String nom, Integer coutMana, String classe, Integer pointsDeVie, Integer pointsDeDegats, boolean piochable) {
+		super(nom, coutMana, classe, piochable);
 		this.pointsDeVie = pointsDeVie;
 		this.pointsDeDegats = pointsDeDegats;
 	}

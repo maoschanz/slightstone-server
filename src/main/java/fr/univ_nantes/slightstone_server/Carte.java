@@ -7,6 +7,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Id;
 
+import java.util.ArrayList;
+
 @Entity
 //@Inheritance(strategy=InheritanceType.JOINED)
 public class Carte {
@@ -19,14 +21,20 @@ public class Carte {
 	private String description;
 	private String classe = "commun";
 	private ArrayList<Action> actions;
+	private boolean piochable;
 	
 	// needed by JPA
 	protected Carte () {}
 	
-	public Carte (String nom, Integer coutMana, String classe) {
+	public Carte (String nom, Integer coutMana, String classe, boolean piochable) {
 		this.nom = nom;
 		this.coutMana = coutMana;
 		this.classe = classe;
+		this.piochable = piochable;
+	}
+	
+	public boolean estPiochable() {
+		return this.piochable;
 	}
 	
 	public String getNom() {
