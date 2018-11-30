@@ -1,13 +1,8 @@
 package fr.univ_nantes.slightstone_server;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@PrimaryKeyJoinColumn(name="idCarte")
+@MappedSuperclass
 public abstract class ActionSansCible extends Action {
 	protected ActionSansCible () {}
 	public void performAction() {}

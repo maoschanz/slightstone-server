@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 
 @Entity
-//@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Carte {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -1,13 +1,8 @@
 package fr.univ_nantes.slightstone_server;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@PrimaryKeyJoinColumn(name="idAction")
+@MappedSuperclass
 public abstract class ActionAvecCible extends Action {
 	private TypeCible typeCible;
 	protected ActionAvecCible () {}
