@@ -16,13 +16,17 @@ public class App {
 	}
 
 	@Bean
-	public CommandLineRunner demo(CartesRepository repository) {
+	public CommandLineRunner demoCartes(CartesRepository repository) {
 		return (args) -> {
 			// save a couple of customers
-			repository.save(new Carte("Sanglier brocheroc", 1, "commun", true));
+			
+			Carte carte1 = new Carte("Sanglier brocheroc", 1, "commun", true);
+			
+			repository.save(carte1);
 			repository.save(new Carte("Yéti noroit", 4,"paladin", true));
-			repository.save(new Carte("Métamorphose", 4, "mage", true));
-
+			repository.save(new Sort("Métamorphose", 4, "mage", true));
+			repository.save(new Serviteur("Chef de raid", 4, "commun", 2, 1, true));
+			
 			// fetch all cartes
 			System.out.println("Cartes found with findAll():");
 			System.out.println("-------------------------------");
@@ -40,21 +44,61 @@ public class App {
 					System.out.println("");
 				});
 
-			// fetch cartes by last name
-//			System.out.println("Cartes found with findByClasseIn('commun', 'mage'):");
-//			System.out.println("--------------------------------------------");
-//			Collection<String> collection = new ArrayList();
-//			collection.add("commun");
-//			collection.add("mage");
-//			repository.findByClasseIn(collection).forEach(bauer -> {
-//				System.out.println(bauer.toString());
-//			});
 			System.out.println("Cartes found with findByClasseOrClasse('commun', 'mage'):");
 			System.out.println("--------------------------------------------");
-			repository.findByClasseOrClasse("mage", "commun").forEach(bauer -> {
-				System.out.println(bauer.toString());
+			repository.findByClasseOrClasse("mage", "commun").forEach(instance -> {
+				System.out.println(instance.toString());
 			});
 			System.out.println("");
+		};
+	}
+	
+	@Bean
+	public CommandLineRunner demoAction(ActionsRepository repository) {
+		return (args) -> {
+			// save a couple of customers
+			
+			ActionBoostArmure action1 = new ActionBoostArmure();
+			ActionModifVieIndiv action2 = new ActionModifVieIndiv(-3);
+			
+			repository.save(action1);
+			repository.save(action2);
+			
+			// fetch all cartes
+			System.out.println("Actions found with findAll():");
+			System.out.println("-------------------------------");
+			for (Action action : repository.findAll()) {
+				System.out.println(action.toString());
+//				if (action instanceof ActionSansCible) {
+//					System.out.println(action.toString());
+//					ActionSansCible action_bien = action;
+//					action_bien.performAction();
+//				} else {
+//					System.out.println(action.toString());
+					Serviteur serviteur1 = new Serviteur("Chef de raid", 4, "commun", 2, 1, true);
+//					ActionAvecCible action_bien = action;
+//					action_bien.performAction(serviteur1);
+//				}
+				action.performAction();
+				action.performAction(serviteur1);
+			}
+			System.out.println("");
+
+			// fetch an individual carte by ID
+//			repository.findById(1)
+//				.ifPresent(customer -> {
+//					System.out.println("Carte found with findById(1):");
+//					System.out.println("--------------------------------");
+//					System.out.println(customer.toString());
+//					System.out.println("");
+//				});
+
+//			System.out.println("Cartes found with findByClasseOrClasse('commun', 'mage'):");
+//			System.out.println("--------------------------------------------");
+//			repository.findByClasseOrClasse("mage", "commun").forEach(instance -> {
+//				System.out.println(instance.toString());
+//			});
+//			System.out.println("");
 		};
 	}
 }

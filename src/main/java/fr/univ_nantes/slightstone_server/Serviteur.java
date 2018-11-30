@@ -5,7 +5,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name="id")
-public class Serviteur extends Carte {
+public class Serviteur extends Carte implements Ciblable {
 	
 	private Integer pointsDeVie;
 	private Integer pointsDeDegats;
@@ -17,17 +17,31 @@ public class Serviteur extends Carte {
 	
 	protected Serviteur () {}
 	
-	public Serviteur (String nom, Integer coutMana, String classe, Integer pointsDeVie, Integer pointsDeDegats, boolean piochable) {
+	public Serviteur (String nom,
+	                  Integer coutMana,
+	                  String classe,
+	                  Integer pointsDeVie,
+	                  Integer pointsDeDegats,
+	                  boolean piochable) {
 		super(nom, coutMana, classe, piochable);
 		this.pointsDeVie = pointsDeVie;
 		this.pointsDeDegats = pointsDeDegats;
 	}
 	
-	public Integer getPointDeVie() {
+	@Override
+	public String toString() {
+		return String.format("Carte %s de classe %s avec %d points de vie", this.getNom(), this.getClasse(), this.pointsDeVie);
+	}
+	
+	public void prendreDegats(Integer valeur) {
+		this.pointsDeVie -= valeur;//TODO points d'armures si il y en a + tuer si 0
+	}
+	
+	public Integer getPointsDeVie() {
 		return this.pointsDeVie;
 	}
 	
-	public void setPointDeVie(Integer pointsDeVie) {
+	public void setPointsDeVie(Integer pointsDeVie) {
 		this.pointsDeVie = pointsDeVie;
 	}
 	

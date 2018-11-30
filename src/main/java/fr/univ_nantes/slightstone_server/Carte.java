@@ -26,11 +26,19 @@ public class Carte {
 	// needed by JPA
 	protected Carte () {}
 	
-	public Carte (String nom, Integer coutMana, String classe, boolean piochable) {
+	public Carte (String nom,
+	              Integer coutMana,
+	              String classe,
+	              boolean piochable) {
 		this.nom = nom;
 		this.coutMana = coutMana;
 		this.classe = classe;
 		this.piochable = piochable;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Carte %s de classe %s", this.nom, this.classe);
 	}
 	
 	public boolean estPiochable() {

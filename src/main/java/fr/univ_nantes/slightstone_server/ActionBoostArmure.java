@@ -14,5 +14,6 @@ public class ActionBoostArmure extends ActionSansCible {
 	@Override
 	public void performAction () {
 		// toujours sur nous-mêmes TODO
+		System.out.println("performAction de ActionBoostArmure");
 	}
 }
