@@ -1,21 +1,22 @@
 package fr.univ_nantes.slightstone_server;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-public class ActionModifVieZone extends ActionSansCible {
-	private TypeCible typeCible;
+@PrimaryKeyJoinColumn(name="id_action")
+public class ActionModifVieZone extends Action {
 	private Integer increment;
-	
 	protected ActionModifVieZone () {}
 	
-	public ActionModifVieZone (TypeCible typeCible, Integer increment) {
+	public ActionModifVieZone (Jeu jeu, TypeCible typeCible, Integer increment) {
+		super(jeu);
 		this.typeCible = typeCible;
 		this.increment = increment; // peut être négatif
 	}
 	
 	@Override
-	public void performAction () {
+	public void execAction () {
 		// TODO
 	}
 }

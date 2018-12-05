@@ -7,11 +7,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Id;
 
-import java.util.ArrayList;
-
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Carte {
+public abstract class Carte {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
@@ -20,7 +18,6 @@ public class Carte {
 	private String nom;
 	private String description;
 	private String classe = "commun";
-	private ArrayList<Action> actions;
 	private boolean piochable;
 	
 	// needed by JPA
@@ -39,6 +36,12 @@ public class Carte {
 	@Override
 	public String toString() {
 		return String.format("Carte %s de classe %s", this.nom, this.classe);
+	}
+
+	public abstract boolean jouer();
+
+	public Integer getId() {
+		return this.id;
 	}
 	
 	public boolean estPiochable() {

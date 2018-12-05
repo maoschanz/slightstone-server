@@ -1,6 +1,8 @@
 package fr.univ_nantes.slightstone_server;
 
 public enum TypeCible {
+	AUCUN,
+
 	TOUS,
 	TOUS_SERVITEURS,
 	

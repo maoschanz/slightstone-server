@@ -1,24 +1,30 @@
 package fr.univ_nantes.slightstone_server;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.Transient;
+
+import java.util.ArrayList;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-//@MappedSuperclass
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Action {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="idAction")
-	private Integer idAction;
-	
-	// FIXME ceci est abject
-	public void performAction() {}
-	public void performAction(Ciblable cible) {}
+	private Integer id;
+	protected TypeCible typeCible;
+	protected Action() {}
+
+	@Transient
+	protected Jeu jeu;
+
+	public Action(Jeu jeu) {
+		this.jeu = jeu;
+	}
+
+	public abstract void execAction();
 }

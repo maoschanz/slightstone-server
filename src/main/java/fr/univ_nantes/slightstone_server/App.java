@@ -20,10 +20,10 @@ public class App {
 		return (args) -> {
 			// save a couple of customers
 			
-			Carte carte1 = new Carte("Sanglier brocheroc", 1, "commun", true);
+			// Carte carte1 = new Carte("Sanglier brocheroc", 1, "commun", true);
 			
-			repository.save(carte1);
-			repository.save(new Carte("Yéti noroit", 4,"paladin", true));
+			// repository.save(carte1);
+			// repository.save(new Carte("Yéti noroit", 4,"paladin", true));
 			repository.save(new Sort("Métamorphose", 4, "mage", true));
 			repository.save(new Serviteur("Chef de raid", 4, "commun", 2, 1, true));
 			
@@ -56,10 +56,11 @@ public class App {
 	@Bean
 	public CommandLineRunner demoAction(ActionsRepository repository) {
 		return (args) -> {
-			// save a couple of customers
+
+			Jeu jeu = new Jeu();
 			
-			ActionBoostArmure action1 = new ActionBoostArmure();
-			ActionModifVieIndiv action2 = new ActionModifVieIndiv(-3);
+			ActionBoostArmure action1 = new ActionBoostArmure(jeu, 2);
+			ActionModifVieIndiv action2 = new ActionModifVieIndiv(jeu, -3);
 			
 			repository.save(action1);
 			repository.save(action2);
@@ -69,18 +70,7 @@ public class App {
 			System.out.println("-------------------------------");
 			for (Action action : repository.findAll()) {
 				System.out.println(action.toString());
-//				if (action instanceof ActionSansCible) {
-//					System.out.println(action.toString());
-//					ActionSansCible action_bien = action;
-//					action_bien.performAction();
-//				} else {
-//					System.out.println(action.toString());
-					Serviteur serviteur1 = new Serviteur("Chef de raid", 4, "commun", 2, 1, true);
-//					ActionAvecCible action_bien = action;
-//					action_bien.performAction(serviteur1);
-//				}
-				action.performAction();
-				action.performAction(serviteur1);
+				action.execAction();
 			}
 			System.out.println("");
 

@@ -32,6 +32,10 @@ public class Serviteur extends Carte implements Ciblable {
 	public String toString() {
 		return String.format("Carte %s de classe %s avec %d points de vie", this.getNom(), this.getClasse(), this.pointsDeVie);
 	}
+
+	public boolean jouer() {
+		return true;
+	}
 	
 	public void prendreDegats(Integer valeur) {
 		this.pointsDeVie -= valeur;//TODO points d'armures si il y en a + tuer si 0
