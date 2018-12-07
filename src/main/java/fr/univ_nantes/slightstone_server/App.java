@@ -73,22 +73,25 @@ public class App {
 				action.execAction();
 			}
 			System.out.println("");
+		};
+	}
 
-			// fetch an individual carte by ID
-//			repository.findById(1)
-//				.ifPresent(customer -> {
-//					System.out.println("Carte found with findById(1):");
-//					System.out.println("--------------------------------");
-//					System.out.println(customer.toString());
-//					System.out.println("");
-//				});
+	@Bean
+	public CommandLineRunner demoHeros(HerosRepository repository) {
+		return (args) -> {
+			Heros heros1 = new Heros(3, 5, 1);
+			Heros heros2 = new Heros(5, 7, 2);
 
-//			System.out.println("Cartes found with findByClasseOrClasse('commun', 'mage'):");
-//			System.out.println("--------------------------------------------");
-//			repository.findByClasseOrClasse("mage", "commun").forEach(instance -> {
-//				System.out.println(instance.toString());
-//			});
-//			System.out.println("");
+			repository.save(heros1);
+			repository.save(heros2);
+
+			// fetch all cartes
+			System.out.println("Heros found with findAll():");
+			System.out.println("-------------------------------");
+			for (Heros heros : repository.findAll()) {
+				System.out.println(heros.toString());
+			}
+			System.out.println("");
 		};
 	}
 }
