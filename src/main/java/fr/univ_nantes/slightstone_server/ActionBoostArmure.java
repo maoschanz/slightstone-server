@@ -15,8 +15,8 @@ public class ActionBoostArmure extends Action {
 	}
 	
 	@Override
-	public void execAction () {
+	public void executer () {
 		// toujours sur nous-mêmes TODO
-		System.out.println("execAction de ActionBoostArmure");
+		System.out.println("executer de ActionBoostArmure");
 	}
 }

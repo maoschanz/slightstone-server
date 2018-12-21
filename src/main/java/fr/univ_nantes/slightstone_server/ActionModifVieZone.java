@@ -16,7 +16,7 @@ public class ActionModifVieZone extends Action {
 	}
 	
 	@Override
-	public void execAction () {
+	public void executer () {
 		// TODO
 	}
 }

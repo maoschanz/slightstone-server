@@ -13,7 +13,7 @@ public class ActionPiocheRandom extends Action {
 	}
 	
 	@Override
-	public void execAction () {
+	public void executer () {
 		// TODO
 	}
 }

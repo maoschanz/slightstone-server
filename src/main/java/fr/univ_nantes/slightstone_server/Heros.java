@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Heros {
@@ -13,18 +14,20 @@ public class Heros {
 
 	private Integer pointsVie;
 	private Integer pointsArmure;
-	private Integer idActionSpeciale;
 	private String imageURL;
 	private TypeHeros classe;
 
-	protected Heros () {} // TODO? ajouter de la persistence pour ça ?
+	//private Integer idTypeCarte; //??
 
-	public Heros (Integer pv, Integer pa, Integer idActionSpeciale) {
-		// TODO
+	@Transient //TODO joinoncolumn
+	private DescripteurSort actionSpe;
+
+	protected Heros () {}
+
+	public Heros (Integer pv, Integer pa, Integer idTypeCarte) {
+		// TODO instancier une action spéciale depuis le JPA
 		this.pointsVie = pv;
 		this.pointsArmure = pa;
-		this.idActionSpeciale = idActionSpeciale;
-
 	}
 
 	public Integer getPointsVie() {
@@ -35,8 +38,7 @@ public class Heros {
 		return this.pointsArmure;
 	}
 
-	// public Carte getActionSpeciale() {
-	// 	Carte c = pioche.getCarteParId(this.idActionSpeciale) // TODO
-	// 	return c;
-	// }
+	public void jouerActionSpeciale () {
+		this.actionSpe.lancerActions();
+	}
 }

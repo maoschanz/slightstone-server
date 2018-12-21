@@ -9,75 +9,58 @@ import javax.persistence.Id;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Carte {
+public abstract class DescripteurCarte {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
+	private Integer idType;
+
 	private Integer coutMana;
 	private String nom;
 	private String description;
-	private String classe = "commun";
-	private boolean piochable;
-	
+	private String imageURL;
+	private TypeHeros classe;
+
 	// needed by JPA
-	protected Carte () {}
-	
-	public Carte (String nom,
-	              Integer coutMana,
-	              String classe,
-	              boolean piochable) {
+	protected DescripteurCarte () {}
+
+	public DescripteurCarte (String nom,
+	                         String description,
+	                         String imageURL,
+	                         Integer coutMana,
+	                         TypeHeros classe) {
 		this.nom = nom;
+		this.description = description;
+		this.imageURL = imageURL;
 		this.coutMana = coutMana;
 		this.classe = classe;
-		this.piochable = piochable;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("Carte %s de classe %s", this.nom, this.classe);
 	}
 
-	public abstract boolean jouer();
+	public Integer getIdType() {
+		return this.idType;
+	}
 
-	public Integer getId() {
-		return this.id;
-	}
-	
-	public boolean estPiochable() {
-		return this.piochable;
-	}
-	
 	public String getNom() {
 		return this.nom;
 	}
-	
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	
+
 	public String getDescription() {
 		return this.description;
 	}
-	
-	public void setDescription(String description) {
-		this.description = description;
+
+	public String getimageURL() {
+		return this.imageURL;
 	}
-	
-	public String getClasse() {
+
+	public TypeHeros getClasse() {
 		return this.classe;
 	}
-	
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
-	
+
 	public Integer getCoutMana() {
 		return this.coutMana;
 	}
-	
-	public void setCoutMana(Integer coutMana) {
-		this.coutMana = coutMana;
-	}
-	
 }

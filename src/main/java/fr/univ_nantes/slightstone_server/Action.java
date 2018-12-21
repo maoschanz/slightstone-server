@@ -26,5 +26,5 @@ public abstract class Action {
 		this.jeu = jeu;
 	}
 
-	public abstract void execAction();
+	public abstract void executer();
 }

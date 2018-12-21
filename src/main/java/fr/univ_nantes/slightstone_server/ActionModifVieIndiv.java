@@ -15,7 +15,7 @@ public class ActionModifVieIndiv extends Action {
 	}
 	
 	@Override
-	public void execAction () {
+	public void executer () {
 		// ArrayList<Ciblable> cibles = Jeu.get_cibles();
 		// Ciblable cible = cibles.get(0);
 		// TODO
@@ -23,7 +23,7 @@ public class ActionModifVieIndiv extends Action {
 		// if (increment < 0) {
 		// 	cible.prendreDegats(-1 * this.increment);
 		// }
-		System.out.println("execAction de ActionModifVieIndiv");
+		System.out.println("executer de ActionModifVieIndiv");
 		// System.out.println(cible.getPointsDeVie());
 	}
 }

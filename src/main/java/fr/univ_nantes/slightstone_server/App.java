@@ -20,17 +20,18 @@ public class App {
 		return (args) -> {
 			// save a couple of customers
 			
-			// Carte carte1 = new Carte("Sanglier brocheroc", 1, "commun", true);
+			// DescripteurCarte carte1 = new DescripteurCarte("Sanglier brocheroc", "carte1", "url", 1, TypeHeros.COMMUN);
+			DescripteurCarte sort1 = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.PALADIN);
+			DescripteurCarte serviteur1 = new DescripteurServiteur("Nestor", "serviteur1", "url", 3, TypeHeros.COMMUN, 50, 20, true, true, true, true);
 			
 			// repository.save(carte1);
-			// repository.save(new Carte("Yéti noroit", 4,"paladin", true));
-			repository.save(new Sort("Métamorphose", 4, "mage", true));
-			repository.save(new Serviteur("Chef de raid", 4, "commun", 2, 1, true));
+			repository.save(sort1);
+			repository.save(serviteur1);
 			
 			// fetch all cartes
 			System.out.println("Cartes found with findAll():");
 			System.out.println("-------------------------------");
-			for (Carte customer : repository.findAll()) {
+			for (DescripteurCarte customer : repository.findAll()) {
 				System.out.println(customer.toString());
 			}
 			System.out.println("");
@@ -57,7 +58,9 @@ public class App {
 	public CommandLineRunner demoAction(ActionsRepository repository) {
 		return (args) -> {
 
-			Jeu jeu = new Jeu();
+			Joueur j1 = new Joueur("pascal", TypeHeros.PALADIN, true);
+			Joueur j2 = new Joueur("jean-xavier", TypeHeros.GUERRIER, false);
+			Jeu jeu = new Jeu(j1, j2);
 			
 			ActionBoostArmure action1 = new ActionBoostArmure(jeu, 2);
 			ActionModifVieIndiv action2 = new ActionModifVieIndiv(jeu, -3);
@@ -70,7 +73,7 @@ public class App {
 			System.out.println("-------------------------------");
 			for (Action action : repository.findAll()) {
 				System.out.println(action.toString());
-				action.execAction();
+				action.executer();
 			}
 			System.out.println("");
 		};
