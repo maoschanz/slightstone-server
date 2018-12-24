@@ -1,17 +1,33 @@
 package fr.univ_nantes.slightstone_server;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
-@PrimaryKeyJoinColumn(name="idType")
+@Table(name="serviteurs")
+@PrimaryKeyJoinColumn(name="id_carte")
 public class DescripteurServiteur extends DescripteurCarte {
-
+	@Column(name="points_de_vie")
 	private Integer pointsDeVie;
+	
+	@Column(name="points_de_degats")
 	private Integer pointsDeDegats;
+	
+	@Column(name="effet_provocation")
 	private boolean effetProvocation;
+	
+	@Column(name="effet_charge")
 	private boolean effetCharge;
+	
+	@Column(name="effet_vol_vie")
 	private boolean effetVolDeVie;
+	
+	@Column(name="effet_leader")
 	private boolean effetLeader;
 
 	protected DescripteurServiteur () {}

@@ -1,37 +1,56 @@
 package fr.univ_nantes.slightstone_server;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="heros")
 public class Heros {
 	@Id
+	@Column(name="id_heros")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-
-	private Integer pointsVie;
+	
+	@Column(name="points_de_vie")
+	private Integer pointsDeVie;
+	
+	@Column(name="points_armure")
 	private Integer pointsArmure;
+	
+	@Column(name="url_image")
 	private String imageURL;
+	
+	@Column(name="classe_heros")
+	@Enumerated(EnumType.STRING)
 	private TypeHeros classe;
 
-	//private Integer idTypeCarte; //??
-
-	@Transient //TODO joinoncolumn
+	@OneToOne(fetch=FetchType.EAGER, optional=false)
+	@JoinColumn(name="id_carte", nullable=false)
 	private DescripteurSort actionSpe;
 
 	protected Heros () {}
 
-	public Heros (Integer pv, Integer pa, Integer idTypeCarte) {
-		// TODO instancier une action spéciale depuis le JPA
-		this.pointsVie = pv;
-		this.pointsArmure = pa;
+	public Heros (TypeHeros classe, 
+				  Integer pointsDeVie, 
+				  Integer pointsArmure, 
+				  DescripteurSort actionSpe) {
+		this.classe = classe;
+		this.pointsDeVie = pointsDeVie;
+		this.pointsArmure = pointsArmure;
+		this.actionSpe = actionSpe;
 	}
 
 	public Integer getPointsVie() {
-		return this.pointsVie;
+		return this.pointsDeVie;
 	}
 
 	public Integer getPointsArmure() {

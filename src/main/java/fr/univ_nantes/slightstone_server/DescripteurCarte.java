@@ -1,23 +1,39 @@
 package fr.univ_nantes.slightstone_server;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Id;
 
 @Entity
+@Table(name="cartes")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class DescripteurCarte {
 	@Id
+	@Column(name="id_carte")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idType;
-
+	private Integer idCarte;
+	
+	@Column(name="cout_mana")
 	private Integer coutMana;
+	
+	@Column(name="nom")
 	private String nom;
+	
+	@Column(name="description")
 	private String description;
+	
+	@Column(name="url_image")
 	private String imageURL;
+	
+	@Column(name="classe")
+	@Enumerated(EnumType.STRING)
 	private TypeHeros classe;
 
 	// needed by JPA
@@ -41,7 +57,7 @@ public abstract class DescripteurCarte {
 	}
 
 	public Integer getIdType() {
-		return this.idType;
+		return this.idCarte;
 	}
 
 	public String getNom() {

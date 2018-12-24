@@ -1,7 +1,5 @@
 package fr.univ_nantes.slightstone_server;
 
-import java.util.ArrayList;
-
 public class FacadeServeur implements IServeur{
 
 	public FacadeServeur () {

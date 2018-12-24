@@ -2,7 +2,7 @@ package fr.univ_nantes.slightstone_server;
 
 import java.util.ArrayList;
 
-public class Board extends ArrayList<CarteServiteur> {
+public class Board {
 	private ArrayList<CarteServiteur> serviteurs;
 
 	public Board () {

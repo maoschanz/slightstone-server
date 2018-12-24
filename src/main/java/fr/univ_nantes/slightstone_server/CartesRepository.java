@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CartesRepository extends CrudRepository<DescripteurCarte, Integer> {
 	List<DescripteurCarte> findByClasseIn(Collection<String> collection);
-	List<DescripteurCarte> findByClasseOrClasse(String classe1, String classe2);
+	List<DescripteurCarte> findByClasseOrClasse(TypeHeros classe1, TypeHeros classe2);
 } //XXX faire 2 repo pour sorts vs. serviteurs ???

@@ -2,14 +2,15 @@ package fr.univ_nantes.slightstone_server;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="action_pioche")
 @PrimaryKeyJoinColumn(name="id_action")
 public class ActionPiocheRandom extends Action {
-	// protected ActionPiocheRandom () {}
 	
-	public ActionPiocheRandom (Jeu jeu) {
-		super(jeu);
+	public ActionPiocheRandom (Jeu jeu, TypeCible typeCible) {
+		super(jeu, typeCible);
 	}
 	
 	@Override
