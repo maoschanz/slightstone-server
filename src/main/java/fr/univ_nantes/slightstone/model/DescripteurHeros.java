@@ -15,6 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name="heros")
 public class DescripteurHeros {
+	
+	/* ******************************* */
+	/* ********** Attributs ********** */
+	/* ******************************* */
+	
 	@Id
 	@Column(name="id_heros")
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,35 +32,82 @@ public class DescripteurHeros {
 	private Integer pointsArmure;
 	
 	@Column(name="url_image")
-	private String imageURL;
+	private String urlImage;
 	
 	@Column(name="classe_heros")
 	@Enumerated(EnumType.STRING)
-	private TypeHeros classe;
+	private ClasseHeros classe;
 
+	@Column(name="cout_action_speciale")
+	private Integer coutActionSpeciale;
+	
 	@OneToOne(fetch=FetchType.EAGER, optional=false)
-	@JoinColumn(name="id_carte", nullable=false)
+	@JoinColumn(name="id_carte")
 	private DescripteurSort actionSpe;
 
-	protected DescripteurHeros () {}
-
-	public DescripteurHeros (TypeHeros classe, 
+	/* *********************************** */
+	/* ********** Constructeurs ********** */
+	/* *********************************** */
+	
+	protected DescripteurHeros() {}
+	
+	public DescripteurHeros (ClasseHeros classe, 
+							 String urlImage,
 				  			 DescripteurSort actionSpe) {
 		this.classe = classe;
+		this.urlImage = urlImage;
 		this.pointsDeVie = 30;
 		this.pointsArmure = 0;
+		this.coutActionSpeciale = 2;
 		this.actionSpe = actionSpe;
 	}
-
+	
+	/* ******************************** */
+	/* ********** Accesseurs ********** */
+	/* ******************************** */
+	
+	/**
+	 * Récupère les points de vie initiaux du héros.
+	 * 
+	 * @return : points de vie du héros
+	 */
 	public Integer getPointsVie() {
 		return this.pointsDeVie;
 	}
 
+	/**
+	 * Récupère les points armure initiaux du héros.
+	 * 
+	 * @return : points armure du héros
+	 */
 	public Integer getPointsArmure() {
 		return this.pointsArmure;
 	}
 	
+	/**
+	 * Récupère le coût en mana de l'attaque spéciale du héros.
+	 * 
+	 * @return : coût en mana pour lancer l'attaque spéciale du héros
+	 */
+	public Integer getCoutActionSpeciale() {
+		return this.coutActionSpeciale;
+	}
+	
+	/**
+	 * Récupère l'attaque spéciale du héros.
+	 * 
+	 * @return : carte sort correspondant à l'attaque spéciale du héros
+	 */
 	public DescripteurSort getActionSpeciale() {
 		return this.actionSpe;
+	}
+	
+	/* ****************************** */
+	/* ********** Méthodes ********** */
+	/* ****************************** */
+	
+	@Override
+	public String toString() {
+		return String.format("%s avec %d points de vie et %d points d'armure", this.classe, this.pointsDeVie, this.pointsArmure);
 	}
 }

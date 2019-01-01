@@ -3,7 +3,7 @@ package fr.univ_nantes.slightstone.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck {
+public class MainJoueur {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -15,10 +15,8 @@ public class Deck {
 	/* ********** Constructeurs ********** */
 	/* *********************************** */
 	
-	public Deck(ClasseHeros classeHeros) {
+	public MainJoueur() {
 		this.cartes = new ArrayList<DescripteurCarte>();
-		this.cartes.addAll(ServiceJpaSlightstone.getService().construireDeck(classeHeros));
-		System.out.println(this.cartes.size());
 	}
 	
 	/* ******************************** */
@@ -26,11 +24,11 @@ public class Deck {
 	/* ******************************** */
 	
 	/**
-	 * Récupère la liste des cartes présentes dans la pioche.
+	 * Récupère les cartes présentes dans la main du joueur.
 	 * 
 	 * @return : liste de cartes
 	 */
-	protected List<DescripteurCarte> getCartes() {
+	public List<DescripteurCarte> getCartes() {
 		return this.cartes;
 	}
 	
@@ -39,13 +37,20 @@ public class Deck {
 	/* ****************************** */
 
 	/**
-	 * Récupère une carte au hasard dans la pioche.
+	 * Ajoute une carte dans la main du joueur.
 	 * 
-	 * @return : carte tiré aléatoirement
+	 * @param carte : carte à ajouter
 	 */
-	public DescripteurCarte piocher() {
-		Integer index = (int)(Math.random() * this.cartes.size());
-		DescripteurCarte carte = this.cartes.get(index);
-		return carte;
+	public void ajouter(DescripteurCarte carte) {
+		this.cartes.add(carte);
+	}
+
+	/**
+	 * Retire une carte de la main du joueur.
+	 * 
+	 * @param carte : carte à retirer
+	 */
+	public void retirer(DescripteurCarte carte) {
+		this.cartes.remove(carte);
 	}
 }

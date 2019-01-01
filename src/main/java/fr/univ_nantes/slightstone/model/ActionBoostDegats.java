@@ -7,13 +7,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
- * Cette action augmente les points armure du héros du joueur courant (à qui c'est le tour)
- * Le nombre de points armure ajoutés au héros est défini par la variable valeur.
+ * Cette action augmente les points de dégâts d'un des serviteurs du joueur courant
+ * Le nombre de points de dégâts ajoutés au serviteur est défini par la variable valeur.
  */
 @Entity
-@Table(name="action_boost_armure")
+@Table(name="action_boost_degats")
 @PrimaryKeyJoinColumn(name="id_action")
-public class ActionBoostArmure extends Action {
+public class ActionBoostDegats extends Action {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -21,20 +21,21 @@ public class ActionBoostArmure extends Action {
 	
 	@NotNull
 	@Column(name="valeur_boost")
-	private Integer valeur;
-	
+	private Integer valeur; //nombre de points de dégâts ajoutés
+		
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
 	/* *********************************** */
-		
-	protected ActionBoostArmure() {}
 	
-	public ActionBoostArmure (Jeu jeu, Integer valeur) throws ValeurNegativeException {
-		super(jeu, TypeCible.AUCUNE); //cette action ne nécessite aucune cible
+	protected ActionBoostDegats() {}
+	
+	public ActionBoostDegats(Jeu jeu, Integer valeur) throws ValeurNegativeException {
+		super(jeu, TypeCible.UN_SERVITEUR_ALLIE);
 		if(valeur < 0) {
 			throw new ValeurNegativeException("La valeur du boost doit être positive !");
 		}
 		this.valeur = valeur;
+		
 	}
 	
 	/* ****************************** */
@@ -42,15 +43,11 @@ public class ActionBoostArmure extends Action {
 	/* ****************************** */
 	
 	/**
-	 * Augmente les points armure du héros du joueur courant
+	 * Agmente les points de dégats du serviteur sélectionné
 	 */
 	@Override
 	public void executer () {
-		Heros herosAllie = this.jeu.getJoueurCourant().getHeros();
-		try {
-			herosAllie.ajouterPointsArmure(valeur);
-		} catch (ValeurNegativeException e) {
-			e.printStackTrace();
-		}
+		CarteServiteur serviteur = (CarteServiteur) this.jeu.getCibleCourante();
+		serviteur.setPointsDeDegats(serviteur.getPointsDeDegats() + this.valeur);
 	}
 }

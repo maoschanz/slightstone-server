@@ -6,24 +6,46 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+/**
+ * Cette action invoque un serviteur sur le plateau du joueur courant
+ * Le serviteur invoqué est défini par l'attribut descServiteur 
+ */
 @Entity
 @Table(name="action_invocation")
 @PrimaryKeyJoinColumn(name="id_action")
 public class ActionInvocation extends Action {
+	
+	/* ******************************* */
+	/* ********** Attributs ********** */
+	/* ******************************* */
+	
 	@OneToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(name="id_serviteur", nullable=false)
-	private DescripteurServiteur descServiteur;
+	private DescripteurServiteur descServiteur; //description du serviteur invoqué
+		
+	/* *********************************** */
+	/* ********** Constructeurs ********** */
+	/* *********************************** */
 	
-	protected ActionInvocation () {}
+	protected ActionInvocation() {}
 	
-	public ActionInvocation (Jeu jeu, TypeCible typeCible, DescripteurServiteur descServiteur) {
-		super(jeu, typeCible);
+	public ActionInvocation (Jeu jeu, @NotNull DescripteurServiteur descServiteur) {
+		super(jeu, TypeCible.AUCUNE); //cette action ne nécessite aucune cible
 		this.descServiteur = descServiteur;
 	}
 	
+	/* ****************************** */
+	/* ********** Méthodes ********** */
+	/* ****************************** */
+	
+	/**
+	 * Invoque un serviteur sur le plateau du joueur
+	 */
 	@Override
 	public void executer () {
-		System.out.println(String.format("Invocation du serviteur %s\n", this.descServiteur.getNom()));
+		Joueur joueurCourant = this.jeu.getJoueurCourant();
+		joueurCourant.invoquerServiteur(this.descServiteur);
 	}
 }

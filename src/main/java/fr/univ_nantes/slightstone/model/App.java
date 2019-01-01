@@ -1,151 +1,154 @@
 package fr.univ_nantes.slightstone.model;
 
-import java.util.Collection;
-import java.util.ArrayList;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import static org.mockito.Mockito.mock;
+
 @SpringBootApplication
 public class App {
+	
 	public static void main(String[] args) {
 		SpringApplication.run(App.class);
 	}
-
-	/*@Bean
-	public CommandLineRunner demoCartes(CartesRepository repository) {
-		return (args) -> {
-			// save a couple of customers
-			
-			// DescripteurCarte carte1 = new DescripteurCarte("Sanglier brocheroc", "carte1", "url", 1, TypeHeros.COMMUN);
-			DescripteurCarte sort1 = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.PALADIN);
-			DescripteurCarte serviteur1 = new DescripteurServiteur("Nestor", "serviteur1", "url", 3, TypeHeros.COMMUN, 50, 20, true, true, true, true);
-			
-			// repository.save(carte1);
-			repository.save(sort1);
-			repository.save(serviteur1);
-			
-			// fetch all cartes
-			System.out.println("Cartes found with findAll():");
-			System.out.println("-------------------------------");
-			for (DescripteurCarte customer : repository.findAll()) {
-				System.out.println(customer.toString());
-			}
-			System.out.println("");
-
-			// fetch an individual carte by ID
-			repository.findById(1)
-				.ifPresent(customer -> {
-					System.out.println("Carte found with findById(1):");
-					System.out.println("--------------------------------");
-					System.out.println(customer.toString());
-					System.out.println("");
-				});
-
-			System.out.println("Cartes found with findByClasseOrClasse('commun', 'mage'):");
-			System.out.println("--------------------------------------------");
-			repository.findByClasseOrClasse("mage", "commun").forEach(instance -> {
-				System.out.println(instance.toString());
-			});
-			System.out.println("");
-		};
-	}*/
-	
+	/*
 	@Bean
-	public CommandLineRunner demoAction(ActionsRepository aRepository, CartesRepository cRepository) {
+	public CommandLineRunner initialisationBDD(HerosRepository hRepository, ActionsRepository aRepository, CartesRepository cRepository) {
 		return (args) -> {
-
-			DescripteurSort actionSpeciale = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.GUERRIER);
-			DescripteurHeros descHeros = new DescripteurHeros(TypeHeros.GUERRIER, actionSpeciale);
+			//Initialisation d'un jeu fictif
+			Jeu jeu = mock(Jeu.class);
 			
-			Joueur j1 = new Joueur("julien", new Heros(descHeros));
-			Joueur j2 = new Joueur("arthur", new Heros(descHeros));
-			Jeu jeu = new Jeu(j1, j2);
+			//Action spéciale du Mage
+			DescripteurSort actionSpecialeMage = new DescripteurSort("Boule de feu", "Boule de feu, infligeant un point de dégats à un adversaire (serviteur ou héros)", "bouleDeFeu.png", ClasseHeros.MAGE, 2);
+			ActionAttaque bouleDeFeu = new ActionAttaque(jeu, TypeCible.UN_ADVERSAIRE, 1);
+			actionSpecialeMage.ajouterAction(bouleDeFeu);
+			aRepository.save(bouleDeFeu);
+			cRepository.save(actionSpecialeMage);
 			
-			DescripteurServiteur serviteur = new DescripteurServiteur("Nestor", "serviteur1", "url", 3, TypeHeros.COMMUN, 50, 20, true, true, true, true);
-			cRepository.save(serviteur);	
+			//Mage
+			DescripteurHeros mage = new DescripteurHeros(ClasseHeros.MAGE, "mage.png", actionSpecialeMage);
+			hRepository.save(mage);
 			
-			ActionBoostArmure boost = new ActionBoostArmure(jeu, TypeCible.HEROS_ALLIE, 2);
-			ActionModifVieIndiv degatHP = new ActionModifVieIndiv(jeu, TypeCible.UN_SERVITEUR_ADVERSE, -3);
-			ActionInvocation invocation = new ActionInvocation(jeu, TypeCible.AUCUNE, serviteur);
+			//Action spéciale du Paladin
+			DescripteurSort actionSpecialePaladin = new DescripteurSort("Renfort", "Renfort, invoquant un serviteur \"recrue de la Main d'argent\" 1/1", "recrueMainArgent.png", ClasseHeros.PALADIN, 2);
+			DescripteurServiteur serviteurRenfort = new DescripteurServiteur("Recrue de la main d'argent", "Serviteur 1/1", "recrueMainArgent.png", ClasseHeros.PALADIN, 0, 1, 1, false, false, false, false);
+			ActionInvocation invocationRenfort = new ActionInvocation(jeu, serviteurRenfort);
+			actionSpecialePaladin.ajouterAction(invocationRenfort);
+			cRepository.save(serviteurRenfort);
+			aRepository.save(invocationRenfort);
+			cRepository.save(actionSpecialePaladin);
 			
-			aRepository.save(boost);
-			aRepository.save(degatHP);
-			aRepository.save(invocation);
-			
-			DescripteurSort sort = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.PALADIN);
-			sort.ajouterAction(boost);
-			sort.ajouterAction(degatHP);
-			sort.ajouterAction(invocation);
-			cRepository.save(sort);
-			
-			// fetch all cartes
-			System.out.println("Actions found with findAll():");
-			System.out.println("-----------------------------");
-			for (Action action : aRepository.findAll()) {
-				System.out.println(action.toString());
-				action.executer();
-			}
-			System.out.println("");
-			
-			cRepository.findByClasseOrClasse(TypeHeros.COMMUN, TypeHeros.PALADIN).forEach(instance -> {
-				if(instance instanceof DescripteurSort) {
-					((DescripteurSort) instance).lancerActions();
-				}
-			});
-		};
-	}
-	
-	@Bean
-	public CommandLineRunner demoHeros(HerosRepository hRepository, ActionsRepository aRepository, CartesRepository cRepository) {
-		return (args) -> {
-
-			DescripteurSort actionSpeciale = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.GUERRIER);
-			DescripteurHeros descHeros = new DescripteurHeros(TypeHeros.GUERRIER, actionSpeciale);
-			
-			Joueur j1 = new Joueur("julien", new Heros(descHeros));
-			Joueur j2 = new Joueur("arthur", new Heros(descHeros));
-			Jeu jeu = new Jeu(j1, j2);
-			
-			ActionBoostArmure boost = new ActionBoostArmure(jeu, TypeCible.HEROS_ALLIE, 2);
-			ActionModifVieIndiv degatHP = new ActionModifVieIndiv(jeu, TypeCible.UN_SERVITEUR_ADVERSE, -3);
-			
-			aRepository.save(boost);
-			aRepository.save(degatHP);
-			
-			DescripteurSort sort = new DescripteurSort("Boule de feu", "sort1", "url", 2, TypeHeros.PALADIN);
-			sort.ajouterAction(boost);
-			sort.ajouterAction(degatHP);
-			cRepository.save(sort);
-			
-			DescripteurHeros paladin = new DescripteurHeros(TypeHeros.PALADIN, sort);
+			//Paladin
+			DescripteurHeros paladin = new DescripteurHeros(ClasseHeros.PALADIN, "paladin.png", actionSpecialePaladin);
 			hRepository.save(paladin);
 			
-			for (DescripteurHeros dHeros : hRepository.findAll()) {
-				new Heros(dHeros).jouerActionSpeciale();
-			}
+			//Action spéciale du Guerrier
+			DescripteurSort actionSpecialeGuerrier = new DescripteurSort("Armure", "Armure, lui conférant 2 points d'armure", "armure.png", ClasseHeros.GUERRIER, 2);
+			ActionBoostArmure armure = new ActionBoostArmure(jeu, 2);
+			actionSpecialeGuerrier.ajouterAction(armure);
+			aRepository.save(armure);
+			cRepository.save(actionSpecialeGuerrier);
+			
+			//Guerrier
+			DescripteurHeros guerrier = new DescripteurHeros(ClasseHeros.GUERRIER, "guerrier.png", actionSpecialeGuerrier);
+			hRepository.save(guerrier);
+			
+			//Cartes communes
+			DescripteurServiteur sanglierBrocheroc = new DescripteurServiteur("Sanglier brocheroc", "Serviteur 1/1", "sanglierBrocheroc.png", ClasseHeros.COMMUN, 1, 1, 1, false, false, false, false);
+			cRepository.save(sanglierBrocheroc);
+			
+			DescripteurServiteur soldatCompteOr = new DescripteurServiteur("Soldat du compté-de-l'or", "Serviteur 1/2", "soldatCompteOr.png", ClasseHeros.COMMUN, 1, 1, 2, true, false, false, false);
+			cRepository.save(soldatCompteOr);
+			
+			DescripteurServiteur chevaucheurDeLoup = new DescripteurServiteur("Chevaucheur de loup", "Serviteur 3/1", "chevaucheurDeLoup.png", ClasseHeros.COMMUN, 3, 3, 1, false, true, false, false);
+			cRepository.save(chevaucheurDeLoup);
+			
+			DescripteurServiteur chefDeRaid = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+			cRepository.save(chefDeRaid);
+			
+			DescripteurServiteur yetiNoroit = new DescripteurServiteur("Yéti noroit", "Serviteur 4/5", "yetiNoroit.png", ClasseHeros.COMMUN, 4, 4, 5, false, false, false, false);
+			cRepository.save(yetiNoroit);
+			
+			//Cartes spécifiques au mage
+			DescripteurSort imageMiroir = new DescripteurSort("Image miroir", "Sort de 1 point de mana, invoque deux serviteurs 0/2 avec provocation", "imageMiroir.png", ClasseHeros.MAGE, 1);
+			DescripteurServiteur serviteurImageMiroir = new DescripteurServiteur("Serviteur miroir", "Serviteur 0/2", "serviteurMiroir.png", ClasseHeros.MAGE, 0, 0, 2, true, false, false, false);
+			ActionInvocation invocationImageMiroir = new ActionInvocation(jeu, serviteurImageMiroir);
+			imageMiroir.ajouterAction(invocationImageMiroir);
+			imageMiroir.ajouterAction(invocationImageMiroir);
+			cRepository.save(serviteurImageMiroir);
+			aRepository.save(invocationImageMiroir);
+			cRepository.save(imageMiroir);
+			
+			DescripteurSort explosionDesArcanes = new DescripteurSort("Explosion des arcanes", "Sort de 2 points de mana, inflige 1 point de dégats à tous les serviteurs adverses", "explosionDesArcanes.png", ClasseHeros.MAGE, 2);
+			ActionAttaque attaqueExplosionDesArcanes = new ActionAttaque(jeu, TypeCible.TOUS_SERVITEURS_ADVERSES, 1);
+			explosionDesArcanes.ajouterAction(attaqueExplosionDesArcanes);
+			aRepository.save(attaqueExplosionDesArcanes);
+			cRepository.save(explosionDesArcanes);
+			
+			DescripteurSort metamorphose = new DescripteurSort("Métamorphose", "Sort de 4 points de mana, transforme un serviteur en serviteur 1/1 sans effet spécial", "metamorphose.png", ClasseHeros.MAGE, 4);
+			ActionMouton metamorphoseMouton = new ActionMouton(jeu);
+			metamorphose.ajouterAction(metamorphoseMouton);
+			aRepository.save(metamorphoseMouton);
+			cRepository.save(metamorphose);
+			
+			//Cartes spécifiques au paladin
+			DescripteurServiteur championFrisselame = new DescripteurServiteur("Champion frisselame", "Serviteur 3/2", "championFirsselame.png", ClasseHeros.PALADIN, 4, 3, 2, false, true, true, false);
+			cRepository.save(championFrisselame);
+			
+			DescripteurSort benedictionDePuissance = new DescripteurSort("Bénédiction de puissance", "Sort de 1 point de mana, confère +3 d'attaque à un serviteur", "benedictionDePuissance.png", ClasseHeros.PALADIN, 1);
+			ActionBoostDegats buffBenedictionDePuissance = new ActionBoostDegats(jeu, 3);
+			benedictionDePuissance.ajouterAction(buffBenedictionDePuissance);
+			aRepository.save(buffBenedictionDePuissance);
+			cRepository.save(benedictionDePuissance);
+			
+			DescripteurSort consecration = new DescripteurSort("Consécration", "Sort de 4 points de mana, inflige 2 points de dégâts à tous les adversaires", "consecration.png", ClasseHeros.PALADIN, 4);
+			ActionAttaque attaqueConsecration = new ActionAttaque(jeu, TypeCible.TOUS_ADVERSAIRES, 2);
+			consecration.ajouterAction(attaqueConsecration);
+			aRepository.save(attaqueConsecration);
+			cRepository.save(consecration);
+			
+			//Cartes spécifiques au guerrier
+			DescripteurSort tourbillon = new DescripteurSort("Tourbillon", "Sort de 1 point de mana, inflige 1 point de dégats à tous les serviteurs (y compris les vôtres)", "tourbillon.png", ClasseHeros.GUERRIER, 1);
+			ActionAttaque attaqueTourbillon = new ActionAttaque(jeu, TypeCible.TOUS_SERVITEURS, 1);
+			tourbillon.ajouterAction(attaqueTourbillon);
+			aRepository.save(attaqueTourbillon);
+			cRepository.save(tourbillon);
+			
+			DescripteurServiteur avocatCommisOffice = new DescripteurServiteur("Avocat commis d'office", "Serviteur 0/7", "avocatCommisOffice.png", ClasseHeros.GUERRIER, 2, 0, 7, true, false, false, false);
+			cRepository.save(avocatCommisOffice);
+			
+			DescripteurSort maitriseDuBlocage = new DescripteurSort("Maitrise du blocage", "Sort de 3 points de mana, +5 d'armure et place une carte aléatoire de la pioche dans votre main", "maitriseDuBlocage.png", ClasseHeros.GUERRIER, 3);
+			ActionBoostArmure buffArmureMaitriseDuBlocage = new ActionBoostArmure(jeu, 5);
+			ActionPioche piocheMaitriseDuBlocage = new ActionPioche(jeu);
+			maitriseDuBlocage.ajouterAction(buffArmureMaitriseDuBlocage);
+			maitriseDuBlocage.ajouterAction(piocheMaitriseDuBlocage);
+			aRepository.save(buffArmureMaitriseDuBlocage);
+			aRepository.save(piocheMaitriseDuBlocage);
+			cRepository.save(maitriseDuBlocage);
 		};
 	}
-
-	/*@Bean
-	public CommandLineRunner demoHeros(HerosRepository repository) {
+	*/
+	/*
+	@Bean
+	public CommandLineRunner demo() {
 		return (args) -> {
-			Heros heros1 = new Heros(3, 5, 1);
-			Heros heros2 = new Heros(5, 7, 2);
-
-			repository.save(heros1);
-			repository.save(heros2);
-
-			// fetch all cartes
-			System.out.println("Heros found with findAll():");
-			System.out.println("-------------------------------");
-			for (Heros heros : repository.findAll()) {
-				System.out.println(heros.toString());
-			}
-			System.out.println("");
+			ServiceJpaSlightstone test = ServiceJpaSlightstone.getService();
+			test.resetDonnees();
+			Jeu jeu = mock(Jeu.class);
+			//Action spéciale du Mage
+			DescripteurSort actionSpecialeMage = new DescripteurSort("Boule de feu", "Boule de feu, infligeant un point de dégats à un adversaire (serviteur ou héros)", "bouleDeFeu.png", ClasseHeros.MAGE, 2);
+			ActionAttaque bouleDeFeu = new ActionAttaque(jeu, TypeCible.UN_ADVERSAIRE, 1);
+			actionSpecialeMage.ajouterAction(bouleDeFeu);
+			test.sauvegarderAction(bouleDeFeu);
+			test.sauvegarderCarte(actionSpecialeMage);
+			//Mage
+			DescripteurHeros mage = new DescripteurHeros(ClasseHeros.MAGE, "mage.png", actionSpecialeMage);
+			test.sauvegarderHeros(mage);
+			
+			System.out.println(test.getHeros(ClasseHeros.MAGE).toString());
 		};
-	}*/
+	}
+	*/
 }

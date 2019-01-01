@@ -9,13 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.persistence.Id;
 
 @Entity
 @Table(name="cartes")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class DescripteurCarte {
+	
+	/* ******************************* */
+	/* ********** Attributs ********** */
+	/* ******************************* */
+	
 	@Id
+	@NotNull
 	@Column(name="id_carte")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idCarte;
@@ -34,28 +41,30 @@ public abstract class DescripteurCarte {
 	
 	@Column(name="classe")
 	@Enumerated(EnumType.STRING)
-	private TypeHeros classe;
+	private ClasseHeros classe;
 
-	// needed by JPA
-	protected DescripteurCarte () {}
+	/* *********************************** */
+	/* ********** Constructeurs ********** */
+	/* *********************************** */
 
+	protected DescripteurCarte() {}
+	
 	public DescripteurCarte (String nom,
 	                         String description,
 	                         String imageURL,
 	                         Integer coutMana,
-	                         TypeHeros classe) {
+	                         ClasseHeros classe) {
 		this.nom = nom;
 		this.description = description;
 		this.imageURL = imageURL;
 		this.coutMana = coutMana;
 		this.classe = classe;
 	}
-
-	@Override
-	public String toString() {
-		return String.format("Carte %s de classe %s", this.nom, this.classe);
-	}
-
+	
+	/* ******************************** */
+	/* ********** Accesseurs ********** */
+	/* ******************************** */
+	
 	public Integer getIdCarte() {
 		return this.idCarte;
 	}
@@ -72,11 +81,20 @@ public abstract class DescripteurCarte {
 		return this.imageURL;
 	}
 
-	public TypeHeros getClasse() {
+	public ClasseHeros getClasse() {
 		return this.classe;
 	}
 
 	public Integer getCoutMana() {
 		return this.coutMana;
+	}
+	
+	/* ****************************** */
+	/* ********** Méthodes ********** */
+	/* ****************************** */
+
+	@Override
+	public String toString() {
+		return String.format("Carte %s de classe %s", this.nom, this.classe);
 	}
 }
