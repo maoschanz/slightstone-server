@@ -64,7 +64,7 @@ public class Joueur {
 	 * 
 	 * @return : liste des serviteurs du joueur
 	 */
-	protected List<CarteServiteur> getServiteurs() {
+	public List<CarteServiteur> getServiteurs() {
 		return this.board.getCartes();
 	}
 	
@@ -73,12 +73,20 @@ public class Joueur {
 	 * 
 	 * @return : main du joueur
 	 */
-	protected List<DescripteurCarte> getMainJoueur() {
+	public List<DescripteurCarte> getMainJoueur() {
 		return this.hand.getCartes();
 	}
 	
 	protected List<DescripteurCarte> getPioche() {
 		return this.deck.getCartes();
+	}
+	
+	public int getCapaciteMana() {
+		return this.stockMana.getCapacite();
+	}
+	
+	public int getQuantiteMana() {
+		return this.stockMana.getQuantite();
 	}
 	
 	/* ****************************** */

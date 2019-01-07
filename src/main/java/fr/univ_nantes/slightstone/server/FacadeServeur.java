@@ -27,7 +27,8 @@ public class FacadeServeur implements IServeur{
 	Semaphore mutexFileAttente = new Semaphore(1);
 	private LinkedList<Joueur> fileAttente = new LinkedList<Joueur>();
 	
-	private HashMap<String, String> socketsId = new HashMap<String, String>();
+	private HashMap<String, String> convPseudoId = new HashMap<String, String>();
+	private HashMap<String, String> convIdPseudo = new HashMap<String, String>();
 	private HashMap<String, Controleur> jeux = new HashMap<String, Controleur>();
 	
 	
@@ -36,8 +37,8 @@ public class FacadeServeur implements IServeur{
 	}
 	
 	private Joueur rechercheAdversaire() throws InterruptedException {
-		this.mutexFileAttente.acquire();
 		Joueur adversaire;
+		this.mutexFileAttente.acquire();
 		if(this.fileAttente.isEmpty()) {
 			adversaire =  null;
 		} else {
@@ -47,8 +48,17 @@ public class FacadeServeur implements IServeur{
 		return adversaire;
 	}
 	
+	private void mettreJoueurEnAttente(Joueur joueur) throws InterruptedException {
+		this.mutexFileAttente.acquire();
+		this.fileAttente.addLast(joueur);
+		this.mutexFileAttente.release();
+	}
+	
+	/*private void nouvellePartie() {
+		
+	}*/
+	
 	@MessageMapping("/partie")
-	//@SendTo("/topic/greetings")
 	public void lancerPartie(Principal principal, MessageLancerPartie message) {
 		logger.warn(message.getPseudo());
 		logger.warn(principal.getName());
@@ -56,7 +66,6 @@ public class FacadeServeur implements IServeur{
 		
 		try {
 			Joueur joueur = new Joueur(message.getPseudo(), message.getHeros());
-			messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/reply", joueur);
 			logger.warn(joueur.getPseudo());
 			Joueur adversaire = this.rechercheAdversaire();
 			if(adversaire != null) {
@@ -67,8 +76,8 @@ public class FacadeServeur implements IServeur{
 				//envoyer état du jeu
 				//return "coucou";
 			} else {
-				//joueur en attente
-				//return "attente";
+				this.mettreJoueurEnAttente(joueur);
+				messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/attente", "Attente d'un autre joueur...");
 			}
 		} catch (Exception e) {
 			//return "erreur";

@@ -84,6 +84,14 @@ public class DescripteurHeros {
 		return this.pointsArmure;
 	}
 	
+	public ClasseHeros getClasse() {
+		return this.classe;
+	}
+	
+	public String getUrlImage() {
+		return this.urlImage;
+	}
+	
 	/**
 	 * Récupère le coût en mana de l'attaque spéciale du héros.
 	 * 
