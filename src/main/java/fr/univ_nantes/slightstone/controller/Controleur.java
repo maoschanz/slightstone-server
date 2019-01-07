@@ -5,7 +5,7 @@ import java.util.List;
 import fr.univ_nantes.slightstone.model.*;
 
 public class Controleur {
-	/*
+	
 	private Jeu jeu;
 	
 	public Controleur(Jeu jeu) {
@@ -15,7 +15,7 @@ public class Controleur {
 	public boolean peutJouerJoueur(Joueur joueur) {
 		return this.jeu.getJoueurCourant().equals(joueur);
 	}
-	
+	/*
 	private boolean cibleValide(TypeCible typeCible, Ciblable cible) {
 		switch(typeCible) {
 		case UN_ADVERSAIRE:

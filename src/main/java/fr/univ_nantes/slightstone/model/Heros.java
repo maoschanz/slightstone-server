@@ -79,6 +79,10 @@ public class Heros implements Ciblable{
 		return this.descripteur.getCoutActionSpeciale();
 	}
 	
+	public DescripteurSort getActionSpeciale() {
+		return this.descripteur.getActionSpeciale();
+	}
+	
 	/* ****************************** */
 	/* ********** Méthodes ********** */
 	/* ****************************** */

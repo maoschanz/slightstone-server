@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,10 +18,13 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import fr.univ_nantes.slightstone.server.WebSocketConfig;
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "fr.univ_nantes.slightstone.model" })
 @PropertySource("classpath:application.properties")
+@Import(WebSocketConfig.class)
 public class Config {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
     private static final String PROPERTY_NAME_DATABASE_URL = "db.url";

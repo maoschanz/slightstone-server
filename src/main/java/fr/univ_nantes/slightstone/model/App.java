@@ -4,9 +4,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import static org.mockito.Mockito.mock;
 
+@ComponentScan({"fr.univ_nantes.slightstone.model","fr.univ_nantes.slightstone.server"})
 @SpringBootApplication
 public class App {
 	
