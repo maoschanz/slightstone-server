@@ -53,4 +53,8 @@ public class MainJoueur {
 	public void retirer(DescripteurCarte carte) {
 		this.cartes.remove(carte);
 	}
+	
+	public boolean contient(DescripteurCarte carte) {
+		return this.cartes.contains(carte);
+	}
 }

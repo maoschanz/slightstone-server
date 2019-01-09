@@ -15,11 +15,9 @@ public class ActionPioche extends Action {
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
 	/* *********************************** */
-	
-	protected ActionPioche() {}
-	
-	public ActionPioche(Jeu jeu) {
-		super(jeu, TypeCible.AUCUNE); //cette action ne nécessite aucune cible
+		
+	public ActionPioche() {
+		super(TypeCible.AUCUNE); //cette action ne nécessite aucune cible
 	}
 	
 	/* ****************************** */
@@ -30,8 +28,8 @@ public class ActionPioche extends Action {
 	 * Pioche une carte dans le deck du joueur courant et la place dans sa main
 	 */
 	@Override
-	public void executer() {
-		Joueur joueurCourant = this.jeu.getJoueurCourant();
+	public void executer(Jeu jeu) {
+		Joueur joueurCourant = jeu.getJoueurCourant();
 		joueurCourant.piocherCarte();
 	}
 }

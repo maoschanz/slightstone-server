@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "serviteurs")
 @PrimaryKeyJoinColumn(name = "id_carte")
-public class DescripteurServiteur extends DescripteurCarte {
+public class DescripteurServiteur extends DescripteurCarte implements Cloneable {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -138,5 +138,12 @@ public class DescripteurServiteur extends DescripteurCarte {
 	public String toString() {
 		return String.format("Carte %s de classe %s avec %d points de vie", this.getNom(), this.getClasse(),
 				this.pointsDeVie);
+	}
+	
+	@Override
+	public Object clone() {
+		Object o = null;
+		o = super.clone();
+		return o;
 	}
 }

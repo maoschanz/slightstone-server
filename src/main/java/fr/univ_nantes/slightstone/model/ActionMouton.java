@@ -16,11 +16,9 @@ public class ActionMouton extends Action {
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
 	/* *********************************** */
-	
-	protected ActionMouton() {}
-	
-	public ActionMouton(Jeu jeu) {
-		super(jeu, TypeCible.UN_SERVITEUR_ADVERSE); //la cible doit être un serviteur adverse
+		
+	public ActionMouton() {
+		super(TypeCible.UN_SERVITEUR_ADVERSE); //la cible doit être un serviteur adverse
 	}
 	
 	/* ****************************** */
@@ -32,8 +30,8 @@ public class ActionMouton extends Action {
 	 * sans effet spécial
 	 */
 	@Override
-	public void executer() {
-		CarteServiteur serviteur = (CarteServiteur) this.jeu.getCibleCourante();
+	public void executer(Jeu jeu) {
+		CarteServiteur serviteur = (CarteServiteur) jeu.getCibleCourante();
 		serviteur.setPointsDeDegats(1);
 		serviteur.setPointsDeVie(1);
 		serviteur.setEffetCharge(false);

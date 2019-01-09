@@ -86,6 +86,7 @@ public class TestCarteServiteur {
 		Joueur joueur1 = mock(Joueur.class);
 		Joueur joueur2 = mock(Joueur.class);
 		Jeu jeu = new Jeu(joueur1, joueur2);
+		
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
 				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descServiteur);
@@ -102,14 +103,17 @@ public class TestCarteServiteur {
 	@Test
 	public void attaquerHerosAdverseSansArmure() {
 		// With
-		Jeu jeu = mock(Jeu.class);
+		Joueur joueur1 = mock(Joueur.class);
+		Joueur joueur2 = mock(Joueur.class);
+		Jeu jeu = new Jeu(joueur1, joueur2);
 
 		DescripteurHeros descHeros = mock(DescripteurHeros.class);
 		when(descHeros.getPointsVie()).thenReturn(30);
 		when(descHeros.getPointsArmure()).thenReturn(0);
 		Heros cible = new Heros(descHeros);
-		when(jeu.getCibleCourante()).thenReturn(cible);
 
+		jeu.setCibleCourante(cible);
+		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
 				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
@@ -124,14 +128,17 @@ public class TestCarteServiteur {
 	@Test
 	public void attaquerHerosAdverseAvecArmureSupDegatsAttaque() {
 		// With
-		Jeu jeu = mock(Jeu.class);
+		Joueur joueur1 = mock(Joueur.class);
+		Joueur joueur2 = mock(Joueur.class);
+		Jeu jeu = new Jeu(joueur1, joueur2);
 
 		DescripteurHeros descHeros = mock(DescripteurHeros.class);
 		when(descHeros.getPointsVie()).thenReturn(30);
 		when(descHeros.getPointsArmure()).thenReturn(5);
 		Heros cible = new Heros(descHeros);
-		when(jeu.getCibleCourante()).thenReturn(cible);
 
+		jeu.setCibleCourante(cible);
+		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
 				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
@@ -146,14 +153,17 @@ public class TestCarteServiteur {
 	@Test
 	public void attaquerHerosAdverseAvecArmureInfDegatsAttaque() {
 		// With
-		Jeu jeu = mock(Jeu.class);
+		Joueur joueur1 = mock(Joueur.class);
+		Joueur joueur2 = mock(Joueur.class);
+		Jeu jeu = new Jeu(joueur1, joueur2);
 
 		DescripteurHeros descHeros = mock(DescripteurHeros.class);
 		when(descHeros.getPointsVie()).thenReturn(30);
 		when(descHeros.getPointsArmure()).thenReturn(2);
 		Heros cible = new Heros(descHeros);
-		when(jeu.getCibleCourante()).thenReturn(cible);
 
+		jeu.setCibleCourante(cible);
+		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
 				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);

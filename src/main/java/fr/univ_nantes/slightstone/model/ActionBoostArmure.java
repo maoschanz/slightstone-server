@@ -29,8 +29,8 @@ public class ActionBoostArmure extends Action {
 		
 	protected ActionBoostArmure() {}
 	
-	public ActionBoostArmure (Jeu jeu, Integer valeur) throws ValeurNegativeException {
-		super(jeu, TypeCible.AUCUNE); //cette action ne nécessite aucune cible
+	public ActionBoostArmure (Integer valeur) throws ValeurNegativeException {
+		super(TypeCible.AUCUNE); //cette action ne nécessite aucune cible
 		if(valeur < 0) {
 			throw new ValeurNegativeException("La valeur du boost doit être positive !");
 		}
@@ -45,8 +45,8 @@ public class ActionBoostArmure extends Action {
 	 * Augmente les points armure du héros du joueur courant
 	 */
 	@Override
-	public void executer () {
-		Heros herosAllie = this.jeu.getJoueurCourant().getHeros();
+	public void executer(Jeu jeu) {
+		Heros herosAllie = jeu.getJoueurCourant().getHeros();
 		try {
 			herosAllie.ajouterPointsArmure(valeur);
 		} catch (ValeurNegativeException e) {

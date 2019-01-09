@@ -27,7 +27,7 @@ public class TestActionBoostArmure {
 	public void construireActionAvecValeurBoostNegativeImpossible() {
 		try {
 			@SuppressWarnings("unused")
-			ActionBoostArmure actionBoostArmure = new ActionBoostArmure(this.jeu, -2);
+			ActionBoostArmure actionBoostArmure = new ActionBoostArmure(-2);
 			assert false;
 		} catch (ValeurNegativeException e) {
 			assert true;
@@ -38,9 +38,9 @@ public class TestActionBoostArmure {
 	public void executerActionBoostArmure() {
 		try {
 			// With
-			ActionBoostArmure actionBoostArmure = new ActionBoostArmure(this.jeu, 2);
+			ActionBoostArmure actionBoostArmure = new ActionBoostArmure(2);
 			// When
-			actionBoostArmure.executer();
+			actionBoostArmure.executer(this.jeu);
 			// Then
 			Heros herosAllie = this.jeu.getJoueurCourant().getHeros();
 			assert (herosAllie.getPointsArmure() == 2);

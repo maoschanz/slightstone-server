@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Entity
 @Table(name="cartes")
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class DescripteurCarte {
+public abstract class DescripteurCarte implements Cloneable {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -96,5 +96,17 @@ public abstract class DescripteurCarte {
 	@Override
 	public String toString() {
 		return String.format("Carte %s de classe %s", this.nom, this.classe);
+	}
+	
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (CloneNotSupportedException e) {
+			// ne devrait jamais arriver car on implémente l'interface Cloneable
+			e.printStackTrace();
+		}
+		return o;
 	}
 }

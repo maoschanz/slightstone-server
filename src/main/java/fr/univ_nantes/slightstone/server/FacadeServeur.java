@@ -12,103 +12,251 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import fr.univ_nantes.slightstone.controller.Controleur;
-import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.ClasseHeros;
 import fr.univ_nantes.slightstone.model.Joueur;
 
 @Controller
-public class FacadeServeur implements IServeur{
+public class FacadeServeur {
 
 	@Autowired
-    private SimpMessagingTemplate messagingTemplate;
-	
+	private SimpMessagingTemplate messagingTemplate;
+
 	Logger logger = LoggerFactory.getLogger(FacadeServeur.class);
-	
+
 	Semaphore mutexFileAttente = new Semaphore(1);
 	private LinkedList<Joueur> fileAttente = new LinkedList<Joueur>();
-	
-	private HashMap<String, String> convPseudoId = new HashMap<String, String>();
-	private HashMap<String, String> convIdPseudo = new HashMap<String, String>();
-	private HashMap<String, Controleur> jeux = new HashMap<String, Controleur>();
-	
-	
-	public FacadeServeur () {
-		//TODO
-	}
-	
+
+	private HashMap<Joueur, String> convJoueurId = new HashMap<Joueur, String>();
+	private HashMap<String, Joueur> convIdJoueur = new HashMap<String, Joueur>();
+	private HashMap<String, Partie> parties = new HashMap<String, Partie>();
+
 	private Joueur rechercheAdversaire() throws InterruptedException {
+		logger.warn("--> Recherche d'un adversaire !");
 		Joueur adversaire;
 		this.mutexFileAttente.acquire();
-		if(this.fileAttente.isEmpty()) {
-			adversaire =  null;
+		if (this.fileAttente.isEmpty()) {
+			adversaire = null;
+			logger.warn("Aucun adversaire trouvé...");
 		} else {
 			adversaire = this.fileAttente.removeFirst();
+			logger.warn(String.format("==> Adversaire trouvé : %s", adversaire.getPseudo()));
 		}
 		this.mutexFileAttente.release();
 		return adversaire;
 	}
-	
-	private void mettreJoueurEnAttente(Joueur joueur) throws InterruptedException {
-		this.mutexFileAttente.acquire();
-		this.fileAttente.addLast(joueur);
-		this.mutexFileAttente.release();
-	}
-	
-	/*private void nouvellePartie() {
-		
-	}*/
-	
-	@MessageMapping("/partie")
-	public void lancerPartie(Principal principal, MessageLancerPartie message) {
-		logger.warn(message.getPseudo());
-		logger.warn(principal.getName());
-		logger.warn(message.getHeros().toString());
-		
+
+	private void mettreJoueurEnAttente(Joueur joueur) {
+		logger.warn("--> Mettre joueur en attente");
 		try {
-			Joueur joueur = new Joueur(message.getPseudo(), message.getHeros());
-			logger.warn(joueur.getPseudo());
-			Joueur adversaire = this.rechercheAdversaire();
-			if(adversaire != null) {
-				Jeu jeu = new Jeu(joueur, adversaire);
-				Controleur controleur = new Controleur(jeu);
-				this.jeux.put(joueur.getPseudo(), controleur);
-				this.jeux.put(adversaire.getPseudo(), controleur);
-				//envoyer état du jeu
-				//return "coucou";
-			} else {
-				this.mettreJoueurEnAttente(joueur);
-				messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/attente", "Attente d'un autre joueur...");
-			}
-		} catch (Exception e) {
-			//return "erreur";
+			this.mutexFileAttente.acquire();
+			this.fileAttente.addLast(joueur);
+			this.mutexFileAttente.release();
+			
+			Message message = new Message("En attente d'un autre joueur...");
+			this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur), "/queue/attente", message);
+			logger.warn(String.format("==> Joueur %s en attente", joueur.getPseudo()));
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+			MessageErreur erreur = new MessageErreur(501, "Une erreur interne est survenue");
+			this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur), "/queue/erreur", erreur);
 		}
 	}
-	
-	
 
-		/* avant d'envoyer, on compare les joueur.get_board au plateau stocké et le joueur.get_hand à la main stockée */
-
-	public void jouerCarte(Integer idCarte){
-
+	private void envoyerEtatPartie(Partie partie, String destination) {
+		Joueur joueur1 = partie.getJoueur1();
+		MessageEtatPartie etatPartieJoueur1 = new MessageEtatPartie(partie.getEtatPartie(joueur1));
+		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur1), destination, etatPartieJoueur1);
+		Joueur joueur2 = partie.getJoueur2();
+		MessageEtatPartie etatPartieJoueur2 = new MessageEtatPartie(partie.getEtatPartie(joueur2));
+		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur2), destination, etatPartieJoueur2);
 	}
 
-	public void jouerCarte(Integer idCarte, Integer idCible){
-
+	private void nouvellePartie(Joueur joueur, Joueur adversaire) {
+		logger.warn("--> Création d'une nouvelle partie");
+		Partie partie = new Partie(joueur, adversaire);
+		this.parties.put(this.convJoueurId.get(joueur), partie);
+		this.parties.put(this.convJoueurId.get(adversaire), partie);
+		this.envoyerEtatPartie(partie, "/queue/debutPartie");
+		logger.warn(String.format("==> Nouvelle partie crée avec les joueurs %s et %s", joueur.getPseudo(), adversaire.getPseudo()));
 	}
 
-	public void terminerTour(){
-
+	private Joueur creerJoueur(String id, String pseudo, ClasseHeros heros) {
+		logger.warn("--> Création d'un nouveau joueur");
+		Joueur joueur = new Joueur(pseudo, heros);
+		this.convIdJoueur.put(id, joueur);
+		this.convJoueurId.put(joueur, id);
+		logger.warn(String.format("==> Joueur %s crée", joueur.getPseudo()));
+		return joueur;
 	}
 
-	public void lancerActionHeros(){
-
+	@MessageMapping("/nouvellePartie")
+	public void nouvellePartie(Principal principal, MessageNouvellePartie message) {
+		logger.warn("--> Nouvelle partie");
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		if(joueur != null) {
+			MessageErreur erreur = new MessageErreur(400, "Vous êtes déjà en attente d'une partie...");
+			this.messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/erreur", erreur);
+			return;
+		}
+		try {
+			joueur = this.creerJoueur(principal.getName(), message.getPseudo(), message.getHeros());
+			Joueur adversaire = this.rechercheAdversaire();
+			if (adversaire != null) {
+				this.nouvellePartie(joueur, adversaire);
+			} else {
+				this.mettreJoueurEnAttente(joueur);
+			}
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+			MessageErreur erreur = new MessageErreur(501, "Une erreur interne est survenue");
+			this.messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/erreur", erreur);
+		}
 	}
 
-	public void lancerActionHeros(Integer idCible){
-
+	private void envoyerResultatPartie(Partie partie, String pseudoVainqueur) {
+		MessageFinPartie message = new MessageFinPartie(pseudoVainqueur);
+		Joueur joueur1 = partie.getJoueur1();
+		Joueur joueur2 = partie.getJoueur1();
+		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur1), "/queue/finPartie", message);
+		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur2), "/queue/finPartie", message);
 	}
 
-	public void attaquer(Integer idServiteur, Integer idCible){
+	private void libererRessourcesJoueur(Joueur joueur) {
+		String idJoueur = this.convJoueurId.get(joueur);
+		this.convJoueurId.remove(joueur);
+		this.convIdJoueur.remove(idJoueur);
+		this.parties.remove(idJoueur);
+	}
 
+	private void libererRessourcesPartie(Partie partie) {
+		Joueur joueur1 = partie.getJoueur1();
+		this.libererRessourcesJoueur(joueur1);
+		Joueur joueur2 = partie.getJoueur2();
+		this.libererRessourcesJoueur(joueur2);
+	}
+
+	private void actualiserJoueurs(Partie partie) {
+		if (partie.estTerminee()) {
+			String pseudoVainqueur = partie.getVainqueur().getPseudo();
+			this.envoyerResultatPartie(partie, pseudoVainqueur);
+			this.libererRessourcesPartie(partie);
+		} else {
+			this.envoyerEtatPartie(partie, "/queue/etatPartie");
+		}
+	}
+
+	private void erreurJoueurOuPartieInexistante(Principal principal) {
+		MessageErreur erreur = new MessageErreur(403,
+				"Le joueur n'existe pas où n'est actuellement dans aucune partie");
+		logger.warn(String.format("-- %s", erreur.getMessage()));
+		this.messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/erreur", erreur);
+	}
+
+	private void erreurIdentifiantInvalide(Principal principal) {
+		MessageErreur erreur = new MessageErreur(401, "Un ou plusieurs identifiant(s) sont invalides !");
+		logger.warn(String.format("-- %s", erreur.getMessage()));
+		this.messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/erreur", erreur);
+	}
+
+	@MessageMapping("/jouerCarteServiteur")
+	public void jouerCarteServiteur(Principal principal, MessageJouerCarteServiteur message) {
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		logger.warn(String.format("--> %s joue une carte serviteur", joueur.getPseudo()));
+		Partie partie = this.parties.get(principal.getName());
+		if (joueur != null && partie != null) {
+			try {
+				partie.jouerCarte(joueur, message.getIdCarte());
+				logger.warn("==> carte serviteur joué !");
+				this.actualiserJoueurs(partie);
+			} catch (IdentifiantInvalideException e) {
+				this.erreurIdentifiantInvalide(principal);
+			}
+		} else {
+			this.erreurJoueurOuPartieInexistante(principal);
+		}
+	}
+
+	@MessageMapping("/jouerCarteSort")
+	public void jouerCarteSort(Principal principal, MessageJouerCarteSort message) {
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		logger.warn(String.format("--> %s joue une carte sort", joueur.getPseudo()));
+		Partie partie = this.parties.get(principal.getName());
+		if (joueur != null && partie != null) {
+			Integer idCarte = message.getIdCarte();
+			Integer idCible = message.getIdCible();
+			try {
+				if (idCible == null) {
+					logger.warn("++ aucune cible !");
+					partie.jouerCarte(joueur, idCarte);
+				} else {
+					logger.warn(String.format("++ cible : %d !", idCible));
+					partie.jouerCarteSort(joueur, idCarte, idCible);
+				}
+				logger.warn("==> carte sort joué !");
+				this.actualiserJoueurs(partie);
+			} catch (IdentifiantInvalideException e) {
+				this.erreurIdentifiantInvalide(principal);
+			}
+		} else {
+			this.erreurJoueurOuPartieInexistante(principal);
+		}
+	}
+
+	@MessageMapping("/terminerTour")
+	public void terminerTour(Principal principal) {
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		logger.warn(String.format("--> Le joueur %s met fin à son tour", joueur.getPseudo()));
+		Partie partie = this.parties.get(principal.getName());
+		if (joueur != null && partie != null) {
+			partie.terminerTour(joueur);
+			logger.warn("==> nouveau tour");
+			this.envoyerEtatPartie(partie, "/queue/nouveauTour");
+		} else {
+			this.erreurJoueurOuPartieInexistante(principal);
+		}
+	}
+
+	@MessageMapping("/lancerActionSpecial")
+	public void lancerActionHeros(Principal principal, MessageLancerActionSpecial message) {
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		logger.warn(String.format("--> Le joueur %s lance son attaque spécial", joueur.getPseudo()));
+		Partie partie = this.parties.get(principal.getName());
+		if (joueur != null && partie != null) {
+			Integer idCible = message.getIdCible();
+			try {
+				if (idCible == null) {
+					partie.lancerActionHeros(joueur);
+				} else {
+					partie.lancerActionHeros(joueur, idCible);
+				}
+				logger.warn(String.format("==> Le joueur %s a lancé son attaque spécial", joueur.getPseudo()));
+				this.actualiserJoueurs(partie);
+			} catch (IdentifiantInvalideException e) {
+				this.erreurIdentifiantInvalide(principal);
+			}
+		} else {
+			this.erreurJoueurOuPartieInexistante(principal);
+		}
+	}
+
+	@MessageMapping("/attaquer")
+	public void attaquer(Principal principal, MessageAttaquer message){
+		Joueur joueur = this.convIdJoueur.get(principal.getName());
+		logger.warn(String.format("--> Le joueur %s attaque avec un serviteur", joueur.getPseudo()));
+		Partie partie = this.parties.get(principal.getName());
+		if(joueur != null && partie != null) {
+			Integer idServiteur = message.getIdServiteur();
+			Integer idCible = message.getIdCible();
+			logger.warn(String.format("++ le joueur attaque avec le serviteur %d la cible %d", idServiteur, idCible));
+			try {
+				partie.attaquer(joueur, idServiteur, idCible);
+				logger.warn(String.format("==> Le joueur %s a attaqué avec un serviteur", joueur.getPseudo()));
+				this.actualiserJoueurs(partie);
+			} catch (IdentifiantInvalideException e) {
+				this.erreurIdentifiantInvalide(principal);
+			}
+		} else {
+			this.erreurJoueurOuPartieInexistante(principal);
+		}
 	}
 }

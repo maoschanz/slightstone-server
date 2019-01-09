@@ -27,9 +27,9 @@ public class TestActionInvocation {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier", "un chevalier", "chevalier.png",
 				ClasseHeros.COMMUN, 2, 1, 3, false, false, false, false);
-		ActionInvocation actionInvocation = new ActionInvocation(this.jeu, descServiteur);
+		ActionInvocation actionInvocation = new ActionInvocation(descServiteur);
 		//When
-		actionInvocation.executer();
+		actionInvocation.executer(this.jeu);
 		//Then
 		List<CarteServiteur> serviteursAllies = this.jeu.getJoueurCourant().getServiteurs();
 		assert (serviteursAllies.size() == 1);

@@ -14,9 +14,9 @@ public class TestActionMouton {
 		CarteServiteur cible = new CarteServiteur(descServiteur);
 		Jeu jeu = mock(Jeu.class);
 		when(jeu.getCibleCourante()).thenReturn(cible);
-		ActionMouton actionMouton = new ActionMouton(jeu);		
+		ActionMouton actionMouton = new ActionMouton();		
 		//When
-		actionMouton.executer();
+		actionMouton.executer(jeu);
 		//Then
 		assert (cible.getPointsDeDegats() == 1);
 		assert (cible.getPointsDeVie() == 1);

@@ -23,7 +23,7 @@ public class TestActionBoostDegats {
 	public void construireActionAvecValeurBoostNegativeImpossible() {
 		try {
 			@SuppressWarnings("unused")
-			ActionBoostDegats actionBoostDegats = new ActionBoostDegats(this.jeu, -3);
+			ActionBoostDegats actionBoostDegats = new ActionBoostDegats(-3);
 			assert false;
 		} catch (ValeurNegativeException e) {
 			assert true;
@@ -34,9 +34,9 @@ public class TestActionBoostDegats {
 	public void executerActionBoostDegats() {
 		try {
 			//With
-			ActionBoostDegats actionBoostDegats = new ActionBoostDegats(this.jeu, 3);
+			ActionBoostDegats actionBoostDegats = new ActionBoostDegats(3);
 			//When
-			actionBoostDegats.executer();
+			actionBoostDegats.executer(this.jeu);
 			//Then
 			CarteServiteur serviteur = (CarteServiteur) this.jeu.getCibleCourante();
 			assert (serviteur.getPointsDeDegats() == serviteur.getDescripteur().getPointsDeDegats() + 3);

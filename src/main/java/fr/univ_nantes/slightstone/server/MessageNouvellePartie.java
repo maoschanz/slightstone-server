@@ -2,15 +2,15 @@ package fr.univ_nantes.slightstone.server;
 
 import fr.univ_nantes.slightstone.model.ClasseHeros;
 
-public class MessageLancerPartie {
+public class MessageNouvellePartie {
 	
 	private String pseudo;
 	private ClasseHeros heros;
 	
-	public MessageLancerPartie() {
+	public MessageNouvellePartie() {
 	}
 	
-	public MessageLancerPartie(String pseudo, ClasseHeros heros) {
+	public MessageNouvellePartie(String pseudo, ClasseHeros heros) {
 		this.pseudo = pseudo;
 		this.heros = heros;
 	}

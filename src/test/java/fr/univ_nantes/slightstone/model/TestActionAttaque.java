@@ -58,20 +58,20 @@ public class TestActionAttaque {
 	public void construireActionAttaqueAvecDegatsNegatifsImpossible() {
 		try {
 			@SuppressWarnings("unused")
-			ActionAttaque actionAttaque = new ActionAttaque(this.jeu, TypeCible.AUCUNE, -3);
+			ActionAttaque actionAttaque = new ActionAttaque(TypeCible.AUCUNE, -3);
 			assert false;
 		} catch (ValeurNegativeException e) {
 			assert true;
 		}
 	}
 
-	@Test
+	/*@Test
 	public void recupererTousAdversaires() {
 		try {
 			// With
-			ActionAttaque actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_ADVERSAIRES, 2);
+			ActionAttaque actionAttaque = new ActionAttaque(TypeCible.TOUS_ADVERSAIRES, 2);
 			// When
-			List<Ciblable> cibles = actionAttaque.recupererCibles();
+			List<Ciblable> cibles = this.jeu.recupererCibles(actionAttaque.getTypeCible());
 			// Then
 			assert (cibles.size() == this.serviteursJ2.size() + 1);
 			for (Ciblable cible : cibles) {
@@ -92,9 +92,9 @@ public class TestActionAttaque {
 	public void recupererServiteursAdverses() {
 		try {
 			// With
-			ActionAttaque actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_SERVITEURS_ADVERSES, 2);
+			ActionAttaque actionAttaque = new ActionAttaque(TypeCible.TOUS_SERVITEURS_ADVERSES, 2);
 			// When
-			List<Ciblable> cibles = actionAttaque.recupererCibles();
+			List<Ciblable> cibles = this.jeu.recupererCibles(actionAttaque.getTypeCible());
 			// Then
 			assert (cibles.size() == this.serviteursJ2.size());
 			for (Ciblable cible : cibles) {
@@ -113,9 +113,10 @@ public class TestActionAttaque {
 	public void recupererTousServiteurs() {	
 		try {
 			// With
-			ActionAttaque actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_SERVITEURS, 2);
+			ActionAttaque actionAttaque = new ActionAttaque(TypeCible.TOUS_SERVITEURS, 2);
 			// When
-			List<Ciblable> cibles = actionAttaque.recupererCibles(); // Then
+			List<Ciblable> cibles = this.jeu.recupererCibles(actionAttaque.getTypeCible()); 
+			// Then
 			assert (cibles.size() == this.serviteursJ1.size() + this.serviteursJ2.size());
 			for (Ciblable cible : cibles) {
 				if (cible instanceof CarteServiteur) {
@@ -128,17 +129,17 @@ public class TestActionAttaque {
 		} catch (ValeurNegativeException e) {
 			assert false;
 		}
-	}
+	}*/
 
 	@Test
 	public void executerActionAttaqueSurServiteurAdverse() {
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.UN_SERVITEUR_ADVERSE, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.UN_SERVITEUR_ADVERSE, 2);
 			CarteServiteur cible = serviteursJ2.get(0);
 			this.jeu.setCibleCourante(cible);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			assert (cible.getPointsDeVie() == cible.getDescripteur().getPointsDeVie() - 2);
 			for (int i = 1; i < this.serviteursJ2.size(); i++) {
@@ -154,9 +155,9 @@ public class TestActionAttaque {
 	public void executerActionAttaqueSurServiteursAdverses() {
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_SERVITEURS_ADVERSES, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.TOUS_SERVITEURS_ADVERSES, 2);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			CarteServiteur serviteur;
 			for (int i = 1; i < this.serviteursJ2.size(); i++) {
@@ -172,9 +173,9 @@ public class TestActionAttaque {
 	public void executerActionAttaqueSurTousServiteurs() {	
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_SERVITEURS, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.TOUS_SERVITEURS, 2);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			CarteServiteur serviteur;
 			for (int i = 1; i < serviteursJ2.size(); i++) {
@@ -194,9 +195,9 @@ public class TestActionAttaque {
 	public void executerActionAttaqueSurTousAdversaires() {	
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.TOUS_ADVERSAIRES, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.TOUS_ADVERSAIRES, 2);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			CarteServiteur serviteur;
 			for (int i = 1; i < this.serviteursJ2.size(); i++) {
@@ -212,11 +213,11 @@ public class TestActionAttaque {
 	public void executerActionAttaqueAvecCibleHeros() {
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.UN_ADVERSAIRE, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.UN_ADVERSAIRE, 2);
 			Heros cible = this.herosJ2;
 			this.jeu.setCibleCourante(cible);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			assert (cible.getPointsDeVie() == cible.getDescripteur().getPointsVie() - 2);
 			for (int i = 1; i < this.serviteursJ2.size(); i++) {
@@ -232,11 +233,11 @@ public class TestActionAttaque {
 	public void executerActionAttaqueAvecCibleServiteur() {
 		try {
 			// With
-			Action actionAttaque = new ActionAttaque(this.jeu, TypeCible.UN_ADVERSAIRE, 2);
+			Action actionAttaque = new ActionAttaque(TypeCible.UN_ADVERSAIRE, 2);
 			CarteServiteur cible = this.serviteursJ2.get(0);
 			this.jeu.setCibleCourante(cible);
 			// When
-			actionAttaque.executer();
+			actionAttaque.executer(this.jeu);
 			// Then
 			assert (cible.getPointsDeVie() == cible.getDescripteur().getPointsDeVie() - 2);
 			for (int i = 1; i < this.serviteursJ2.size(); i++) {

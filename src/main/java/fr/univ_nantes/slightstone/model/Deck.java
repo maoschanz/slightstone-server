@@ -46,6 +46,6 @@ public class Deck {
 	public DescripteurCarte piocher() {
 		Integer index = (int)(Math.random() * this.cartes.size());
 		DescripteurCarte carte = this.cartes.get(index);
-		return carte;
+		return (DescripteurCarte) carte.clone();
 	}
 }

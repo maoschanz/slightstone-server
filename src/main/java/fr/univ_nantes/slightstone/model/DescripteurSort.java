@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="sorts")
 @PrimaryKeyJoinColumn(name="id_carte")
-public class DescripteurSort extends DescripteurCarte {
+public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -57,7 +57,7 @@ public class DescripteurSort extends DescripteurCarte {
 	public TypeCible cibleASelectionner() {
 		for(Action action : this.actions) {
 			if(action.requiereCible()) {
-				return action.typeCible;
+				return action.getTypeCible();
 			}
 		}
 		return TypeCible.AUCUNE;
@@ -96,7 +96,23 @@ public class DescripteurSort extends DescripteurCarte {
 	/**
 	 * Exécute toutes les actions associées à la carte sort.
 	 */
-	public void lancerActions() {
-		actions.stream().forEach( action -> { action.executer(); } );
+	public void lancerActions(Jeu jeu) {
+		actions.stream().forEach( action -> { action.executer(jeu); } );
+	}
+	
+	/*public boolean estCibleValide(Ciblable cible) {
+		for(Action action : this.actions) {
+			if(action.requiereCible() && !action.cibleValide(cible)) {
+				return false;
+			}
+		}
+		return true;
+	}*/
+	
+	@Override
+	public Object clone() {
+		Object o = null;
+		o = super.clone();
+		return o;
 	}
 }

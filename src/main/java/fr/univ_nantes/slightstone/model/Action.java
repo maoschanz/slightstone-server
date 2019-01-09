@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -31,11 +30,8 @@ public abstract class Action {
 	@NotNull
 	@Column(name="type_cible")
 	@Enumerated(EnumType.STRING)
-	protected TypeCible typeCible; //utilisé pour récupérer la/les cible(s) souhaitée(s)
+	private TypeCible typeCible; //utilisé pour récupérer la/les cible(s) souhaitée(s)
 								   //permet de vérifier qu'une cible envoyée par l'utilisateur est correcte
-	
-	@Transient
-	protected Jeu jeu; //permet de récupérer les cibles des actions
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
@@ -43,8 +39,7 @@ public abstract class Action {
 	
 	protected Action() {}
 	
-	public Action(Jeu jeu, TypeCible typeCible) {
-		this.jeu = jeu;
+	public Action(TypeCible typeCible) {
 		this.typeCible = typeCible;
 	}
 	
@@ -52,6 +47,10 @@ public abstract class Action {
 	/* ********** Méthodes ********** */
 	/* ****************************** */
 
+	public TypeCible getTypeCible() {
+		return this.typeCible;
+	}
+	
 	/**
 	 * Indique si une action nécessite que l'utilisateur sélectionne une cible
 	 * @return
@@ -72,5 +71,5 @@ public abstract class Action {
 		}
 	}
 	
-	public abstract void executer();
+	public abstract void executer(Jeu jeu);
 }

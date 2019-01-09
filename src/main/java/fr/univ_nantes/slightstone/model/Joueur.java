@@ -55,7 +55,7 @@ public class Joueur {
 	 * 
 	 * @return : héros du joueur
 	 */
-	protected Heros getHeros() {
+	public Heros getHeros() {
 		return this.heros;
 	}
 	
@@ -117,13 +117,13 @@ public class Joueur {
 	 * 
 	 * @param carte : carte à jouer
 	 */
-	public void jouerCarte(DescripteurCarte carte) {
+	public void jouerCarte(Jeu jeu, DescripteurCarte carte) {
 		int coutCarte = carte.getCoutMana();
 		if(this.stockMana.depenserMana(coutCarte)) {
 			this.hand.retirer(carte);
 			if(carte instanceof DescripteurSort) {
 				DescripteurSort sort = (DescripteurSort) carte;
-				sort.lancerActions();
+				sort.lancerActions(jeu);
 			} else {
 				DescripteurServiteur descServiteur = (DescripteurServiteur) carte;
 				this.invoquerServiteur(descServiteur);
@@ -134,10 +134,10 @@ public class Joueur {
 	/**
 	 * Lance l'action spéciale du héros.
 	 */
-	public void jouerActionHeros() {
+	public void jouerActionHeros(Jeu jeu) {
 		int coutActionHeros = this.heros.getCoutActionSpeciale();
 		if(this.stockMana.depenserMana(coutActionHeros)) {
-			this.heros.jouerActionSpeciale();
+			this.heros.jouerActionSpeciale(jeu);
 		}
 	}
 	
@@ -156,5 +156,21 @@ public class Joueur {
 	 */
 	public void actualiserJouabiliteServiteurs() {
 		this.board.actualiserJouabiliteServiteurs();
+	}
+	
+	public boolean peutJoueurCarte(DescripteurCarte carte) {
+		return this.hand.contient(carte);
+	}
+	
+	public boolean possedeServiteur(CarteServiteur serviteur) {
+		return this.board.contient(serviteur);
+	}
+	
+	public boolean estHerosJoueur(Heros heros) {
+		return this.heros.equals(heros);
+	}
+	
+	public boolean aServiteurAvecProvocation() {
+		return this.board.contientServiteurAvecProvocation();
 	}
 }

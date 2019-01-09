@@ -124,6 +124,10 @@ public class Board implements Observer {
 			}
 		}
 	}
+	
+	public boolean contient(CarteServiteur serviteur) {
+		return this.serviteurs.contains(serviteur);
+	}
 
 	@Override
 	public void update(Observable observable, Object arg) {
@@ -134,5 +138,14 @@ public class Board implements Observer {
 		if(serviteur.getDescripteur().aEffetLeader() && !serviteur.aEffetLeader()) { 
 			this.perteEffetLeader(); // le serviteur a perdu l'effet "Leader"
 		}
+	}
+
+	public boolean contientServiteurAvecProvocation() {
+		for(CarteServiteur serviteur : this.serviteurs) {
+			if(serviteur.aEffetProvocation()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

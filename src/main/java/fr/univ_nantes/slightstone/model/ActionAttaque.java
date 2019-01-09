@@ -1,6 +1,5 @@
 package fr.univ_nantes.slightstone.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,8 +32,8 @@ public class ActionAttaque extends Action {
 	
 	protected ActionAttaque() {}
 	
-	public ActionAttaque (Jeu jeu, TypeCible typeCible, Integer valeur) throws ValeurNegativeException {
-		super(jeu, typeCible);
+	public ActionAttaque (TypeCible typeCible, Integer valeur) throws ValeurNegativeException {
+		super(typeCible);
 		if(valeur < 0) { 
 				throw new ValeurNegativeException("Les dégâts de l'attaque ne peuvent pas être négatifs");
 		}
@@ -46,38 +45,11 @@ public class ActionAttaque extends Action {
 	/* ****************************** */
 	
 	/**
-	 * Récupère les cibles touchées par l'attaque
-	 * @return : liste des cibles
-	 */
-	protected List<Ciblable> recupererCibles() {
-		List<Ciblable> cibles = new ArrayList<Ciblable>();
-		switch(this.typeCible) {
-		case TOUS_ADVERSAIRES:
-			cibles.add(this.jeu.getJoueurAdverse().getHeros());
-			cibles.addAll(this.jeu.getJoueurAdverse().getServiteurs());
-			return cibles;
-		case TOUS_SERVITEURS:
-			cibles.addAll(this.jeu.getJoueurAdverse().getServiteurs());
-			cibles.addAll(this.jeu.getJoueurCourant().getServiteurs());
-			return cibles;
-		case TOUS_SERVITEURS_ADVERSES:
-			cibles.addAll(this.jeu.getJoueurAdverse().getServiteurs());
-			return cibles;
-		case UN_ADVERSAIRE:
-		case UN_SERVITEUR_ADVERSE:
-			cibles.add(this.jeu.getCibleCourante());
-			return cibles;
-		default:
-			return cibles;
-		}
-	}
-	
-	/**
 	 * Inflige des dégats à toutes les cibles touchées par l'attaque
 	 */
 	@Override
-	public void executer() {
-		List<Ciblable> cibles = this.recupererCibles();
+	public void executer(Jeu jeu) {
+		List<Ciblable> cibles = jeu.recupererCibles(this.getTypeCible());
 		for(Ciblable cible : cibles) {
 			cible.prendreDegats(valeur);
 		}

@@ -56,7 +56,7 @@ public class Heros implements Ciblable{
 	 * 
 	 * @return : description du héros
 	 */
-	protected DescripteurHeros getDescripteur() {
+	public DescripteurHeros getDescripteur() {
 		return this.descripteur;
 	}
 	
@@ -103,8 +103,8 @@ public class Heros implements Ciblable{
 	/**
 	 * Lance l'attaque spéciale du héros.
 	 */
-	public void jouerActionSpeciale() {
-		this.descripteur.getActionSpeciale().lancerActions();
+	public void jouerActionSpeciale(Jeu jeu) {
+		this.descripteur.getActionSpeciale().lancerActions(jeu);
 	}
 	
 	@Override
@@ -115,5 +115,13 @@ public class Heros implements Ciblable{
 			this.pointsDeVie -= (degats - this.pointsArmure);
 			this.pointsArmure = 0;
 		}
+	}
+	
+	/*public boolean estCibleValide(Ciblable cible) {
+		return this.descripteur.getActionSpeciale().estCibleValide(cible);
+	}*/
+	
+	public boolean estMort() {
+		return this.pointsDeVie <= 0;
 	}
 }

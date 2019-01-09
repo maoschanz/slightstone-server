@@ -31,8 +31,8 @@ public class ActionInvocation extends Action {
 	
 	protected ActionInvocation() {}
 	
-	public ActionInvocation (Jeu jeu, @NotNull DescripteurServiteur descServiteur) {
-		super(jeu, TypeCible.AUCUNE); //cette action ne nécessite aucune cible
+	public ActionInvocation (@NotNull DescripteurServiteur descServiteur) {
+		super(TypeCible.AUCUNE); //cette action ne nécessite aucune cible
 		this.descServiteur = descServiteur;
 	}
 	
@@ -44,8 +44,8 @@ public class ActionInvocation extends Action {
 	 * Invoque un serviteur sur le plateau du joueur
 	 */
 	@Override
-	public void executer () {
-		Joueur joueurCourant = this.jeu.getJoueurCourant();
+	public void executer(Jeu jeu) {
+		Joueur joueurCourant = jeu.getJoueurCourant();
 		joueurCourant.invoquerServiteur(this.descServiteur);
 	}
 }

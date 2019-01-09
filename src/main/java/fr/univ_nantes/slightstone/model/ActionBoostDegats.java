@@ -29,8 +29,8 @@ public class ActionBoostDegats extends Action {
 	
 	protected ActionBoostDegats() {}
 	
-	public ActionBoostDegats(Jeu jeu, Integer valeur) throws ValeurNegativeException {
-		super(jeu, TypeCible.UN_SERVITEUR_ALLIE);
+	public ActionBoostDegats(Integer valeur) throws ValeurNegativeException {
+		super(TypeCible.UN_SERVITEUR_ALLIE);
 		if(valeur < 0) {
 			throw new ValeurNegativeException("La valeur du boost doit être positive !");
 		}
@@ -46,8 +46,8 @@ public class ActionBoostDegats extends Action {
 	 * Agmente les points de dégats du serviteur sélectionné
 	 */
 	@Override
-	public void executer () {
-		CarteServiteur serviteur = (CarteServiteur) this.jeu.getCibleCourante();
+	public void executer(Jeu jeu) {
+		CarteServiteur serviteur = (CarteServiteur) jeu.getCibleCourante();
 		serviteur.setPointsDeDegats(serviteur.getPointsDeDegats() + this.valeur);
 	}
 }

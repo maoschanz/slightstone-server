@@ -1,7 +1,5 @@
 package fr.univ_nantes.slightstone.controller;
 
-import java.util.List;
-
 import fr.univ_nantes.slightstone.model.*;
 
 public class Controleur {
@@ -11,98 +9,86 @@ public class Controleur {
 	public Controleur(Jeu jeu) {
 		this.jeu = jeu;
 	}
-	
-	public boolean peutJouerJoueur(Joueur joueur) {
-		return this.jeu.getJoueurCourant().equals(joueur);
-	}
-	/*
-	private boolean cibleValide(TypeCible typeCible, Ciblable cible) {
-		switch(typeCible) {
-		case UN_ADVERSAIRE:
-			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible) ||
-					this.jeu.getJoueurAdverse().getHeros().equals(cible);
-		case UN_SERVITEUR_ADVERSE:
-			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible);
-		case UN_SERVITEUR_ALLIE:
-			return this.jeu.getJoueurCourant().getServiteurs().contains(cible);
-		default:
-			return false;
-		}
-	}
-	
-	public void jouerCarte(DescripteurCarte carte) {
-		if(!this.peutJouerCarte(carte)) {
-			// cette carte n'est pas dans la main du joueur !
-		} else {
-			this.jeu.jouerCarte(carte);
-		}
-	}
-	
-	private boolean peutJouerCarte(DescripteurCarte carte) {
-		return this.jeu.getJoueurCourant().getMainJoueur().contains(carte);
-	}
-	
-	public void jouerCarte(DescripteurCarte carte, Ciblable cible) {
-		if(carte instanceof DescripteurServiteur) {
-			//pas possible, seules les cartes sorts ont besoin d'une cible
-		}
-		DescripteurSort sort = (DescripteurSort) carte;
-		TypeCible typeCible = sort.cibleASelectionner();
-		if(!this.peutJouerCarte(carte)) {
-			//le joueur ne possède pas cette carte dans sa main
-		} else if(!this.cibleValide(typeCible, cible)) {
-			//cible invalide
-		} else {
-			this.jouerCarte(carte, cible);
-		}
-	}
 
-	private boolean existeServiteurAdverseAvecProvocation() {
-		List<CarteServiteur> serviteursAdverses = this.jeu.getJoueurAdverse().getServiteurs();
-		for(CarteServiteur serviteur : serviteursAdverses) {
-			if(serviteur.aEffetProvocation()) {
-				return true;
-			}
+	public void jouerCarte(Joueur joueur, DescripteurCarte carte) {
+		if(this.jeu.estJoueurCourant(joueur) && 
+				joueur.peutJoueurCarte(carte)) {
+			this.jeu.jouerCarte(carte);
+		} else {
+			System.out.println("Ne peut pas jouer cette carte !");
 		}
-		return false;
+	}
+		
+	public void jouerCarteSort(Joueur joueur, DescripteurSort sort, Ciblable cible) {
+		if(this.jeu.estJoueurCourant(joueur) && 
+				joueur.peutJoueurCarte(sort) && 
+				this.jeu.cibleCouranteValide(sort.cibleASelectionner())) {
+			this.jeu.jouerCarte(sort, cible);
+		} else {
+			System.out.println("Ne peut pas jouer cette carte !");
+		}
 	}
 	
-	private boolean aCibleProvocation(Ciblable cible) {
-		if(cible instanceof Heros) {
+	private boolean aProvocation(Ciblable cible) {
+		if(!(cible instanceof CarteServiteur)) {
 			return false;
 		}
 		CarteServiteur serviteur = (CarteServiteur) cible;
 		return serviteur.aEffetProvocation();
 	}
 	
-	public void attaquer(CarteServiteur attaquant, Ciblable cible) {
-		if(!attaquant.estJouable()) {
-			//la carte n'est pas jouable
-		} else if(!this.cibleValide(TypeCible.UN_ADVERSAIRE, cible)) {
-			//cible invalide
-		} else if(this.existeServiteurAdverseAvecProvocation() && !this.aCibleProvocation(cible)) {
-			//obligation de cibler le serviteur avec une provocation
+	private boolean estCibleValidePourServiteur(Ciblable cible) {
+		return this.jeu.getJoueurAdverse().getServiteurs().contains(cible) ||
+				this.jeu.getJoueurAdverse().getHeros().equals(cible);
+	}
+	
+	public void attaquer(Joueur joueur, CarteServiteur serviteur, Ciblable cible) {
+		System.out.println("EST CIBLE HEROS : " + (cible instanceof Heros));
+		if(this.jeu.estJoueurCourant(joueur) &&
+				joueur.possedeServiteur(serviteur) &&
+				serviteur.estJouable() &&
+				this.estCibleValidePourServiteur(cible)) {
+			if(joueur.aServiteurAvecProvocation() && this.aProvocation(cible)) {
+				this.jeu.attaquer(serviteur, cible);
+			} else if(!joueur.aServiteurAvecProvocation()) {
+				this.jeu.attaquer(serviteur, cible);
+			} else {
+				System.out.println("CIBLE AVEC PROVOC NON CIBLEE");
+			}
 		} else {
-			this.jeu.attaquer(attaquant, cible);
+			System.out.println("PRE CONDITIONS INVALIDES");
 		}
 	}
 
-	public void lancerActionHeros() {
-		this.jeu.lancerActionHeros();		
+	public void lancerActionHeros(Joueur joueur) {
+		if(this.jeu.estJoueurCourant(joueur)) {
+			this.jeu.lancerActionHeros();
+		}		
 	}
 
-	public void lancerActionHeros(Ciblable cible) {
-		TypeCible typeCible = this.jeu.getJoueurCourant().getHeros().getTypeCibleActionSpeciale();
-		if(!this.cibleValide(typeCible, cible)) {
-			//cible invalide
-		} else if(this.existeServiteurAdverseAvecProvocation() && !this.aCibleProvocation(cible)) {
-			//obligation de cibler le serviteur avec une provocation
-		} else {
-			this.jeu.lancerActionHeros(cible);
+	public void lancerActionHeros(Joueur joueur, Ciblable cible) {
+		DescripteurSort actionHeros = joueur.getHeros().getActionSpeciale();
+		if(this.jeu.estJoueurCourant(joueur) && 
+				this.jeu.cibleCouranteValide(actionHeros.cibleASelectionner())) {
+			if(joueur.aServiteurAvecProvocation() && this.aProvocation(cible)) {
+				this.jeu.lancerActionHeros(cible);
+			} else if(!joueur.aServiteurAvecProvocation()) {
+				this.jeu.lancerActionHeros(cible);
+			}
+		} 
+	}
+
+	public void terminerTour(Joueur joueur) {
+		if(this.jeu.estJoueurCourant(joueur)) {
+			this.jeu.terminerTour();
 		}
 	}
-
-	public void terminerTour() {
-		// TODO Auto-generated method stub
-	}*/
+	
+	public boolean estJeuTermine() {
+		return this.jeu.estTermine();
+	}
+	
+	public Joueur getVainqueuer() {
+		return this.jeu.getJoueurCourant();
+	}
 }

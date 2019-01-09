@@ -176,7 +176,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @return
 	 */
-	protected DescripteurServiteur getDescripteur() {
+	public DescripteurServiteur getDescripteur() {
 		return this.descripteur;
 	}
 	
@@ -230,9 +230,8 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 */
 	public void attaquer(Jeu jeu) {
 		try {
-			ActionAttaque attaque;
-			attaque = new ActionAttaque(jeu, this.descripteur.getTypeCible(), this.pointsDeDegats);
-			attaque.executer();
+			ActionAttaque attaque = new ActionAttaque(this.descripteur.getTypeCible(), this.pointsDeDegats);
+			attaque.executer(jeu);
 			this.jouable = false; // ne peut attaquer qu'une fois par tour
 			if (this.effetVolDeVie) {
 				this.pointsDeVie += this.pointsDeDegats;
