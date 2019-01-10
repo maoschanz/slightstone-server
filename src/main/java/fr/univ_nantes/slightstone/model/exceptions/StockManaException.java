@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.exceptions;
 
 public class StockManaException extends Exception {
 

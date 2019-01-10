@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import fr.univ_nantes.slightstone.controller.Controleur;
+import fr.univ_nantes.slightstone.controller.ViolationReglesException;
 import fr.univ_nantes.slightstone.model.CarteServiteur;
 import fr.univ_nantes.slightstone.model.Ciblable;
 import fr.univ_nantes.slightstone.model.DescripteurCarte;
@@ -79,7 +80,7 @@ public class Partie {
 		}
 	}
 	
-	public void jouerCarte(Joueur joueur, Integer idCarte) throws IdentifiantInvalideException {
+	public void jouerCarte(Joueur joueur, Integer idCarte) throws IdentifiantInvalideException, ViolationReglesException {
 		DescripteurCarte carte = this.identifiantsVersCartes.get(idCarte);
 		if(carte == null) {
 			throw new IdentifiantInvalideException();
@@ -87,7 +88,7 @@ public class Partie {
 		this.controleurJeu.jouerCarte(joueur, carte);
 	}
 	
-	public void jouerCarteSort(Joueur joueur, Integer idCarte, Integer idCible) throws IdentifiantInvalideException {
+	public void jouerCarteSort(Joueur joueur, Integer idCarte, Integer idCible) throws IdentifiantInvalideException, ViolationReglesException {
 		DescripteurCarte carte = this.identifiantsVersCartes.get(idCarte);
 		Ciblable cible = this.identifiantsVersCiblables.get(idCible);
 		if(carte == null || cible == null) {
@@ -98,15 +99,15 @@ public class Partie {
 		}
 	}
 	
-	public void terminerTour(Joueur joueur) {
+	public void terminerTour(Joueur joueur) throws ViolationReglesException {
 		this.controleurJeu.terminerTour(joueur);
 	}
 
-	public void lancerActionHeros(Joueur joueur) {
+	public void lancerActionHeros(Joueur joueur) throws ViolationReglesException {
 		this.controleurJeu.lancerActionHeros(joueur);
 	}
 
-	public void lancerActionHeros(Joueur joueur, Integer idCible) throws IdentifiantInvalideException {
+	public void lancerActionHeros(Joueur joueur, Integer idCible) throws IdentifiantInvalideException, ViolationReglesException {
 		Ciblable cible = this.identifiantsVersCiblables.get(idCible);
 		if(cible == null) {
 			throw new IdentifiantInvalideException();
@@ -114,7 +115,7 @@ public class Partie {
 		this.controleurJeu.lancerActionHeros(joueur, cible);
 	}
 
-	public void attaquer(Joueur joueur, Integer idServiteur, Integer idCible) throws IdentifiantInvalideException {
+	public void attaquer(Joueur joueur, Integer idServiteur, Integer idCible) throws IdentifiantInvalideException, ViolationReglesException {
 		Ciblable serviteur = this.identifiantsVersCiblables.get(idServiteur);
 		Ciblable cible = this.identifiantsVersCiblables.get(idCible);
 		if(serviteur == null || cible == null) {

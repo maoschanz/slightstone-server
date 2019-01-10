@@ -17,7 +17,7 @@ public class App {
 		app.setDefaultProperties(Collections.singletonMap("server.port", "8080"));
 		app.run(args);
 	}
-	
+	/*
 	@Bean
 	public CommandLineRunner initialisationBDD(HerosRepository hRepository, ActionsRepository aRepository, CartesRepository cRepository) {
 		return (args) -> {
@@ -130,7 +130,7 @@ public class App {
 			cRepository.save(maitriseDuBlocage);
 		};
 	}
-	
+	*/
 	/*
 	@Bean
 	public CommandLineRunner demo() {

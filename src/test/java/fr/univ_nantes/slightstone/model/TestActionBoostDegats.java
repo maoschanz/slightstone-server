@@ -6,6 +6,9 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_nantes.slightstone.model.actions.ActionBoostDegats;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 public class TestActionBoostDegats {
 	private Jeu jeu;
 	

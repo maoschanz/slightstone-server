@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.server;
+package fr.univ_nantes.slightstone.server.messages;
 
 public class MessageAttaquer {
 

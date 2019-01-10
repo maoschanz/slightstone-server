@@ -155,7 +155,7 @@ public class EtatPartie {
 	
 	public HashMap<String, Object> getEtatPartie(Joueur joueur) {
 		HashMap<String, Object> etatPartie = new HashMap<String, Object>();
-		etatPartie.put("joueurCourant", this.jeu.getJoueurCourant().getPseudo());
+		etatPartie.put("estJoueurCourant", this.jeu.getJoueurCourant().equals(joueur));
 		etatPartie.put("joueur", this.getEtatJoueur(joueur, false));
 		etatPartie.put("adversaire", this.getEtatJoueur(this.getAdversaireJoueur(joueur), true));
 		return etatPartie;

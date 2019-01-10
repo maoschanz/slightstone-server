@@ -8,6 +8,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import fr.univ_nantes.slightstone.model.actions.Action;
+
 @Service
 public class ServiceJpaSlightstone {
 	

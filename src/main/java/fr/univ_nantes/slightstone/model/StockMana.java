@@ -1,5 +1,8 @@
 package fr.univ_nantes.slightstone.model;
 
+import fr.univ_nantes.slightstone.model.exceptions.StockManaException;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 public class StockMana {
 	
 	/* ******************************* */

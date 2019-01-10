@@ -9,6 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_nantes.slightstone.model.actions.Action;
+import fr.univ_nantes.slightstone.model.actions.ActionAttaque;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 public class TestActionAttaque {
 	//private DescripteurHeros descHeros;
 	private List<CarteServiteur> serviteursJ1;

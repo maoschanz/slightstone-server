@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.actions;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.TypeCible;
 
 @Entity
 @Table(name="actions")

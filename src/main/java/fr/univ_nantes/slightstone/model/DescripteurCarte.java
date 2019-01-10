@@ -93,6 +93,10 @@ public abstract class DescripteurCarte implements Cloneable {
 	/* ********** Méthodes ********** */
 	/* ****************************** */
 
+	public boolean estManaSuffisante(int quantiteMana) {
+		return quantiteMana >= this.coutMana;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Carte %s de classe %s", this.nom, this.classe);

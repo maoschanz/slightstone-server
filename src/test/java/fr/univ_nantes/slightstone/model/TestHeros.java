@@ -3,6 +3,8 @@ package fr.univ_nantes.slightstone.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 import static org.mockito.Mockito.*;
 
 public class TestHeros {

@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.server;
+package fr.univ_nantes.slightstone.server.messages;
 
 import fr.univ_nantes.slightstone.model.ClasseHeros;
 

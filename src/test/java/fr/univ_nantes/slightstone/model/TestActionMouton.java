@@ -2,6 +2,8 @@ package fr.univ_nantes.slightstone.model;
 
 import org.junit.jupiter.api.Test;
 
+import fr.univ_nantes.slightstone.model.actions.ActionMouton;
+
 import static org.mockito.Mockito.*;
 
 public class TestActionMouton {

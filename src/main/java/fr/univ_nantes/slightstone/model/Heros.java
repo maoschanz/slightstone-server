@@ -1,5 +1,7 @@
 package fr.univ_nantes.slightstone.model;
 
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 public class Heros implements Ciblable{
 	
 	/* ******************************* */
@@ -116,10 +118,6 @@ public class Heros implements Ciblable{
 			this.pointsArmure = 0;
 		}
 	}
-	
-	/*public boolean estCibleValide(Ciblable cible) {
-		return this.descripteur.getActionSpeciale().estCibleValide(cible);
-	}*/
 	
 	public boolean estMort() {
 		return this.pointsDeVie <= 0;

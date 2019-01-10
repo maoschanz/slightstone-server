@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.actions;
 
 import java.util.List;
 
@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import fr.univ_nantes.slightstone.model.Ciblable;
+import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.TypeCible;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 /**
  * Cette action inflige des dégâts à une ou plusieurs cibles lorsqu'elle est exécutée.

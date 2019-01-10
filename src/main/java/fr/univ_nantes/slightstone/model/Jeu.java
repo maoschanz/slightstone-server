@@ -162,7 +162,7 @@ public class Jeu {
 	 * 
 	 * @return : liste des cibles
 	 */
-	protected List<Ciblable> recupererCibles(TypeCible typeCible) {
+	public List<Ciblable> recupererCibles(TypeCible typeCible) {
 		List<Ciblable> cibles = new ArrayList<Ciblable>();
 		switch (typeCible) {
 		case TOUS_ADVERSAIRES:

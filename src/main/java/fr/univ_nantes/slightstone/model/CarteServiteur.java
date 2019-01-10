@@ -2,6 +2,9 @@ package fr.univ_nantes.slightstone.model;
 
 import java.util.Observable;
 
+import fr.univ_nantes.slightstone.model.actions.ActionAttaque;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
+
 /**
  * Cette classe réunit toutes les statistiques d'un serviteur qui sont
  * susceptibles de changer au cours de la partie (de l'invocation du serviteur

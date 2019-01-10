@@ -1,10 +1,15 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.actions;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import fr.univ_nantes.slightstone.model.Heros;
+import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.TypeCible;
+import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 /**
  * Cette action augmente les points armure du héros du joueur courant (à qui c'est le tour)

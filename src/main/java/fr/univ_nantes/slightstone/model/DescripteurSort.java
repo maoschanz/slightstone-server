@@ -7,6 +7,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import fr.univ_nantes.slightstone.model.actions.Action;
+import fr.univ_nantes.slightstone.model.exceptions.ActionException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,15 +102,6 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	public void lancerActions(Jeu jeu) {
 		actions.stream().forEach( action -> { action.executer(jeu); } );
 	}
-	
-	/*public boolean estCibleValide(Ciblable cible) {
-		for(Action action : this.actions) {
-			if(action.requiereCible() && !action.cibleValide(cible)) {
-				return false;
-			}
-		}
-		return true;
-	}*/
 	
 	@Override
 	public Object clone() {

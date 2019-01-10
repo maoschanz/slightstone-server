@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.actions;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +7,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import fr.univ_nantes.slightstone.model.DescripteurServiteur;
+import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.Joueur;
+import fr.univ_nantes.slightstone.model.TypeCible;
 
 /**
  * Cette action invoque un serviteur sur le plateau du joueur courant
