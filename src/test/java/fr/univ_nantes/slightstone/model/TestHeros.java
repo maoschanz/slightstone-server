@@ -70,7 +70,7 @@ public class TestHeros {
 	}
 
 	@Test
-	public void attaquerHerosAvecArmureInfDegats() {	
+	public void attaquerHerosAvecArmureInfDegats() {
 		try {
 			// With
 			this.heros.ajouterPointsArmure(3);

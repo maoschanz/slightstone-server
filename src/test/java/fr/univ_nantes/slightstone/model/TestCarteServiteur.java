@@ -59,8 +59,9 @@ public class TestCarteServiteur {
 	@Test
 	public void boostDegatsServiteur() {
 		// With
-		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 2, false, false, false, true);
 		CarteServiteur serviteur = new CarteServiteur(descServiteur);
 		// When
 		serviteur.boostDegats(2);
@@ -71,8 +72,9 @@ public class TestCarteServiteur {
 	@Test
 	public void prendreDegats() {
 		// With
-		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 5, false, false, false, true);
+		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 5, false, false, false, true);
 		CarteServiteur serviteur = new CarteServiteur(descServiteur);
 		// When
 		serviteur.prendreDegats(2);
@@ -87,8 +89,9 @@ public class TestCarteServiteur {
 		Joueur joueur2 = mock(Joueur.class);
 		Jeu jeu = new Jeu(joueur1, joueur2);
 		
-		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descServiteur);
 		CarteServiteur cible = new CarteServiteur(descServiteur);
 
@@ -114,8 +117,9 @@ public class TestCarteServiteur {
 
 		jeu.setCibleCourante(cible);
 		
-		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When
@@ -139,8 +143,9 @@ public class TestCarteServiteur {
 
 		jeu.setCibleCourante(cible);
 		
-		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When
@@ -164,8 +169,9 @@ public class TestCarteServiteur {
 
 		jeu.setCibleCourante(cible);
 		
-		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid", "Serviteur 2/2", "chefDeRaid.png",
-				ClasseHeros.COMMUN, 3, 2, 2, false, false, false, true);
+		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
+				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
+				3, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When

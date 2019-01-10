@@ -9,8 +9,8 @@ import fr.univ_nantes.slightstone.model.Jeu;
 import fr.univ_nantes.slightstone.model.TypeCible;
 
 /**
- * Cette action transforme un serviteur sélectionné par le joueur courant en un serviteur 1/1
- * sans effet spécial.
+ * Cette action transforme un serviteur sélectionné par le joueur courant en un
+ * serviteur dont les statistiques sont 1/1, sans effet spécial.
  */
 @Entity
 @Table(name="action_mouton")
@@ -30,8 +30,8 @@ public class ActionMouton extends Action {
 	/* ****************************** */
 	
 	/**
-	 * Récupère le serviteur sélectionné par le joueur et le transforme en un serviteur 1/1
-	 * sans effet spécial
+	 * Récupère le serviteur sélectionné par le joueur et le transforme en un
+	 * serviteur 1/1 sans effet spécial
 	 */
 	@Override
 	public void executer(Jeu jeu) {

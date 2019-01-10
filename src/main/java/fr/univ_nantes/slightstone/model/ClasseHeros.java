@@ -4,5 +4,5 @@ public enum ClasseHeros {
 	MAGE,
 	PALADIN,
 	GUERRIER,
-	COMMUN // utilisé pour les cartes spécifiques à aucun héros
+	COMMUN // utilisé pour les cartes accessibles à tous les héros
 }

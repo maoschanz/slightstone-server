@@ -27,8 +27,9 @@ public class TestActionInvocation {
 	@Test
 	public void executerActionInvocation() {
 		// With
-		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier", "un chevalier", "chevalier.png",
-				ClasseHeros.COMMUN, 2, 1, 3, false, false, false, false);
+		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
+				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
+				2, 1, 3, false, false, false, false);
 		ActionInvocation actionInvocation = new ActionInvocation(descServiteur);
 		//When
 		actionInvocation.executer(this.jeu);

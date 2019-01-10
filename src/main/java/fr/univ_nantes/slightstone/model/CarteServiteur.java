@@ -45,7 +45,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	/* ******************************** */
 	
 	/**
-	 * Récupère les points de vie actuelle du serviteur.
+	 * Récupère les points de vie actuels du serviteur.
 	 * 
 	 * @return : points de vie du serviteur
 	 */
@@ -63,7 +63,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	}
 
 	/**
-	 * Récupère les points de dégâts actuelle du serviteur.
+	 * Récupère les points de dégâts actuels du serviteur.
 	 * 
 	 * @return : points de dégâts du serviteur
 	 */

@@ -41,7 +41,7 @@ public class Deck {
 	/**
 	 * Récupère une carte au hasard dans la pioche.
 	 * 
-	 * @return : carte tiré aléatoirement
+	 * @return : carte tirée aléatoirement
 	 */
 	public DescripteurCarte piocher() {
 		Integer index = (int)(Math.random() * this.cartes.size());

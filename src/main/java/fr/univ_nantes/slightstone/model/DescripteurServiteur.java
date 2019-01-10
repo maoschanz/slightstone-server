@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
- * Cette classe réunit toutes les informations concernant les statistiques d'un serviteur. 
+ * Cette classe réunit toutes les informations concernant les statistiques d'un serviteur.
  */
 @Entity
 @Table(name = "serviteurs")
@@ -33,8 +33,8 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	private boolean effetCharge; // rend la carte jouable dès qu'elle est invoquée
 
 	@Column(name = "effet_vol_vie")
-	private boolean effetVolDeVie; // pour chaque attaque, récupère autant de points de vie que de
-									// dégâts infligés
+	private boolean effetVolDeVie; // pour chaque attaque, récupère autant de
+									// points de vie que de dégâts infligés
 
 	@Column(name = "effet_leader")
 	private boolean effetLeader; // augmente les dégâts de tous les serviteurs sur le plateau de 1 point

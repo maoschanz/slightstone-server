@@ -84,10 +84,20 @@ public class DescripteurHeros {
 		return this.pointsArmure;
 	}
 	
+	/**
+	 * Récupère la classe du héros.
+	 * 
+	 * @return : la classe du héros (de type ClasseHeros)
+	 */
 	public ClasseHeros getClasse() {
 		return this.classe;
 	}
 	
+	/**
+	 * Récupère l'url où trouver l'image du héros.
+	 * 
+	 * @return : URL où trouver l'image du héros
+	 */
 	public String getUrlImage() {
 		return this.urlImage;
 	}

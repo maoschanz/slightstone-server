@@ -23,7 +23,7 @@ public class TestStockMana {
 			assert (stockMana.getQuantite() == 4);
 		} catch (ValeurNegativeException | StockManaException e) {
 			assert false;
-		}		
+		}
 	}
 
 	@Test
@@ -109,7 +109,6 @@ public class TestStockMana {
 		} catch (ValeurNegativeException | StockManaException e) {
 			assert false;
 		}
-		
 	}
 
 	@Test
@@ -125,6 +124,5 @@ public class TestStockMana {
 		} catch (ValeurNegativeException | StockManaException e) {
 			assert false;
 		}
-		
 	}
 }

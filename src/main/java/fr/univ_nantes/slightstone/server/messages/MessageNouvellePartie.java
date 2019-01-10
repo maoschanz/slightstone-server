@@ -7,8 +7,7 @@ public class MessageNouvellePartie {
 	private String pseudo;
 	private ClasseHeros heros;
 	
-	public MessageNouvellePartie() {
-	}
+	public MessageNouvellePartie() {}
 	
 	public MessageNouvellePartie(String pseudo, ClasseHeros heros) {
 		this.pseudo = pseudo;

@@ -4,8 +4,7 @@ public class MessageLancerActionSpecial {
 
 	private Integer idCible;
 	
-	public MessageLancerActionSpecial() {
-	}
+	public MessageLancerActionSpecial() {}
 	
 	public MessageLancerActionSpecial(Integer idCible) {
 		this.idCible = idCible;

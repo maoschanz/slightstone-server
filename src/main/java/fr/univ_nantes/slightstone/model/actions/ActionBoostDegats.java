@@ -48,7 +48,7 @@ public class ActionBoostDegats extends Action {
 	/* ****************************** */
 	
 	/**
-	 * Agmente les points de dégats du serviteur sélectionné
+	 * Augmente les points de dégats du serviteur sélectionné
 	 */
 	@Override
 	public void executer(Jeu jeu) {

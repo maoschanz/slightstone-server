@@ -1,6 +1,6 @@
 # slightstone-server
 
-Server part of the "Mini-Heartstone" java project (project of "Algorithme, Conception et mise en œuvre de logiciels")
+Server part of the "Mini-Heartstone" java project (project of "Algorithme, Conception et mise en œuvre de logiciels" and "Test Logiciel")
 
 [code of the client](https://github.com/ArthuurT/MiniHearthstone)
 

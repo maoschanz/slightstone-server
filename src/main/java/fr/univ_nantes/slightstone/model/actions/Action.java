@@ -34,7 +34,7 @@ public abstract class Action {
 	@Column(name="type_cible")
 	@Enumerated(EnumType.STRING)
 	private TypeCible typeCible; //utilisé pour récupérer la/les cible(s) souhaitée(s)
-								   //permet de vérifier qu'une cible envoyée par l'utilisateur est correcte
+								//permet de vérifier qu'une cible envoyée par l'utilisateur est correcte
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
@@ -58,7 +58,7 @@ public abstract class Action {
 	 * Indique si une action nécessite que l'utilisateur sélectionne une cible
 	 * @return
 	 */
-	public boolean requiereCible() {
+	public boolean requiertCible() {
 		switch(this.typeCible) {
 		case AUCUNE:
 		case TOUS_ADVERSAIRES:

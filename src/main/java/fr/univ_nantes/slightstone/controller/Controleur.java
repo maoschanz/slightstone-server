@@ -14,8 +14,8 @@ import fr.univ_nantes.slightstone.model.*;
  * 		- Un joueur ne peut attaquer avec un serviteur que s'il est jouable
  * 		- Si un serviteur adverse a un effet provocation, le joueur doit attaquer ce serviteur
  *
- * En théorie, le client Angular de nôtre application réalise les contrôles nécessaires pour ne pas enfreindre ces règles.
- * Par conséquent, aucune des exceptions ci-dessous n'est censé être levé !
+ * En théorie, le client Angular de notre application réalise les contrôles nécessaires pour ne pas enfreindre ces règles.
+ * Par conséquent, aucune des exceptions ci-dessous n'est censée être levée !
  */
 public class Controleur {
 	

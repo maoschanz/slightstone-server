@@ -41,11 +41,11 @@ public class Board implements Observer {
 	/**
 	 * Augmente les dégats du serviteur de 1 point pour chaque serviteur
 	 * présent sur le plateau ayant l'effet "Leader".
-	 * Si il y a n serviteurs avec l'effet "Leader" sur la plateau, les dégâts
+	 * Si il y a n serviteurs avec l'effet "Leader" sur le plateau, les dégâts
 	 * du serviteur invoqué seront augmentés de n points.
 	 * 
 	 * Cette méthode est utilisée pour mettre à jour les dégâts du serviteur
-	 * invoqué en fonction des effets des serviteurs déjà présent sur le plateau.
+	 * invoqué en fonction des effets des serviteurs déjà présents sur le plateau.
 	 * 
 	 * @param serviteurInvoque
 	 */
@@ -115,7 +115,7 @@ public class Board implements Observer {
 	}
 	
 	/**
-	 * Rend tous les serviteurs jouable.
+	 * Rend tous les serviteurs jouables.
 	 */
 	public void actualiserJouabiliteServiteurs() {
 		for(CarteServiteur serviteur : this.serviteurs) {

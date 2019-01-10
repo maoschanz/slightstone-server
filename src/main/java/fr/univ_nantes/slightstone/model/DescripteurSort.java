@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Cette classe réunit toutes les informations concernant les statistiques d'un sort. 
+ * Cette classe réunit toutes les informations concernant les statistiques d'un sort.
  */
 @Entity
 @Table(name="sorts")
@@ -49,17 +49,17 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	/* ****************************** */
 	
 	/**
-	 * Vérifie si une action requière la selection d'une cible.
-	 * Si une action requière la sélection d'une cible, alors retourne
+	 * Vérifie si au moins une action requiert la sélection d'une cible.
+	 * Si au moins une action requiert la sélection d'une cible, alors retourne
 	 * le type de cible que doit sélectionner le joueur.
-	 * Si aucune action requière la sélection d'une cible, alors retourne
+	 * Si aucune action ne requiert la sélection d'une cible, alors retourne
 	 * TypeCible.AUCUNE (aucune cible à sélectionner).
 	 * 
 	 * @return type de cible que doit sélectionner le joueur
 	 */
 	public TypeCible cibleASelectionner() {
 		for(Action action : this.actions) {
-			if(action.requiereCible()) {
+			if(action.requiertCible()) {
 				return action.getTypeCible();
 			}
 		}
@@ -67,13 +67,13 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	}
 	
 	/**
-	 * Vérifie si une action requière la selection d'une cible.
+	 * Vérifie si une action requiert la selection d'une cible.
 	 * 
 	 * @return
 	 */
-	public boolean requiereSelection() {
+	public boolean requiertSelection() {
 		for(Action action : this.actions) {
-			if(action.requiereCible()) {
+			if(action.requiertCible()) {
 				return true;
 			}
 		}
@@ -82,15 +82,15 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	
 	/**
 	 * Ajoute une action aux actions de la carte sort.
-	 * Une carte sort ne peut avoir au plus qu'une action qui requière
+	 * Une carte sort ne peut avoir au plus qu'une action qui requiert
 	 * la sélection d'une cible par le joueur!
 	 * 
 	 * @param action : action à ajouter
 	 * @throws ActionException : levé lorsqu'on souhaite ajouter plus d'une action
-	 * qui requière la sélection d'une cible par le joueur.
+	 * qui requiert la sélection d'une cible par le joueur.
 	 */
 	public void ajouterAction(Action action) throws ActionException {
-		if(this.requiereSelection()) {
+		if(this.requiertSelection()) {
 			throw new ActionException("Une carte sort ne peut avoir au plus qu'une action qui nécessite une cible!");
 		}
 		this.actions.add(action);

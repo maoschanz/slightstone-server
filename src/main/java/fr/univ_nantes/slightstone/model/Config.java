@@ -27,49 +27,49 @@ import fr.univ_nantes.slightstone.server.WebSocketConfig;
 @Import(WebSocketConfig.class)
 public class Config {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
-    private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-    private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
-    private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
+	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
 	
 	@Resource
-    private Environment environment;
+	private Environment environment;
 	
 	@Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        
-        dataSource.setDriverClassName(environment
-                .getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
-        dataSource.setUrl(environment
-                .getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
-        dataSource.setUsername(environment
-                .getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
-        dataSource.setPassword(environment
-                .getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		
+		dataSource.setDriverClassName(environment
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
+		dataSource.setUrl(environment
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
+		dataSource.setUsername(environment
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
+		dataSource.setPassword(environment
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
 
-        return dataSource;
-    }
+		return dataSource;
+	}
 	
 	@Bean
-    public EntityManagerFactory entityManagerFactory() {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(Boolean.TRUE);
-        vendorAdapter.setShowSql(Boolean.TRUE);
-        
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("fr.univ_nantes.slightstone.model");
-        factory.setDataSource(dataSource());
-        factory.afterPropertiesSet();
-        factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
-        return factory.getObject();
-    }
+	public EntityManagerFactory entityManagerFactory() {
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setGenerateDdl(Boolean.TRUE);
+		vendorAdapter.setShowSql(Boolean.TRUE);
+		
+		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+		factory.setJpaVendorAdapter(vendorAdapter);
+		factory.setPackagesToScan("fr.univ_nantes.slightstone.model");
+		factory.setDataSource(dataSource());
+		factory.afterPropertiesSet();
+		factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
+		return factory.getObject();
+	}
 	
 	@Bean
-    public PlatformTransactionManager transactionManager() {
-        EntityManagerFactory factory = entityManagerFactory();
-        return new JpaTransactionManager(factory);
-    }
+	public PlatformTransactionManager transactionManager() {
+		EntityManagerFactory factory = entityManagerFactory();
+		return new JpaTransactionManager(factory);
+	}
 
 	@Bean
 	public ServiceJpaSlightstone getServiceJpa() {

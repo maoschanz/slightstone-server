@@ -11,7 +11,8 @@ public class TestActionMouton {
 	@Test
 	public void executerActionMouton() {
 		//With
-		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier", "un chevalier", "chevalier.png", ClasseHeros.COMMUN,
+		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
+				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
 				2, 1, 3, false, false, false, false);
 		CarteServiteur cible = new CarteServiteur(descServiteur);
 		Jeu jeu = mock(Jeu.class);

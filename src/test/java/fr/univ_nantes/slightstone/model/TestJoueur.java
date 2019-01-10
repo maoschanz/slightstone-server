@@ -11,13 +11,13 @@ public class TestJoueur {
 		assert (joueur.getServiteurs().size() == 0);
 		assert (joueur.getHeros().getPointsDeVie() == 30);
 		assert (joueur.getHeros().getPointsArmure() == 0);
-		assert (joueur.getPioche().stream().allMatch( carte -> { 
-			return carte.getClasse().equals(ClasseHeros.COMMUN) || 
-				   carte.getClasse().equals(ClasseHeros.GUERRIER); 
+		assert (joueur.getPioche().stream().allMatch( carte -> {
+			return carte.getClasse().equals(ClasseHeros.COMMUN) ||
+				   carte.getClasse().equals(ClasseHeros.GUERRIER);
 		}));
 	}
 	
-	public void piocherCarte() {
+	public void piocherCarte() { // TODO je suppose
 		
 	}
 }

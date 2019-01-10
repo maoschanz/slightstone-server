@@ -25,8 +25,9 @@ public class TestActionAttaque {
 	public void initAll() {
 		// Initialisation du jeu
 
-		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier", "un chevalier", "chevalier.png",
-				ClasseHeros.COMMUN, 2, 1, 3, false, false, false, false);
+		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
+				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
+				2, 1, 3, false, false, false, false);
 
 		DescripteurHeros descHeros = mock(DescripteurHeros.class);
 		when(descHeros.getPointsVie()).thenReturn(30);

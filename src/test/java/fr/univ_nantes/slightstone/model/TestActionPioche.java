@@ -13,8 +13,8 @@ public class TestActionPioche {
 		//With
 		Heros heros = mock(Heros.class);
 		Deck deck = mock(Deck.class);
-		DescripteurSort bouleDeFeu = new DescripteurSort("Boule de feu", "Une boule de feu", "bouleFeu.png",
-				ClasseHeros.MAGE, 2);
+		DescripteurSort bouleDeFeu = new DescripteurSort("Boule de feu",
+				"Une boule de feu", "bouleFeu.png", ClasseHeros.MAGE, 2);
 		when(deck.piocher()).thenReturn(bouleDeFeu);
 		Joueur joueur1 = new Joueur("julien", heros, deck, new MainJoueur(), new Board(), new StockMana());
 		Joueur joueur2 = new Joueur("nicolas", heros, deck, new MainJoueur(), new Board(), new StockMana());

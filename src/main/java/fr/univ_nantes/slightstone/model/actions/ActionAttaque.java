@@ -15,8 +15,8 @@ import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 /**
  * Cette action inflige des dégâts à une ou plusieurs cibles lorsqu'elle est exécutée.
- * Les cibles touchées sont définis par le type TypeCible défini dans la sur-classe Action.
- * La valeur des dégats infligés à chaque cible est défini par l'attribut valeur.
+ * Les cibles touchées sont définies par le type TypeCible défini dans la superclasse Action.
+ * La valeur des dégats infligés à chaque cible est définie par l'attribut valeur.
  */
 @Entity
 @Table(name="action_attaque")

@@ -5,8 +5,7 @@ public class MessageJouerCarteSort {
 	private Integer idCarte;
 	private Integer idCible;
 	
-	public MessageJouerCarteSort() {
-	}
+	public MessageJouerCarteSort() {}
 	
 	public MessageJouerCarteSort(Integer idCarte, Integer idCible) {
 		this.idCarte = idCarte;

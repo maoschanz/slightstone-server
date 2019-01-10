@@ -17,15 +17,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import fr.univ_nantes.slightstone.controller.ViolationReglesException;
 import fr.univ_nantes.slightstone.model.ClasseHeros;
 import fr.univ_nantes.slightstone.model.Joueur;
-import fr.univ_nantes.slightstone.server.messages.Message;
-import fr.univ_nantes.slightstone.server.messages.MessageAttaquer;
-import fr.univ_nantes.slightstone.server.messages.MessageErreur;
-import fr.univ_nantes.slightstone.server.messages.MessageEtatPartie;
-import fr.univ_nantes.slightstone.server.messages.MessageFinPartie;
-import fr.univ_nantes.slightstone.server.messages.MessageJouerCarteServiteur;
-import fr.univ_nantes.slightstone.server.messages.MessageJouerCarteSort;
-import fr.univ_nantes.slightstone.server.messages.MessageLancerActionSpecial;
-import fr.univ_nantes.slightstone.server.messages.MessageNouvellePartie;
+import fr.univ_nantes.slightstone.server.messages.*;
 
 @Controller
 public class FacadeServeur {
@@ -89,7 +81,7 @@ public class FacadeServeur {
 		this.parties.put(this.convJoueurId.get(joueur), partie);
 		this.parties.put(this.convJoueurId.get(adversaire), partie);
 		this.envoyerEtatPartie(partie, "/queue/debutPartie");
-		logger.warn(String.format("==> Nouvelle partie crée avec les joueurs %s et %s", joueur.getPseudo(), adversaire.getPseudo()));
+		logger.warn(String.format("==> Nouvelle partie créée avec les joueurs %s et %s", joueur.getPseudo(), adversaire.getPseudo()));
 	}
 	
 	private void envoyerEtatPartie(Partie partie, String destination) {
@@ -250,7 +242,7 @@ public class FacadeServeur {
 		Joueur joueur = this.convIdJoueur.get(principal.getName());
 		Partie partie = this.parties.get(principal.getName());
 		if (joueur != null && partie != null) {
-			logger.warn(String.format("--> Le joueur %s lance son attaque spécial", joueur.getPseudo()));
+			logger.warn(String.format("--> Le joueur %s lance son attaque spéciale", joueur.getPseudo()));
 			Integer idCible = message.getIdCible();
 			try {
 				if (idCible == null) {
@@ -258,7 +250,7 @@ public class FacadeServeur {
 				} else {
 					partie.lancerActionHeros(joueur, idCible);
 				}
-				logger.warn(String.format("==> Le joueur %s a lancé son attaque spécial", joueur.getPseudo()));
+				logger.warn(String.format("==> Le joueur %s a lancé son attaque spéciale", joueur.getPseudo()));
 				this.actualiserJoueurs(partie);
 			} catch (IdentifiantInvalideException e) {
 				this.erreurIdentifiantInvalide(principal);
@@ -333,6 +325,6 @@ public class FacadeServeur {
 		} else {
 			logger.warn("le joueur n'avait encore lancé aucune partie");
 		}
-	    logger.warn("Client with username {} disconnected", idSocket);
+		logger.warn("Client with username {} disconnected", idSocket);
 	}
 }

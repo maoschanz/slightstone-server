@@ -124,8 +124,8 @@ public class Jeu {
 	}
 
 	/**
-	 * Joue une carte avec une ou plusieurs action(s) dont une nécessite une cible.
-	 * Cette cible doit être celle défini par le joueur!
+	 * Joue une carte avec une ou plusieurs action(s), dont une nécessite une cible.
+	 * Cette cible doit être celle définie par le joueur!
 	 * 
 	 * @param carte : carte avec une ou plusieurs action(s)
 	 * @param cible : cible visée par l'action de la carte
@@ -137,9 +137,11 @@ public class Jeu {
 
 	/**
 	 * Met fin au tour du joueur courant et initialise le tour du joueur adverse. Au
-	 * début de chaque tour : - le joueur pioche une carte - la capacité du stock de
-	 * mana augmente de 1 et est entièrement rechargé - les serviteurs invoqués au
-	 * tour précédent (qui n'étaient alors pas jouables) deviennent jouables
+	 * début de chaque tour :
+	 * - le joueur pioche une carte
+	 * - la capacité du stock de mana augmente de 1 et est entièrement rechargé
+	 * - les serviteurs invoqués au tour précédent (qui n'étaient alors pas
+	 * tous jouables) deviennent jouables
 	 */
 	public void terminerTour() {
 		this.tourJoueur1 = !this.tourJoueur1;

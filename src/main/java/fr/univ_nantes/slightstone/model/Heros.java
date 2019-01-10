@@ -2,7 +2,7 @@ package fr.univ_nantes.slightstone.model;
 
 import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
-public class Heros implements Ciblable{
+public class Heros implements Ciblable {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -27,7 +27,7 @@ public class Heros implements Ciblable{
 	/* ******************************** */
 
 	/**
-	 * Récupère les points de vie actuelle du héros.
+	 * Récupère les points de vie actuels du héros.
 	 * 
 	 * @return : points de vie du héros
 	 */
@@ -45,7 +45,7 @@ public class Heros implements Ciblable{
 	}
 
 	/**
-	 * Récupère les points armure actuelle du héros.
+	 * Récupère les points armure actuels du héros.
 	 * 
 	 * @return : points armure du héros
 	 */
