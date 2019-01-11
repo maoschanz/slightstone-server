@@ -16,6 +16,7 @@ public class TestStockMana {
 		assert (stockMana.getQuantite() == 1);
 	}
 
+	@Test
 	public void construireStockManaAvecCapaciteEtQuantiteDonnees() {
 		try {
 			StockMana stockMana = new StockMana(6, 4);
@@ -37,6 +38,7 @@ public class TestStockMana {
 		}
 	}
 
+	@Test
 	public void construireStockAvecManaQuantiteNegativeImpossible() {
 		try {
 			@SuppressWarnings("unused")
@@ -47,6 +49,7 @@ public class TestStockMana {
 		}
 	}
 
+	@Test
 	public void construireStockManaAvecQuantiteSupCapaciteImpossible() {
 		try {
 			@SuppressWarnings("unused")
@@ -57,6 +60,7 @@ public class TestStockMana {
 		}
 	}
 
+	@Test
 	public void construireStockManaAvecCapaciteSupCapaciteMaxImpossible() {
 		try {
 			@SuppressWarnings("unused")

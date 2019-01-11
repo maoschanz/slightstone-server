@@ -53,7 +53,7 @@ public class DescripteurHeros {
 	
 	public DescripteurHeros (ClasseHeros classe, 
 							 String urlImage,
-				  			 DescripteurSort actionSpe) {
+							 DescripteurSort actionSpe) {
 		this.classe = classe;
 		this.urlImage = urlImage;
 		this.pointsDeVie = 30;

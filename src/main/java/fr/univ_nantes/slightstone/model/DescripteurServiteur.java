@@ -50,9 +50,9 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 
 	protected DescripteurServiteur() {}
 	
-	public DescripteurServiteur(String nom, String description, String imageURL, ClasseHeros classe, Integer coutMana,
-			Integer pointsDeDegats, Integer pointsDeVie, boolean effetProvocation, boolean effetCharge,
-			boolean effetVolDeVie, boolean effetLeader) {
+	public DescripteurServiteur(String nom, String description, String imageURL, ClasseHeros classe,
+			Integer coutMana, Integer pointsDeDegats, Integer pointsDeVie,
+			boolean effetProvocation, boolean effetCharge, boolean effetVolDeVie, boolean effetLeader) {
 		super(nom, description, imageURL, coutMana, classe);
 		this.pointsDeVie = pointsDeVie;
 		this.pointsDeDegats = pointsDeDegats;
