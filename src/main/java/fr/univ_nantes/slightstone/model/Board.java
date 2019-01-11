@@ -63,7 +63,7 @@ public class Board implements Observer {
 	 * Cette méthode est utilisée lorsqu'on invoque un serviteur avec
 	 * l'effet "Leader".
 	 */
-	protected void transmettreEffetLeader() {
+	protected void nouveauServiteurAvecEffetLeader() {
 		for(CarteServiteur serviteur : this.serviteurs) {
 			serviteur.boostDegats(1);
 		}
@@ -75,7 +75,7 @@ public class Board implements Observer {
 	 * Cette méthode est utilisée lorsqu'un serviteur avec l'effet "Leader"
 	 * meurt ou lorsqu'un serviteur perd l'effet "Leader".
 	 */
-	protected void perteEffetLeader() {
+	protected void perteServiteurAvecEffetLeader() {
 		for(CarteServiteur serviteur : this.serviteurs) {
 			serviteur.boostDegats(-1);
 		}
@@ -96,7 +96,7 @@ public class Board implements Observer {
 		this.recupererEffetLeader(serviteur); // met à jour les dégats du serviteur invoqué
 		this.serviteurs.add(serviteur); // ajoute le serviteur sur le plateau
 		if(serviteur.aEffetLeader()) { 
-			this.transmettreEffetLeader(); // augmente les dégats de tous les serviteurs de 1
+			this.nouveauServiteurAvecEffetLeader(); // augmente les dégats de tous les serviteurs de 1
 		}
 	}
 
@@ -110,7 +110,7 @@ public class Board implements Observer {
 	public void retirer(CarteServiteur serviteur) {
 		this.serviteurs.remove(serviteur);
 		if(serviteur.aEffetLeader()) {
-			this.perteEffetLeader();
+			this.perteServiteurAvecEffetLeader();
 		}
 	}
 	
@@ -136,7 +136,7 @@ public class Board implements Observer {
 			this.retirer(serviteur); // le serviteur est mort, on le retire
 		}
 		if(serviteur.getDescripteur().aEffetLeader() && !serviteur.aEffetLeader()) { 
-			this.perteEffetLeader(); // le serviteur a perdu l'effet "Leader"
+			this.perteServiteurAvecEffetLeader(); // le serviteur a perdu l'effet "Leader"
 		}
 	}
 

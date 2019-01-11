@@ -29,7 +29,7 @@ public class TestBoard {
 		board.invoquer(this.descServiteurSansEffet);
 		board.invoquer(this.descServiteurSansEffet);
 		// When
-		board.transmettreEffetLeader();
+		board.nouveauServiteurAvecEffetLeader();
 		// Then
 		for (CarteServiteur serviteur : board.getCartes()) {
 			assert (serviteur.getPointsDeDegats() == serviteur.getDescripteur().getPointsDeDegats() + 1);

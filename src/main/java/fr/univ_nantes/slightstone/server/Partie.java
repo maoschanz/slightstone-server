@@ -9,6 +9,7 @@ import fr.univ_nantes.slightstone.model.CarteServiteur;
 import fr.univ_nantes.slightstone.model.Ciblable;
 import fr.univ_nantes.slightstone.model.DescripteurCarte;
 import fr.univ_nantes.slightstone.model.DescripteurSort;
+import fr.univ_nantes.slightstone.model.Heros;
 import fr.univ_nantes.slightstone.model.Jeu;
 import fr.univ_nantes.slightstone.model.Joueur;
 

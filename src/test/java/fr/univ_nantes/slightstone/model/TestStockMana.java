@@ -72,29 +72,14 @@ public class TestStockMana {
 	}
 
 	@Test
-	public void depenserManaQuandQuantiteSuffisante() {
+	public void depenserMana() {
 		try {
 			// With
 			StockMana stockMana = new StockMana(10, 6);
 			// When
-			boolean manaSuffisante = stockMana.depenserMana(4);
+			stockMana.depenserMana(4);
 			// Then
-			assert (manaSuffisante);
 			assert (stockMana.getQuantite() == 2);
-		} catch (ValeurNegativeException | StockManaException e) {
-			assert false;
-		}
-	}
-
-	@Test
-	public void depenserManaQuandQuantitePasSuffisante() {
-		try {
-			StockMana stockMana = new StockMana(10, 4);
-			// When
-			boolean manaSuffisante = stockMana.depenserMana(5);
-			// Then
-			assert !(manaSuffisante);
-			assert (stockMana.getQuantite() == 4);
 		} catch (ValeurNegativeException | StockManaException e) {
 			assert false;
 		}

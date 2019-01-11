@@ -71,12 +71,8 @@ public class StockMana {
 	 * @return : true   => quantité de mana suffisante, mana bien dépensé
 	 * 			 false  => pas assez de mana
 	 */
-	public boolean depenserMana(Integer mana) {
-		if(this.quantite >= mana) {
-			this.quantite -= mana;
-			return true;
-		}
-		return false;
+	public void depenserMana(Integer mana) {
+		this.quantite -= mana;
 	}
 	
 	/**

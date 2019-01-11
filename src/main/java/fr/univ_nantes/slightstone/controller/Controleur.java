@@ -33,9 +33,26 @@ public class Controleur {
 		return serviteur.aEffetProvocation();
 	}
 	
-	private boolean estCibleValidePourServiteur(Ciblable cible) {
-		return this.jeu.getJoueurAdverse().getServiteurs().contains(cible) ||
-				this.jeu.getJoueurAdverse().getHeros().equals(cible);
+	public boolean cibleValide(TypeCible typeCible, Ciblable cible) {
+		switch (typeCible) {
+		case UN_ADVERSAIRE:
+			System.out.println(cible);
+			System.out.println(this.jeu.getJoueurAdverse().getHeros().equals(cible));
+			System.out.println(this.jeu.getJoueurAdverse().getHeros().equals((Heros)cible));
+			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible)
+					|| this.jeu.getJoueurAdverse().getHeros().equals(cible);
+		case UN_SERVITEUR_ADVERSE:
+			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible);
+		case UN_SERVITEUR_ALLIE:
+			return this.jeu.getJoueurCourant().getServiteurs().contains(cible);
+		case AUCUNE:
+		case TOUS_ADVERSAIRES:
+		case TOUS_SERVITEURS:
+		case TOUS_SERVITEURS_ADVERSES:
+			return true;
+		default:
+			return false;
+		}
 	}
 	
 	public boolean estJeuTermine() {
@@ -64,7 +81,7 @@ public class Controleur {
 			throw new ViolationReglesException("Un joueur ne peut jouer qu'une carte qui est dans sa main");
 		} else if(!sort.estManaSuffisante(joueur.getQuantiteMana())) {
 			throw new ViolationReglesException("Un joueur ne peut jouer une carte que s'il dispose de la quantité de mana suffisante");
-		} else if(!this.jeu.cibleCouranteValide(sort.cibleASelectionner())) {
+		} else if(!this.cibleValide(sort.cibleASelectionner(), cible)) {
 			throw new ViolationReglesException("Un joueur ne peut sélectionner une cible qui lui est interdite");
 		}
 		this.jeu.jouerCarte(sort, cible);
@@ -78,7 +95,7 @@ public class Controleur {
 			throw new ViolationReglesException("Un joueur ne peut attaquer avec un serviteur que s'il est invoqué sur le plateau");
 		} else if(!serviteur.estJouable()) {
 			throw new ViolationReglesException("Un joueur ne peut attaquer avec un serviteur que s'il est jouable");
-		} else if(!this.estCibleValidePourServiteur(cible)) {
+		} else if(!cibleValide(serviteur.getTypeCible(), cible)) {
 			throw new ViolationReglesException("Un joueur ne peut sélectionner une cible qui lui est interdite");
 		} else if(adversaire.aServiteurAvecProvocation() && !this.aProvocation(cible)) {
 			throw new ViolationReglesException("Si un serviteur adverse a un effet provocation, le joueur doit attaquer ce serviteur");
@@ -103,7 +120,7 @@ public class Controleur {
 			throw new ViolationReglesException("Un joueur ne peut jouer que lorsque c'est son tour");
 		} else if(!actionHeros.estManaSuffisante(joueur.getQuantiteMana())) {
 			throw new ViolationReglesException("Un joueur ne peut lancer l'action spécial du héros que s'il dispose de la quantité de mana suffisante");
-		} else if(!this.jeu.cibleCouranteValide(actionHeros.cibleASelectionner())) {
+		} else if(!this.cibleValide(actionHeros.cibleASelectionner(), cible)) {
 			throw new ViolationReglesException("Un joueur ne peut sélectionner une cible qui lui est interdite");
 		} else if(adversaire.aServiteurAvecProvocation() && !this.aProvocation(cible)) {
 			throw new ViolationReglesException("Si un serviteur adverse a un effet provocation, le joueur doit attaquer ce serviteur");

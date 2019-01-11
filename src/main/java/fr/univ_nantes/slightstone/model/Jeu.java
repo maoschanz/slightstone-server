@@ -56,6 +56,7 @@ public class Jeu {
 		return this.cibleCourante;
 	}
 
+
 	/**
 	 * Modifie la dernière cible sélectionnée.
 	 * 
@@ -92,7 +93,7 @@ public class Jeu {
 	 * @param cible     : cible attaquée (serviteur adverse ou héros adverse)
 	 */
 	public void attaquer(CarteServiteur attaquant, Ciblable cible) {
-		this.cibleCourante = cible;
+		this.setCibleCourante(cible);
 		attaquant.attaquer(this);
 	}
 
@@ -110,7 +111,7 @@ public class Jeu {
 	 * @param cible : cible attaquée (serviteur adverse ou héros adverse)
 	 */
 	public void lancerActionHeros(Ciblable cible) {
-		this.cibleCourante = cible;
+		this.setCibleCourante(cible);
 		this.lancerActionHeros();
 	}
 
@@ -131,7 +132,7 @@ public class Jeu {
 	 * @param cible : cible visée par l'action de la carte
 	 */
 	public void jouerCarte(DescripteurSort sort, Ciblable cible) {
-		this.cibleCourante = cible;
+		this.setCibleCourante(cible);
 		this.jouerCarte(sort);
 	}
 
@@ -144,11 +145,11 @@ public class Jeu {
 	 * tous jouables) deviennent jouables
 	 */
 	public void terminerTour() {
-		this.tourJoueur1 = !this.tourJoueur1;
 		Joueur joueurCourant = this.getJoueurCourant();
 		joueurCourant.piocherCarte();
 		joueurCourant.augmenterCapaciteMana();
 		joueurCourant.actualiserJouabiliteServiteurs();
+		this.tourJoueur1 = !this.tourJoueur1;
 	}
 
 	public boolean estJoueurCourant(Joueur joueur) {
@@ -185,26 +186,6 @@ public class Jeu {
 			return cibles;
 		default:
 			return cibles;
-		}
-	}
-
-	public boolean cibleCouranteValide(TypeCible typeCible) {
-		Ciblable cible = this.getCibleCourante();
-		switch (typeCible) {
-		case UN_ADVERSAIRE:
-			return this.getJoueurAdverse().getServiteurs().contains(cible)
-					|| this.getJoueurAdverse().getHeros().equals(cible);
-		case UN_SERVITEUR_ADVERSE:
-			return this.getJoueurAdverse().getServiteurs().contains(cible);
-		case UN_SERVITEUR_ALLIE:
-			return this.getJoueurCourant().getServiteurs().contains(cible);
-		case AUCUNE:
-		case TOUS_ADVERSAIRES:
-		case TOUS_SERVITEURS:
-		case TOUS_SERVITEURS_ADVERSES:
-			return true;
-		default:
-			return false;
 		}
 	}
 }
