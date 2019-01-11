@@ -14,6 +14,10 @@ import fr.univ_nantes.slightstone.model.Jeu;
 import fr.univ_nantes.slightstone.model.Joueur;
 
 public class Partie {
+	
+	/* ******************************* */
+	/* ********** Attributs ********** */
+	/* ******************************* */
 
 	private Joueur joueur1;
 	private Joueur joueur2;
@@ -27,6 +31,10 @@ public class Partie {
 	private HashMap<DescripteurCarte, Integer> cartesVersIdentifiants = new HashMap<DescripteurCarte, Integer>();
 	private HashMap<Integer, Ciblable> identifiantsVersCiblables = new HashMap<Integer, Ciblable>();
 	private HashMap<Ciblable, Integer> ciblablesVersIdentifants = new HashMap<Ciblable, Integer>();
+
+	/* *********************************** */
+	/* ********** Constructeurs ********** */
+	/* *********************************** */
 	
 	public Partie(Joueur joueur1, Joueur joueur2) {
 		this.joueur1 = joueur1;
@@ -37,6 +45,10 @@ public class Partie {
 		this.generateurEtatPartie = new EtatPartie(jeu, this);
 	}
 	
+	/* ******************************** */
+	/* ********** Accesseurs ********** */
+	/* ******************************** */
+	
 	public Joueur getJoueur1() {
 		return this.joueur1;
 	}
@@ -45,10 +57,28 @@ public class Partie {
 		return this.joueur2;
 	}
 	
+	public boolean estTerminee() {
+		return this.controleurJeu.estJeuTermine();
+	}
+	
+	public Joueur getVainqueur() {
+		return this.controleurJeu.getVainqueur();
+	}
+	
+	/* ****************************** */
+	/* ********** Méthodes ********** */
+	/* ****************************** */
+	
 	public HashMap<String, Object> getEtatPartie(Joueur joueur) {
 		return this.generateurEtatPartie.getEtatPartie(joueur);
 	}
-	
+
+	/**
+	 * Ajoute une cible à la partie
+	 * 
+	 * @param cible : cible à identifier
+	 * @return identifiant : l'identifiant produit pour la cible
+	 */
 	private int ajouterNouvelleCible(Ciblable cible) {
 		int identifiant = this.generateurIdentifiant.nextInt();
 		this.identifiantsVersCiblables.put(identifiant, cible);
@@ -56,6 +86,12 @@ public class Partie {
 		return identifiant;
 	}
 	
+	/**
+	 * Identifie une cible dans la partie
+	 * 
+	 * @param cible : cible à identifier
+	 * @return identifiant : l'identifiant de la cible
+	 */
 	public Integer getIdentifiantCible(Ciblable cible) {
 		Integer identifiant = this.ciblablesVersIdentifants.get(cible);
 		if(identifiant == null) {
@@ -65,6 +101,12 @@ public class Partie {
 		}
 	}
 	
+	/**
+	 * Ajoute une carte à la partie
+	 * 
+	 * @param carte : carte à identifier
+	 * @return identifiant : l'identifiant produit pour la carte
+	 */
 	private int ajouterNouvelleCarte(DescripteurCarte carte) {
 		int identifiant = this.generateurIdentifiant.nextInt();
 		this.identifiantsVersCartes.put(identifiant, carte);
@@ -72,6 +114,12 @@ public class Partie {
 		return identifiant;
 	}
 	
+	/**
+	 * Identifie une carte dans la partie
+	 * 
+	 * @param carte : carte à identifier
+	 * @return identifiant : l'identifiant de la carte
+	 */
 	public Integer getIdentifiantCarte(DescripteurCarte carte) {
 		Integer identifiant = this.cartesVersIdentifiants.get(carte);
 		if(identifiant == null) {
@@ -125,13 +173,5 @@ public class Partie {
 		if(serviteur instanceof CarteServiteur) { //TODO: laisser faire le controleur
 			this.controleurJeu.attaquer(joueur, (CarteServiteur) serviteur, cible);
 		}
-	}
-	
-	public boolean estTerminee() {
-		return this.controleurJeu.estJeuTermine();
-	}
-	
-	public Joueur getVainqueur() {
-		return this.controleurJeu.getVainqueuer();
 	}
 }

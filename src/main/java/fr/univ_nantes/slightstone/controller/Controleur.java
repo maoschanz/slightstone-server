@@ -59,7 +59,10 @@ public class Controleur {
 		return this.jeu.estTermine();
 	}
 	
-	public Joueur getVainqueuer() {
+	public Joueur getVainqueur() throws JeuPasFiniException {
+		if(!this.estJeuTermine()) {
+			throw new ViolationReglesException("Il n'y a pas de vainqueur si le jeu n'est pas terminé");
+		}
 		return this.jeu.getJoueurCourant();
 	}
 

@@ -13,14 +13,26 @@ import fr.univ_nantes.slightstone.model.Jeu;
 import fr.univ_nantes.slightstone.model.Joueur;
 
 public class EtatPartie {
+	
+	/* ******************************* */
+	/* ********** Attributs ********** */
+	/* ******************************* */
 
 	private Jeu jeu;
 	private Partie partie;
+
+	/* *********************************** */
+	/* ********** Constructeurs ********** */
+	/* *********************************** */
 	
 	public EtatPartie(Jeu jeu, Partie partie) {
 		this.jeu = jeu;
 		this.partie = partie;
 	}
+	
+	/* ****************************** */
+	/* ********** Méthodes ********** */
+	/* ****************************** */
 	
 	private HashMap<String, Object> getActionSpecialeHeros(Heros heros) {
 		DescripteurSort actionHeros = heros.getActionSpeciale();

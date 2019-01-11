@@ -53,7 +53,13 @@ public class MainJoueur {
 	public void retirer(DescripteurCarte carte) {
 		this.cartes.remove(carte);
 	}
-	
+
+	/**
+	 * Vérifie si une carte est dans la main du joueur.
+	 * 
+	 * @param carte : carte à vérifier
+	 * @return boolean : si la carte est la main
+	 */
 	public boolean contient(DescripteurCarte carte) {
 		return this.cartes.contains(carte);
 	}
