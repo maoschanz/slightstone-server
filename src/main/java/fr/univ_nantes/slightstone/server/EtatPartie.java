@@ -157,7 +157,7 @@ public class EtatPartie {
 		return etatJoueur;
 	}
 	
-	private Joueur getAdversaireJoueur(Joueur joueur) {
+	private Joueur getEtatAdversaire(Joueur joueur) {
 		if(this.jeu.estJoueurCourant(joueur)) {
 			return this.jeu.getJoueurAdverse();
 		} else {
@@ -165,11 +165,11 @@ public class EtatPartie {
 		}
 	}
 	
-	public HashMap<String, Object> getEtatPartie(Joueur joueur) {
+	public HashMap<String, Object> recupererEtatPartie(Joueur joueur) {
 		HashMap<String, Object> etatPartie = new HashMap<String, Object>();
 		etatPartie.put("estJoueurCourant", this.jeu.getJoueurCourant().equals(joueur));
 		etatPartie.put("joueur", this.getEtatJoueur(joueur, false));
-		etatPartie.put("adversaire", this.getEtatJoueur(this.getAdversaireJoueur(joueur), true));
+		etatPartie.put("adversaire", this.getEtatJoueur(this.getEtatAdversaire(joueur), true));
 		return etatPartie;
 	}
 }

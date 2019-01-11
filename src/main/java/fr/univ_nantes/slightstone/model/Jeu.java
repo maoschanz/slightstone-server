@@ -30,7 +30,25 @@ public class Jeu {
 	/* ******************************** */
 
 	/**
-	 * Récupère le joueur à qui c'est le tour de jouer.
+	 * Retourne le joueur 1 du jeu
+	 * 
+	 * @return
+	 */
+	public Joueur getJoueur1() {
+		return this.joueur1;
+	}
+	
+	/**
+	 * Retourne le joueur 2 du jeu
+	 * 
+	 * @return
+	 */
+	public Joueur getJoueur2() {
+		return this.joueur2;
+	}
+	
+	/**
+	 * Retourne le joueur à qui c'est le tour de jouer.
 	 * 
 	 * @return : joueur
 	 */
@@ -39,7 +57,7 @@ public class Jeu {
 	}
 
 	/**
-	 * Récupère le joueur à qui ce n'est pas le tour de jouer.
+	 * Retourne le joueur à qui ce n'est pas le tour de jouer.
 	 * 
 	 * @return : joueur
 	 */
@@ -48,7 +66,7 @@ public class Jeu {
 	}
 
 	/**
-	 * Récupère la dernière cible sélectionnée.
+	 * Retourne la dernière cible sélectionnée.
 	 * 
 	 * @return
 	 */

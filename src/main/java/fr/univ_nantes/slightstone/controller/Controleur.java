@@ -59,11 +59,29 @@ public class Controleur {
 		return this.jeu.estTermine();
 	}
 	
-	public Joueur getVainqueur() throws JeuPasFiniException {
+	public Joueur getVainqueur() throws ViolationReglesException {
 		if(!this.estJeuTermine()) {
 			throw new ViolationReglesException("Il n'y a pas de vainqueur si le jeu n'est pas terminé");
 		}
 		return this.jeu.getJoueurCourant();
+	}
+	
+	/**
+	 * Retourne le joueur 1 du jeu
+	 * 
+	 * @return
+	 */
+	public Joueur getJoueur1() {
+		return this.jeu.getJoueur1();
+	}
+	
+	/**
+	 * Retourne le joueur 2 du jeu
+	 * 
+	 * @return
+	 */
+	public Joueur getJoueur2() {
+		return this.jeu.getJoueur2();
 	}
 
 	public void jouerCarte(Joueur joueur, DescripteurCarte carte) throws ViolationReglesException {

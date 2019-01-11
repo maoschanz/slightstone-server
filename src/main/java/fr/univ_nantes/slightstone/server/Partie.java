@@ -9,7 +9,6 @@ import fr.univ_nantes.slightstone.model.CarteServiteur;
 import fr.univ_nantes.slightstone.model.Ciblable;
 import fr.univ_nantes.slightstone.model.DescripteurCarte;
 import fr.univ_nantes.slightstone.model.DescripteurSort;
-import fr.univ_nantes.slightstone.model.Heros;
 import fr.univ_nantes.slightstone.model.Jeu;
 import fr.univ_nantes.slightstone.model.Joueur;
 
@@ -18,9 +17,6 @@ public class Partie {
 	/* ******************************* */
 	/* ********** Attributs ********** */
 	/* ******************************* */
-
-	private Joueur joueur1;
-	private Joueur joueur2;
 	
 	private Controleur controleurJeu;
 	private EtatPartie generateurEtatPartie;
@@ -37,8 +33,6 @@ public class Partie {
 	/* *********************************** */
 	
 	public Partie(Joueur joueur1, Joueur joueur2) {
-		this.joueur1 = joueur1;
-		this.joueur2 = joueur2;
 		Jeu jeu = new Jeu(joueur1, joueur2);
 		jeu.initialiserMainJoueurs();
 		this.controleurJeu = new Controleur(jeu);
@@ -50,18 +44,18 @@ public class Partie {
 	/* ******************************** */
 	
 	public Joueur getJoueur1() {
-		return this.joueur1;
+		return this.controleurJeu.getJoueur1();
 	}
 	
 	public Joueur getJoueur2() {
-		return this.joueur2;
+		return this.controleurJeu.getJoueur2();
 	}
 	
 	public boolean estTerminee() {
 		return this.controleurJeu.estJeuTermine();
 	}
 	
-	public Joueur getVainqueur() {
+	public Joueur getVainqueur() throws ViolationReglesException {
 		return this.controleurJeu.getVainqueur();
 	}
 	
@@ -70,7 +64,7 @@ public class Partie {
 	/* ****************************** */
 	
 	public HashMap<String, Object> getEtatPartie(Joueur joueur) {
-		return this.generateurEtatPartie.getEtatPartie(joueur);
+		return this.generateurEtatPartie.recupererEtatPartie(joueur);
 	}
 
 	/**

@@ -75,13 +75,13 @@ public class FacadeServeur {
 		}
 	}
 
-	private void nouvellePartie(Joueur joueur, Joueur adversaire) {
+	private void creerNouvellePartie(Joueur joueur1, Joueur joueur2) {
 		logger.warn("--> Création d'une nouvelle partie");
-		Partie partie = new Partie(joueur, adversaire);
-		this.parties.put(this.convJoueurId.get(joueur), partie);
-		this.parties.put(this.convJoueurId.get(adversaire), partie);
+		Partie partie = new Partie(joueur1, joueur2);
+		this.parties.put(this.convJoueurId.get(joueur1), partie);
+		this.parties.put(this.convJoueurId.get(joueur2), partie);
 		this.envoyerEtatPartie(partie, "/queue/debutPartie");
-		logger.warn(String.format("==> Nouvelle partie créée avec les joueurs %s et %s", joueur.getPseudo(), adversaire.getPseudo()));
+		logger.warn(String.format("==> Nouvelle partie créée avec les joueurs %s et %s", joueur1.getPseudo(), joueur2.getPseudo()));
 	}
 	
 	private void envoyerEtatPartie(Partie partie, String destination) {
@@ -93,12 +93,17 @@ public class FacadeServeur {
 		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur2), destination, etatPartieJoueur2);
 	}
 	
-	private void envoyerResultatPartie(Partie partie, String pseudoVainqueur) {
-		MessageFinPartie message = new MessageFinPartie(pseudoVainqueur);
-		Joueur joueur1 = partie.getJoueur1();
-		Joueur joueur2 = partie.getJoueur1();
-		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur1), "/queue/finPartie", message);
-		this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur2), "/queue/finPartie", message);
+	private void envoyerResultatPartie(Partie partie) {
+		try {
+			String pseudoVainqueur = partie.getVainqueur().getPseudo();
+			MessageFinPartie message = new MessageFinPartie(pseudoVainqueur);
+			Joueur joueur1 = partie.getJoueur1();
+			Joueur joueur2 = partie.getJoueur1();
+			this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur1), "/queue/finPartie", message);
+			this.messagingTemplate.convertAndSendToUser(this.convJoueurId.get(joueur2), "/queue/finPartie", message);
+		} catch (ViolationReglesException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void libererRessourcesJoueur(Joueur joueur) {
@@ -117,8 +122,7 @@ public class FacadeServeur {
 
 	private void actualiserJoueurs(Partie partie) {
 		if (partie.estTerminee()) {
-			String pseudoVainqueur = partie.getVainqueur().getPseudo();
-			this.envoyerResultatPartie(partie, pseudoVainqueur);
+			this.envoyerResultatPartie(partie);
 			this.libererRessourcesPartie(partie);
 		} else {
 			this.envoyerEtatPartie(partie, "/queue/etatPartie");
@@ -157,7 +161,7 @@ public class FacadeServeur {
 			joueur = this.creerJoueur(principal.getName(), message.getPseudo(), message.getHeros());
 			Joueur adversaire = this.rechercheAdversaire();
 			if (adversaire != null) {
-				this.nouvellePartie(joueur, adversaire);
+				this.creerNouvellePartie(joueur, adversaire);
 			} else {
 				this.mettreJoueurEnAttente(joueur);
 			}

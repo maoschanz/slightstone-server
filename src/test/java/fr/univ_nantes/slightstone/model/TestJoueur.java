@@ -61,6 +61,7 @@ public class TestJoueur {
 		Integer mana = this.joueur.getQuantiteMana();
 		Joueur joueur2 = new Joueur("double maléfique de Julien", ClasseHeros.MAGE);
 		Jeu jeu = new Jeu(this.joueur, joueur2);
+		jeu.initialiserMainJoueurs();
 		DescripteurCarte dcarte = this.joueur.getMainJoueur().get(0);
 		// When
 		this.joueur.jouerCarte(jeu, dcarte);
