@@ -36,11 +36,8 @@ public class Controleur {
 	public boolean cibleValide(TypeCible typeCible, Ciblable cible) {
 		switch (typeCible) {
 		case UN_ADVERSAIRE:
-			System.out.println(cible);
-			System.out.println(this.jeu.getJoueurAdverse().getHeros().equals(cible));
-			System.out.println(this.jeu.getJoueurAdverse().getHeros().equals((Heros)cible));
 			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible)
-					|| this.jeu.getJoueurAdverse().getHeros().equals(cible);
+				|| this.jeu.getJoueurAdverse().getHeros().equals(cible);
 		case UN_SERVITEUR_ADVERSE:
 			return this.jeu.getJoueurAdverse().getServiteurs().contains(cible);
 		case UN_SERVITEUR_ALLIE:
