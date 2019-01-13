@@ -42,7 +42,7 @@ import fr.univ_nantes.slightstone.server.messages.*;
  * 		- /user/queue/erreur : une erreur est survenue (est censée servir que lors de la phase de développement)
  */
 @Controller
-public class FacadeServeur {
+public class FacadeServeur implements IServeur {
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
