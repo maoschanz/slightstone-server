@@ -12,13 +12,13 @@ public class TestBoard {
 	public void initAll() {
 		this.descServiteurAvecEffetLeader = new DescripteurServiteur("dragon",
 				"un dragon", "dragon.png", ClasseHeros.PALADIN,
-				2, 3, 5, false, false, false, true);
+				2, true, 3, 5, false, false, false, true);
 		this.descServiteurAvecEffetCharge = new DescripteurServiteur("dragon",
 				"un dragon", "dragon.png", ClasseHeros.PALADIN,
-				2, 3, 5, false, true, false, false);
+				2, true, 3, 5, false, true, false, false);
 		this.descServiteurSansEffet = new DescripteurServiteur("chevalier",
 				"un chevalier", "chevalier.png", ClasseHeros.PALADIN,
-				2, 3, 5, false, false, false, false);
+				2, true, 3, 5, false, false, false, false);
 	}
 
 	@Test

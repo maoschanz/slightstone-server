@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.univ_nantes.slightstone.model.actions.Action;
-import fr.univ_nantes.slightstone.model.actions.ActionAttaque;
 import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 public class TestActionAttaque {
@@ -27,7 +25,7 @@ public class TestActionAttaque {
 
 		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
 				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
-				2, 1, 3, false, false, false, false);
+				2, true, 1, 3, false, false, false, false);
 
 		DescripteurHeros descHeros = mock(DescripteurHeros.class);
 		when(descHeros.getPointsVie()).thenReturn(30);

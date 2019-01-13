@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model.actions;
+package fr.univ_nantes.slightstone.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +11,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import fr.univ_nantes.slightstone.model.Jeu;
-import fr.univ_nantes.slightstone.model.TypeCible;
 
 @Entity
 @Table(name="actions")
@@ -34,7 +31,7 @@ public abstract class Action {
 	@Column(name="type_cible")
 	@Enumerated(EnumType.STRING)
 	private TypeCible typeCible; //utilisé pour récupérer la/les cible(s) souhaitée(s)
-								//permet de vérifier qu'une cible envoyée par l'utilisateur est correcte
+								 //permet de vérifier qu'une cible envoyée par l'utilisateur est correcte
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
@@ -56,6 +53,7 @@ public abstract class Action {
 	
 	/**
 	 * Indique si une action nécessite que l'utilisateur sélectionne une cible
+	 * 
 	 * @return
 	 */
 	public boolean requiertCible() {
@@ -74,5 +72,5 @@ public abstract class Action {
 		}
 	}
 	
-	public abstract void executer(Jeu jeu);
+	abstract void executer(Jeu jeu);
 }

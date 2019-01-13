@@ -2,14 +2,8 @@ package fr.univ_nantes.slightstone.model;
 
 import java.util.Observable;
 
-import fr.univ_nantes.slightstone.model.actions.ActionAttaque;
 import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
-/**
- * Cette classe réunit toutes les statistiques d'un serviteur qui sont
- * susceptibles de changer au cours de la partie (de l'invocation du serviteur
- * jusqu'à sa mort).
- */
 public class CarteServiteur extends Observable implements Ciblable {
 	
 	/* ******************************* */
@@ -45,7 +39,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	/* ******************************** */
 	
 	/**
-	 * Récupère les points de vie actuels du serviteur.
+	 * Retourne les points de vie actuelle du serviteur.
 	 * 
 	 * @return : points de vie du serviteur
 	 */
@@ -58,12 +52,12 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param pointsDeVie : nouvelle valeur pour les points de vie
 	 */
-	public void setPointsDeVie(Integer pointsDeVie) {
+	void setPointsDeVie(Integer pointsDeVie) {
 		this.pointsDeVie = pointsDeVie;
 	}
 
 	/**
-	 * Récupère les points de dégâts actuels du serviteur.
+	 * Retourne les points de dégâts actuels du serviteur.
 	 * 
 	 * @return : points de dégâts du serviteur
 	 */
@@ -76,7 +70,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param pointsDeDegats : nouvelle valeur pour les points de dégâts
 	 */
-	public void setPointsDeDegats(Integer pointsDeDegats) {
+	void setPointsDeDegats(Integer pointsDeDegats) {
 		this.pointsDeDegats = pointsDeDegats;
 	}
 
@@ -94,7 +88,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param jouable : nouvelle valeur pour l'attribut jouable
 	 */
-	public void setJouable(boolean jouable) {
+	void setJouable(boolean jouable) {
 		this.jouable = jouable;
 	}
 
@@ -112,7 +106,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param effetProvocation
 	 */
-	public void setEffetProvocation(boolean effetProvocation) {
+	void setEffetProvocation(boolean effetProvocation) {
 		this.effetProvocation = effetProvocation;
 	}
 
@@ -130,7 +124,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param effetCharge
 	 */
-	public void setEffetCharge(boolean effetCharge) {
+	void setEffetCharge(boolean effetCharge) {
 		this.effetCharge = effetCharge;
 	}
 
@@ -148,7 +142,7 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param effetVolDeVie
 	 */
-	public void setEffetVolDeVie(boolean effetVolDeVie) {
+	void setEffetVolDeVie(boolean effetVolDeVie) {
 		this.effetVolDeVie = effetVolDeVie;
 	}
 
@@ -168,28 +162,19 @@ public class CarteServiteur extends Observable implements Ciblable {
 	 * 
 	 * @param effetLeader
 	 */
-	public void setEffetLeader(boolean effetLeader) {
+	void setEffetLeader(boolean effetLeader) {
 		this.effetLeader = effetLeader;
 		this.setChanged();
 		this.notifyObservers();
 	}
 
 	/**
-	 * Récupère la description du serviteur.
+	 * Retourne le descripteur du serviteur.
 	 * 
 	 * @return
 	 */
 	public DescripteurServiteur getDescripteur() {
 		return this.descripteur;
-	}
-	
-	/**
-	 * Récupère le type de cible(s) que peut attaquer le serviteur.
-	 * 
-	 * @return
-	 */
-	public TypeCible getTypeCible() {
-		return this.descripteur.getTypeCible();
 	}
 	
 	/* ****************************** */
@@ -214,24 +199,32 @@ public class CarteServiteur extends Observable implements Ciblable {
 		this.setChanged();
 		this.notifyObservers();
 	}
-
+	
 	/**
-	 * Augmente les dégats du serviteur.
+	 * Retourne le type de cible(s) qu'attaque le serviteur.
 	 * 
-	 * @param valeur : points de dégâts à ajouter
+	 * @return : le type de cible(s) qu'attaque le serviteur
 	 */
-	public void boostDegats(Integer valeur) {
-		this.pointsDeDegats += valeur;
+	public TypeCible typeCibleAttendu() {
+		return this.descripteur.getTypeCible();
 	}
 
 	/**
-	 * Attaque la cible designé par le joueur Pour ce faire, une nouvelle action
-	 * attaque est crée avec pour dégats les dégats actuelle du serviteur et comme
-	 * type de cible le type de cible que peut attaquer le serviteur.
-	 * 
-	 * @param jeu
+	 * Vérifie le le serviteur a l'effet "Provocation"
 	 */
-	public void attaquer(Jeu jeu) {
+	@Override
+	public boolean aProvocation() {
+		return this.aEffetProvocation();
+	}
+	
+	/**
+	 * Attaque la cible désignée par le joueur. Pour ce faire, une nouvelle action
+	 * attaque est créé avec pour dégâts les dégâts actuels du serviteur et comme
+	 * type de cible, le type de cible que peut attaquer le serviteur.
+	 * 
+	 * @param jeu : le jeu permettant ainsi à l'action de récupérer la/les cible(s) dont elle a besoin
+	 */
+	void attaquer(Jeu jeu) {
 		try {
 			ActionAttaque attaque = new ActionAttaque(this.descripteur.getTypeCible(), this.pointsDeDegats);
 			attaque.executer(jeu);
@@ -242,5 +235,14 @@ public class CarteServiteur extends Observable implements Ciblable {
 		} catch (ValeurNegativeException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Augmente les dégats du serviteur.
+	 * 
+	 * @param valeur : points de dégâts à ajouter aux dégâts actuels
+	 */
+	void boostDegats(Integer valeur) {
+		this.pointsDeDegats += valeur;
 	}
 }

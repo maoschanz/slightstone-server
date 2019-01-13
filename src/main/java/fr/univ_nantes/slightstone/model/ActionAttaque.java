@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model.actions;
+package fr.univ_nantes.slightstone.model;
 
 import java.util.List;
 
@@ -8,9 +8,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import fr.univ_nantes.slightstone.model.Ciblable;
-import fr.univ_nantes.slightstone.model.Jeu;
-import fr.univ_nantes.slightstone.model.TypeCible;
 import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 /**
@@ -53,7 +50,7 @@ public class ActionAttaque extends Action {
 	 * Inflige des dégats à toutes les cibles touchées par l'attaque
 	 */
 	@Override
-	public void executer(Jeu jeu) {
+	void executer(Jeu jeu) {
 		List<Ciblable> cibles = jeu.recupererCibles(this.getTypeCible());
 		for(Ciblable cible : cibles) {
 			cible.prendreDegats(valeur);

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.univ_nantes.slightstone.model.actions.ActionBoostDegats;
 import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
 
 public class TestActionBoostDegats {
@@ -17,7 +16,7 @@ public class TestActionBoostDegats {
 		// Initialisation du jeu
 		this.jeu = mock(Jeu.class);
 		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier", "un chevalier", "chevalier.png",
-				ClasseHeros.COMMUN, 2, 1, 3, false, false, false, false);
+				ClasseHeros.COMMUN, 2, true, 1, 3, false, false, false, false);
 		CarteServiteur serviteur = new CarteServiteur(descServiteur);
 		when(jeu.getCibleCourante()).thenReturn(serviteur);
 	}

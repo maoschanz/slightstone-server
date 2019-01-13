@@ -5,8 +5,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.univ_nantes.slightstone.model.actions.ActionInvocation;
-
 import static org.mockito.Mockito.*;
 
 public class TestActionInvocation {
@@ -29,7 +27,7 @@ public class TestActionInvocation {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
 				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
-				2, 1, 3, false, false, false, false);
+				2, true, 1, 3, false, false, false, false);
 		ActionInvocation actionInvocation = new ActionInvocation(descServiteur);
 		//When
 		actionInvocation.executer(this.jeu);

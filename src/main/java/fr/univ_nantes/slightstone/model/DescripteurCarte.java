@@ -42,6 +42,9 @@ public abstract class DescripteurCarte implements Cloneable {
 	@Column(name="classe")
 	@Enumerated(EnumType.STRING)
 	private ClasseHeros classe;
+	
+	@Column(name="piochable")
+	private boolean piochable;
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
@@ -53,38 +56,72 @@ public abstract class DescripteurCarte implements Cloneable {
 	                         String description,
 	                         String imageURL,
 	                         Integer coutMana,
-	                         ClasseHeros classe) {
+	                         ClasseHeros classe,
+	                         boolean piochable) {
 		this.nom = nom;
 		this.description = description;
 		this.imageURL = imageURL;
 		this.coutMana = coutMana;
 		this.classe = classe;
+		this.piochable = piochable;
 	}
 	
 	/* ******************************** */
 	/* ********** Accesseurs ********** */
 	/* ******************************** */
 	
+	/**
+	 * Retourne l'identifiant de la carte dans la bdd
+	 * 
+	 * @return : l'identifiant de la carte dans la bdd
+	 */
 	public Integer getIdCarte() {
 		return this.idCarte;
 	}
 
+	/**
+	 * Retourne le nom de la carte
+	 * 
+	 * @return : le nom de la carte
+	 */
 	public String getNom() {
 		return this.nom;
 	}
 
+	/**
+	 * Retourn la description textuelle de la carte
+	 * 
+	 * @return : une description de la carte
+	 */
 	public String getDescription() {
 		return this.description;
 	}
 
+	/**
+	 * Retourne l'URL de l'image associée à la carte
+	 * 
+	 * @return : l'URL de l'image associée à la carte
+	 */
 	public String getimageURL() {
 		return this.imageURL;
 	}
 
+	/**
+	 * Retourne la classe à laquelle doit appartenir le héros pour pouvoir
+	 * utiliser cette carte
+	 * 
+	 * @return : la classe à laquelle doit appartenir le héros pour pouvoir
+	 * utiliser cette carte
+	 */
 	public ClasseHeros getClasse() {
 		return this.classe;
 	}
 
+	/**
+	 * Retourne le coût en mana nécessaire pour utiliser cette carte
+	 * 
+	 * @return : coût en mana nécessaire pour utiliser cette carte
+	 */
 	public Integer getCoutMana() {
 		return this.coutMana;
 	}
@@ -93,6 +130,26 @@ public abstract class DescripteurCarte implements Cloneable {
 	/* ********** Méthodes ********** */
 	/* ****************************** */
 
+	/**
+	 * Indique si la carte correspond à une carte sort
+	 * 
+	 * @return : true si la carte est un sort; false sinon
+	 */
+	public abstract boolean estSort();
+	
+	/**
+	 * Indique si la carte correspond à une carte serviteur
+	 * 
+	 * @return : true si la carte est un serviteur; false sinon
+	 */
+	public abstract boolean estServiteur();
+	
+	/**
+	 * Vérifie si une quantité donnée de mana est suffisante pour jouer cette carte
+	 * 
+	 * @param quantiteMana : quantité de mana dont on dispose
+	 * @return : true si la quantité de mana est suffisante pour jouer cette carte; false sinon
+	 */
 	public boolean estManaSuffisante(int quantiteMana) {
 		return quantiteMana >= this.coutMana;
 	}

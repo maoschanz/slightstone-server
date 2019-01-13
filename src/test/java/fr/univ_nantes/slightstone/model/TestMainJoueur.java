@@ -16,7 +16,7 @@ public class TestMainJoueur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		Integer length = this.hand.getCartes().size();
 		// When
 		this.hand.ajouter(descServiteur);
@@ -30,7 +30,7 @@ public class TestMainJoueur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		Integer length = this.hand.getCartes().size();
 		// When
 		this.hand.retirer(descServiteur);
@@ -44,11 +44,11 @@ public class TestMainJoueur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		// When
 		boolean b = this.hand.contient(descServiteur);
 		// Then
-		assert (b = this.hand.getCartes().contains(descServiteur));
+		assert (b == this.hand.getCartes().contains(descServiteur));
 	}
 }
 

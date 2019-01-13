@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.jpa;
 
 import java.util.List;
 
@@ -8,7 +8,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import fr.univ_nantes.slightstone.model.actions.Action;
+import fr.univ_nantes.slightstone.model.Action;
+import fr.univ_nantes.slightstone.model.ClasseHeros;
+import fr.univ_nantes.slightstone.model.DescripteurCarte;
+import fr.univ_nantes.slightstone.model.DescripteurHeros;
 
 @Service
 public class ServiceJpaSlightstone {
@@ -59,6 +62,6 @@ public class ServiceJpaSlightstone {
 	}
 	
 	public List<DescripteurCarte> construireDeck(ClasseHeros classeHeros) {
-		return cRepository.findByClasseOrClasse(ClasseHeros.COMMUN, classeHeros);
+		return cRepository.findByClasseOrClasseAndPiochable(ClasseHeros.COMMUN, classeHeros, true);
 	}
 }

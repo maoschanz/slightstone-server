@@ -50,10 +50,10 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 
 	protected DescripteurServiteur() {}
 	
-	public DescripteurServiteur(String nom, String description, String imageURL, ClasseHeros classe,
-			Integer coutMana, Integer pointsDeDegats, Integer pointsDeVie,
+	public DescripteurServiteur(String nom, String description, String imageURL, ClasseHeros classe, 
+			Integer coutMana, boolean piochable, Integer pointsDeDegats, Integer pointsDeVie,
 			boolean effetProvocation, boolean effetCharge, boolean effetVolDeVie, boolean effetLeader) {
-		super(nom, description, imageURL, coutMana, classe);
+		super(nom, description, imageURL, coutMana, classe, piochable);
 		this.pointsDeVie = pointsDeVie;
 		this.pointsDeDegats = pointsDeDegats;
 		this.effetProvocation = effetProvocation;
@@ -68,7 +68,7 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	/* ******************************** */
 	
 	/**
-	 * Récupère les points de vie initiaux du serviteur.
+	 * Retourne les points de vie initiaux du serviteur.
 	 * 
 	 * @return : points de vie du serviteur à l'invocation
 	 */
@@ -77,7 +77,7 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	}
 
 	/**
-	 * Récupère les points de dégâts initiaux du serviteur.
+	 * Retourne les points de dégâts initiaux du serviteur.
 	 * 
 	 * @return : points de dégâts du serviteur à l'invocation
 	 */
@@ -88,7 +88,7 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	/**
 	 * Indique si le serviteur a initialement l'effet "Provocation".
 	 * 
-	 * @return
+	 * @return : true si le serviteur a l'effet Provocation"; false sinon
 	 */
 	public boolean aEffetProvocation() {
 		return this.effetProvocation;
@@ -97,7 +97,7 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	/**
 	 * Indique si le serviteur a initialement l'effet "Charge".
 	 * 
-	 * @return
+	 * @return : true si le serviteur a l'effet "Charge"; false sinon
 	 */
 	public boolean aEffetCharge() {
 		return this.effetCharge;
@@ -106,7 +106,7 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	/**
 	 * Indique si le serviteur a initialement l'effet "Vol de vie".
 	 * 
-	 * @return
+	 * @return : true si le serviteur a l'effet "Vol de vie"; false sinon
 	 */
 	public boolean aEffetVolDeVie() {
 		return this.effetVolDeVie;
@@ -115,16 +115,16 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 	/**
 	 * Indique si le serviteur a initialement l'effet "Leader".
 	 * 
-	 * @return
+	 * @return : true si le serviteur a l'effet "Leader"; false sinon
 	 */
 	public boolean aEffetLeader() {
 		return this.effetLeader;
 	}
 
 	/**
-	 * Récupère le type de cible(s) que peut attaquer le serviteur.
+	 * Retourne le type de cible(s) qu'attaque le serviteur.
 	 * 
-	 * @return
+	 * @return : le type de cible(s) qu'attaque le serviteur
 	 */
 	public TypeCible getTypeCible() {
 		return this.typeCible;
@@ -145,5 +145,25 @@ public class DescripteurServiteur extends DescripteurCarte implements Cloneable 
 		Object o = null;
 		o = super.clone();
 		return o;
+	}
+
+	/**
+	 * Indique si la carte correspond à une carte sort
+	 * 
+	 * @return : false
+	 */
+	@Override
+	public boolean estSort() {
+		return false;
+	}
+
+	/**
+	 * Indique si la carte correspond à une carte serviteur
+	 * 
+	 * @return : true
+	 */
+	@Override
+	public boolean estServiteur() {
+		return true;
 	}
 }

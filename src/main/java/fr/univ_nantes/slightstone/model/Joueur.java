@@ -2,6 +2,8 @@ package fr.univ_nantes.slightstone.model;
 
 import java.util.List;
 
+import fr.univ_nantes.slightstone.model.jpa.ServiceJpaSlightstone;
+
 public class Joueur {
 
 	/* ******************************* */
@@ -60,7 +62,7 @@ public class Joueur {
 	}
 
 	/**
-	 * Retourne la liste des serviteurs invoqués par le joueur (présent sur le
+	 * Retourne la liste des serviteurs invoqués par le joueur (présents sur le
 	 * plateau).
 	 * 
 	 * @return : liste des serviteurs du joueur
@@ -72,7 +74,7 @@ public class Joueur {
 	/**
 	 * Retourne la liste des cartes présentes dans la main du joueur.
 	 * 
-	 * @return : main du joueur
+	 * @return : la liste des cartes présentes dans la main du joueur
 	 */
 	public List<DescripteurCarte> getMainJoueur() {
 		return this.hand.getCartes();
@@ -81,7 +83,7 @@ public class Joueur {
 	/**
 	 * Retourne la liste des cartes présentes dans la pioche du joueur
 	 * 
-	 * @return : pioche du joueur
+	 * @return : la liste des cartes présentes dans la pioche du joueur
 	 */
 	protected List<DescripteurCarte> getPioche() {
 		return this.deck.getCartes();
@@ -90,7 +92,7 @@ public class Joueur {
 	/**
 	 * Retourne la capacité de stockage de mana du joueur
 	 * 
-	 * @return : capacite de mana du joueur
+	 * @return : la capacite en mana du joueur
 	 */
 	public int getCapaciteMana() {
 		return this.stockMana.getCapacite();
@@ -99,7 +101,7 @@ public class Joueur {
 	/**
 	 * Retourne la quantité de mana actuelle du joueur
 	 * 
-	 * @return : quantité de mana du joueur
+	 * @return : la quantité de mana du joueur
 	 */
 	public int getQuantiteMana() {
 		return this.stockMana.getQuantite();
@@ -108,11 +110,51 @@ public class Joueur {
 	/* ****************************** */
 	/* ********** Méthodes ********** */
 	/* ****************************** */
+	
+	/**
+	 * Vérifie si une carte donnée est présente dans la main du joueur
+	 * 
+	 * @param carte : une carte
+	 * @return : true si le joueur a la carte dans sa main; false sinon
+	 */
+	public boolean possedeCarte(DescripteurCarte carte) {
+		return this.hand.contient(carte);
+	}
+
+	/**
+	 * Vérifie si un serviteur donné est sur le plateau du joueur
+	 * 
+	 * @param serviteur : un serviteur
+	 * @return : true si le serviteur est présent sur le plateau du joueur; false sinon
+	 */
+	public boolean possedeServiteur(CarteServiteur serviteur) {
+		return this.board.contient(serviteur);
+	}
+
+	/**
+	 * Vérifie si un héros donné est le héros du joueur
+	 * 
+	 * @param heros : un héros
+	 * @return : true si c'est le héros du joueur; false sinon
+	 */
+	public boolean estHerosJoueur(Heros heros) {
+		return this.heros.equals(heros);
+	}
+
+	/**
+	 * Vérifie si l'un des serviteurs du jouer a l'effet provocation actif
+	 * 
+	 * @return : true si l'un des serviteurs présents sur le plateau du joueur
+	 * a l'effet "Provocation"; false sinon
+	 */
+	public boolean aServiteurAvecProvocation() {
+		return this.board.contientServiteurAvecProvocation();
+	}
 
 	/**
 	 * Pioche une carte dans le deck et l'ajoute dans la main.
 	 */
-	public void piocherCarte() {
+	void piocherCarte() {
 		DescripteurCarte carte = this.deck.piocher();
 		this.hand.ajouter(carte);
 	}
@@ -120,9 +162,9 @@ public class Joueur {
 	/**
 	 * Invoque un serviteur sur le plateau.
 	 * 
-	 * @param descServiteur : description du serviteur à invoquer
+	 * @param descServiteur : la description du serviteur à invoquer
 	 */
-	public void invoquerServiteur(DescripteurServiteur descServiteur) {
+	void invoquerServiteur(DescripteurServiteur descServiteur) {
 		this.board.invoquer(descServiteur);
 	}
 
@@ -131,13 +173,13 @@ public class Joueur {
 	 * serviteur, on l'invoque sur le plateau. Si la carte correspond à un sort, on
 	 * lance les actions associées.
 	 * 
-	 * @param carte : carte à jouer
+	 * @param carte : la carte à jouer
 	 */
-	public void jouerCarte(Jeu jeu, DescripteurCarte carte) {
+	void jouerCarte(Jeu jeu, DescripteurCarte carte) {
 		int coutCarte = carte.getCoutMana();
 		this.stockMana.depenserMana(coutCarte);
 		this.hand.retirer(carte);
-		if (carte instanceof DescripteurSort) {
+		if (carte.estSort()) {
 			DescripteurSort sort = (DescripteurSort) carte;
 			sort.lancerActions(jeu);
 		} else {
@@ -149,7 +191,7 @@ public class Joueur {
 	/**
 	 * Lance l'action spéciale du héros.
 	 */
-	public void jouerActionHeros(Jeu jeu) {
+	void jouerActionHeros(Jeu jeu) {
 		int coutActionHeros = this.heros.getCoutActionSpeciale();
 		this.stockMana.depenserMana(coutActionHeros);
 		this.heros.jouerActionSpeciale(jeu);
@@ -158,56 +200,14 @@ public class Joueur {
 	/**
 	 * Augmente la capcité de stockage du stock de mana et le recharge.
 	 */
-	public void augmenterCapaciteMana() {
+	void augmenterCapaciteMana() {
 		this.stockMana.augmenterCapacite();
 	}
 
 	/**
-	 * Rend tous les serviteurs jouable.
-	 * 
-	 * Cette méthode est utilisée au début de chaque tour pour rendre jouable les
-	 * serviteurs invoqués au tour précédent.
+	 * Rend tous les serviteurs jouables.
 	 */
-	public void actualiserJouabiliteServiteurs() {
+	void actualiserJouabiliteServiteurs() {
 		this.board.actualiserJouabiliteServiteurs();
-	}
-
-	/**
-	 * Vérifie si une carte donnée est présente dans la main du joueur
-	 * 
-	 * @param carte
-	 * @return
-	 */
-	public boolean possedeCarte(DescripteurCarte carte) {
-		return this.hand.contient(carte);
-	}
-
-	/**
-	 * Vérifie si un serviteur donné est sur le plateau du joueur
-	 * 
-	 * @param serviteur
-	 * @return
-	 */
-	public boolean possedeServiteur(CarteServiteur serviteur) {
-		return this.board.contient(serviteur);
-	}
-
-	/**
-	 * Vérifie si un héros donné est le héros du joueur
-	 * 
-	 * @param heros
-	 * @return
-	 */
-	public boolean estHerosJoueur(Heros heros) {
-		return this.heros.equals(heros);
-	}
-
-	/**
-	 * Vérifie si l'un des serviteurs du jouer a un effet provocation actif
-	 * 
-	 * @return
-	 */
-	public boolean aServiteurAvecProvocation() {
-		return this.board.contientServiteurAvecProvocation();
 	}
 }

@@ -9,24 +9,29 @@ import fr.univ_nantes.slightstone.model.DescripteurCarte;
 import fr.univ_nantes.slightstone.model.DescripteurServiteur;
 import fr.univ_nantes.slightstone.model.DescripteurSort;
 import fr.univ_nantes.slightstone.model.Heros;
-import fr.univ_nantes.slightstone.model.Jeu;
+import fr.univ_nantes.slightstone.model.InterfaceModele;
 import fr.univ_nantes.slightstone.model.Joueur;
 
+/**
+ * Cette classe a pour rôle de construire l'état du jeu.
+ * L'état du jeu correspond à l'ensemble des informations qui sont nécessaires
+ * au client pour afficher le jeu et permettre à l'utilisateur d'intéragir avec.
+ */
 public class EtatPartie {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
 	/* ******************************* */
 
-	private Jeu jeu;
+	private InterfaceModele modele;
 	private Partie partie;
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
 	/* *********************************** */
 	
-	public EtatPartie(Jeu jeu, Partie partie) {
-		this.jeu = jeu;
+	public EtatPartie(InterfaceModele modele, Partie partie) {
+		this.modele = modele;
 		this.partie = partie;
 	}
 	
@@ -41,7 +46,7 @@ public class EtatPartie {
 		actionSpeciale.put("description", actionHeros.getDescription());
 		actionSpeciale.put("image", actionHeros.getimageURL());
 		actionSpeciale.put("cout", actionHeros.getCoutMana());
-		actionSpeciale.put("cible", actionHeros.cibleASelectionner());
+		actionSpeciale.put("cible", actionHeros.typeCibleAttendu());
 		return actionSpeciale;
 	}
 	
@@ -100,7 +105,7 @@ public class EtatPartie {
 		descripteur.put("image", descSort.getimageURL());
 		descripteur.put("classe", descSort.getClasse());
 		descripteur.put("cout", descSort.getCoutMana());
-		descripteur.put("cible", descSort.cibleASelectionner());
+		descripteur.put("cible", descSort.typeCibleAttendu());
 		descripteur.put("identifiant", this.partie.getIdentifiantCarte(descSort));
 		return descripteur;
 	}
@@ -158,16 +163,16 @@ public class EtatPartie {
 	}
 	
 	private Joueur getEtatAdversaire(Joueur joueur) {
-		if(this.jeu.estJoueurCourant(joueur)) {
-			return this.jeu.getJoueurAdverse();
+		if(this.modele.estJoueurCourant(joueur)) {
+			return this.modele.getJeu().getJoueurAdverse();
 		} else {
-			return this.jeu.getJoueurCourant();
+			return this.modele.getJeu().getJoueurCourant();
 		}
 	}
 	
 	public HashMap<String, Object> recupererEtatPartie(Joueur joueur) {
 		HashMap<String, Object> etatPartie = new HashMap<String, Object>();
-		etatPartie.put("estJoueurCourant", this.jeu.getJoueurCourant().equals(joueur));
+		etatPartie.put("estJoueurCourant", this.modele.estJoueurCourant(joueur));
 		etatPartie.put("joueur", this.getEtatJoueur(joueur, false));
 		etatPartie.put("adversaire", this.getEtatJoueur(this.getEtatAdversaire(joueur), true));
 		return etatPartie;

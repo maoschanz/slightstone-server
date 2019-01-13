@@ -1,12 +1,8 @@
-package fr.univ_nantes.slightstone.model.actions;
+package fr.univ_nantes.slightstone.model;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import fr.univ_nantes.slightstone.model.CarteServiteur;
-import fr.univ_nantes.slightstone.model.Jeu;
-import fr.univ_nantes.slightstone.model.TypeCible;
 
 /**
  * Cette action transforme un serviteur sélectionné par le joueur courant en un
@@ -34,7 +30,7 @@ public class ActionMouton extends Action {
 	 * serviteur 1/1 sans effet spécial
 	 */
 	@Override
-	public void executer(Jeu jeu) {
+	void executer(Jeu jeu) {
 		CarteServiteur serviteur = (CarteServiteur) jeu.getCibleCourante();
 		serviteur.setPointsDeDegats(1);
 		serviteur.setPointsDeVie(1);

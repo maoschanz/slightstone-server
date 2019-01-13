@@ -2,8 +2,6 @@ package fr.univ_nantes.slightstone.model;
 
 import org.junit.jupiter.api.Test;
 
-import fr.univ_nantes.slightstone.model.actions.ActionMouton;
-
 import static org.mockito.Mockito.*;
 
 public class TestActionMouton {
@@ -13,7 +11,7 @@ public class TestActionMouton {
 		//With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("chevalier",
 				"un chevalier", "chevalier.png", ClasseHeros.COMMUN,
-				2, 1, 3, false, false, false, false);
+				2, true, 1, 3, false, false, false, false);
 		CarteServiteur cible = new CarteServiteur(descServiteur);
 		Jeu jeu = mock(Jeu.class);
 		when(jeu.getCibleCourante()).thenReturn(cible);

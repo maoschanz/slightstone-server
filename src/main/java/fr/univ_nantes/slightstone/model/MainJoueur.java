@@ -24,7 +24,7 @@ public class MainJoueur {
 	/* ******************************** */
 	
 	/**
-	 * Récupère les cartes présentes dans la main du joueur.
+	 * Retourne les cartes présentes dans la main du joueur.
 	 * 
 	 * @return : liste de cartes
 	 */
@@ -37,11 +37,20 @@ public class MainJoueur {
 	/* ****************************** */
 
 	/**
+	 * Vérifie si une carte données est présente dans la main du joueur
+	 * @param carte : une carte que l'on cherche
+	 * @return : true si la carte est présente dans la main du joueur; false sinon
+	 */
+	public boolean contient(DescripteurCarte carte) {
+		return this.cartes.contains(carte);
+	}
+	
+	/**
 	 * Ajoute une carte dans la main du joueur.
 	 * 
 	 * @param carte : carte à ajouter
 	 */
-	public void ajouter(DescripteurCarte carte) {
+	void ajouter(DescripteurCarte carte) {
 		this.cartes.add(carte);
 	}
 
@@ -50,17 +59,7 @@ public class MainJoueur {
 	 * 
 	 * @param carte : carte à retirer
 	 */
-	public void retirer(DescripteurCarte carte) {
+	void retirer(DescripteurCarte carte) {
 		this.cartes.remove(carte);
-	}
-
-	/**
-	 * Vérifie si une carte est dans la main du joueur.
-	 * 
-	 * @param carte : carte à vérifier
-	 * @return boolean : si la carte est la main
-	 */
-	public boolean contient(DescripteurCarte carte) {
-		return this.cartes.contains(carte);
 	}
 }

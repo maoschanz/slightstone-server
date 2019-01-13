@@ -37,9 +37,6 @@ public class DescripteurHeros {
 	@Column(name="classe_heros")
 	@Enumerated(EnumType.STRING)
 	private ClasseHeros classe;
-
-	@Column(name="cout_action_speciale")
-	private Integer coutActionSpeciale;
 	
 	@OneToOne(fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(name="id_carte")
@@ -58,7 +55,6 @@ public class DescripteurHeros {
 		this.urlImage = urlImage;
 		this.pointsDeVie = 30;
 		this.pointsArmure = 0;
-		this.coutActionSpeciale = 2;
 		this.actionSpe = actionSpe;
 	}
 	
@@ -67,7 +63,7 @@ public class DescripteurHeros {
 	/* ******************************** */
 	
 	/**
-	 * Récupère les points de vie initiaux du héros.
+	 * Retourne les points de vie initiaux du héros.
 	 * 
 	 * @return : points de vie du héros
 	 */
@@ -76,43 +72,43 @@ public class DescripteurHeros {
 	}
 
 	/**
-	 * Récupère les points armure initiaux du héros.
+	 * Retourne les points armures initiaux du héros.
 	 * 
-	 * @return : points armure du héros
+	 * @return : points armures du héros
 	 */
 	public Integer getPointsArmure() {
 		return this.pointsArmure;
 	}
 	
 	/**
-	 * Récupère la classe du héros.
+	 * Retourne la classe à laquelle appartient le héros.
 	 * 
-	 * @return : la classe du héros (de type ClasseHeros)
+	 * @return : la classe du héros
 	 */
 	public ClasseHeros getClasse() {
 		return this.classe;
 	}
 	
 	/**
-	 * Récupère l'url où trouver l'image du héros.
+	 * Retourne l'URL de l'image associée au héros.
 	 * 
-	 * @return : URL où trouver l'image du héros
+	 * @return : URL de l'image associée au héros
 	 */
 	public String getUrlImage() {
 		return this.urlImage;
 	}
 	
 	/**
-	 * Récupère le coût en mana de l'attaque spéciale du héros.
+	 * Retourne le coût en mana de l'attaque spéciale du héros.
 	 * 
 	 * @return : coût en mana pour lancer l'attaque spéciale du héros
 	 */
 	public Integer getCoutActionSpeciale() {
-		return this.coutActionSpeciale;
+		return this.getActionSpeciale().getCoutMana();
 	}
 	
 	/**
-	 * Récupère l'attaque spéciale du héros.
+	 * Retourne l'attaque spéciale du héros.
 	 * 
 	 * @return : carte sort correspondant à l'attaque spéciale du héros
 	 */

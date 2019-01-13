@@ -3,6 +3,8 @@ package fr.univ_nantes.slightstone.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univ_nantes.slightstone.model.jpa.ServiceJpaSlightstone;
+
 public class Deck {
 	
 	/* ******************************* */
@@ -26,11 +28,11 @@ public class Deck {
 	/* ******************************** */
 	
 	/**
-	 * Récupère la liste des cartes présentes dans la pioche.
+	 * Retourne la liste des cartes présentes dans la pioche.
 	 * 
-	 * @return : liste de cartes
+	 * @return : liste des cartes présentes dans la pioche
 	 */
-	protected List<DescripteurCarte> getCartes() {
+	public List<DescripteurCarte> getCartes() {
 		return this.cartes;
 	}
 	
@@ -39,11 +41,11 @@ public class Deck {
 	/* ****************************** */
 
 	/**
-	 * Récupère une carte au hasard dans la pioche.
+	 * Retourne une carte au hasard parmi celles de la pioche.
 	 * 
-	 * @return : carte tirée aléatoirement
+	 * @return : une carte tirée aléatoirement
 	 */
-	public DescripteurCarte piocher() {
+	DescripteurCarte piocher() {
 		Integer index = (int)(Math.random() * this.cartes.size());
 		DescripteurCarte carte = this.cartes.get(index);
 		return (DescripteurCarte) carte.clone();

@@ -27,7 +27,7 @@ public class TestCarteServiteur {
 		assert (serviteur.aEffetCharge() == descServiteur.aEffetCharge());
 		assert (serviteur.aEffetProvocation() == descServiteur.aEffetProvocation());
 		assert (serviteur.aEffetVolDeVie() == descServiteur.aEffetVolDeVie());
-		assert (serviteur.getTypeCible() == descServiteur.getTypeCible());
+		assert (serviteur.typeCibleAttendu() == descServiteur.getTypeCible());
 		assert (!serviteur.estJouable());
 	}
 
@@ -52,7 +52,7 @@ public class TestCarteServiteur {
 		assert (serviteur.aEffetCharge() == descServiteur.aEffetCharge());
 		assert (serviteur.aEffetProvocation() == descServiteur.aEffetProvocation());
 		assert (serviteur.aEffetVolDeVie() == descServiteur.aEffetVolDeVie());
-		assert (serviteur.getTypeCible() == descServiteur.getTypeCible());
+		assert (serviteur.typeCibleAttendu() == descServiteur.getTypeCible());
 		assert (serviteur.estJouable());
 	}
 
@@ -61,7 +61,7 @@ public class TestCarteServiteur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur serviteur = new CarteServiteur(descServiteur);
 		// When
 		serviteur.boostDegats(2);
@@ -74,7 +74,7 @@ public class TestCarteServiteur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 5, false, false, false, true);
+				3, true, 2, 5, false, false, false, true);
 		CarteServiteur serviteur = new CarteServiteur(descServiteur);
 		// When
 		serviteur.prendreDegats(2);
@@ -91,7 +91,7 @@ public class TestCarteServiteur {
 		
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descServiteur);
 		CarteServiteur cible = new CarteServiteur(descServiteur);
 
@@ -119,7 +119,7 @@ public class TestCarteServiteur {
 		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When
@@ -145,7 +145,7 @@ public class TestCarteServiteur {
 		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When
@@ -171,7 +171,7 @@ public class TestCarteServiteur {
 		
 		DescripteurServiteur descAttaquant = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur attaquant = new CarteServiteur(descAttaquant);
 
 		// When

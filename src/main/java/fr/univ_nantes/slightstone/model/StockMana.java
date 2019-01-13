@@ -42,7 +42,7 @@ public class StockMana {
 	/* ******************************** */
 
 	/**
-	 * Récupère la quantité actuelle du stock de mana.
+	 * Retourne la quantité actuelle du stock de mana.
 	 * 
 	 * @return : quantité de mana restante
 	 */
@@ -51,9 +51,9 @@ public class StockMana {
 	}
 
 	/**
-	 * Récupère la capacité actuelle du stock de mana.
+	 * Retourne la capacité actuelle du stock de mana.
 	 * 
-	 * @return : capacité actuelle du stock de mana
+	 * @return : la capacité actuelle du stock de mana
 	 */
 	public Integer getCapacite() {
 		return this.capacite;
@@ -64,23 +64,20 @@ public class StockMana {
 	/* ****************************** */
 	
 	/**
-	 * Vérifie si le joueur dispose d'assez de mana
-	 * et consomme une quantité donnée de mana.
+	 * Consomme une quantité donnée de mana.
 	 * 
-	 * @param mana : quantité de mana que l'on souhaite dépenser
-	 * @return : true   => quantité de mana suffisante, mana bien dépensé
-	 * 			 false  => pas assez de mana
+	 * @param mana : la quantité de mana que l'on souhaite dépenser
 	 */
-	public void depenserMana(Integer mana) {
+	void depenserMana(Integer mana) {
 		this.quantite -= mana;
 	}
 	
 	/**
 	 * Augmente la capacité du stock de mana et recharge ce dernier.
-	 * Si la capacité actuelle est égal à la capacité maximum du stock de mana,
+	 * Si la capacité actuelle est égal à la capacité maximum du stock,
 	 * le stock est seulement rechargé.
 	 */
-	public void augmenterCapacite() {
+	void augmenterCapacite() {
 		if(this.capacite < StockMana.CAPACITE_MAX) {
 			this.capacite++;
 		}

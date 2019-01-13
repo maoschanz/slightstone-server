@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.controller;
+package fr.univ_nantes.slightstone.model.exceptions;
 
 public class ViolationReglesException extends Exception {
 

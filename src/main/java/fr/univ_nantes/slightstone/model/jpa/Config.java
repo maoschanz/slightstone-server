@@ -1,4 +1,4 @@
-package fr.univ_nantes.slightstone.model;
+package fr.univ_nantes.slightstone.model.jpa;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +22,7 @@ import fr.univ_nantes.slightstone.server.WebSocketConfig;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = { "fr.univ_nantes.slightstone.model" })
+@EnableJpaRepositories(basePackages = { "fr.univ_nantes.slightstone.model.jpa" })
 @PropertySource("classpath:application.properties")
 @Import(WebSocketConfig.class)
 public class Config {

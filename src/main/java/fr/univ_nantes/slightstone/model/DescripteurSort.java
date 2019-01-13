@@ -7,7 +7,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import fr.univ_nantes.slightstone.model.actions.Action;
 import fr.univ_nantes.slightstone.model.exceptions.ActionException;
 
 import java.util.ArrayList;
@@ -39,8 +38,9 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	                        String description,
 	                        String imageURL,
 	                        ClasseHeros classe,
-	                        Integer coutMana) {
-		super(nom, description, imageURL, coutMana, classe);
+	                        Integer coutMana,
+	                        boolean piochable) {
+		super(nom, description, imageURL, coutMana, classe, piochable);
 		this.actions = new ArrayList<Action>();
 	}
 
@@ -55,9 +55,9 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	 * Si aucune action ne requiert la sélection d'une cible, alors retourne
 	 * TypeCible.AUCUNE (aucune cible à sélectionner).
 	 * 
-	 * @return type de cible que doit sélectionner le joueur
+	 * @return : type de cible que doit sélectionner le joueur
 	 */
-	public TypeCible cibleASelectionner() {
+	public TypeCible typeCibleAttendu() {
 		for(Action action : this.actions) {
 			if(action.requiertCible()) {
 				return action.getTypeCible();
@@ -69,7 +69,8 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 	/**
 	 * Vérifie si une action requiert la selection d'une cible.
 	 * 
-	 * @return
+	 * @return : AUCUNE si le sort ne requiert aucune cible; UN_ADVERSAIRE,
+	 * UN_SERVITEUR_ADVERSE, UN_SERVITEUR_ALLIE sinon
 	 */
 	public boolean requiertSelection() {
 		for(Action action : this.actions) {
@@ -108,5 +109,25 @@ public class DescripteurSort extends DescripteurCarte implements Cloneable {
 		Object o = null;
 		o = super.clone();
 		return o;
+	}
+
+	/**
+	 * Indique si la carte correspond à une carte sort
+	 * 
+	 * @return : true
+	 */
+	@Override
+	public boolean estSort() {
+		return true;
+	}
+
+	/**
+	 * Indique si la carte correspond à une carte serviteur
+	 * 
+	 * @return : false
+	 */
+	@Override
+	public boolean estServiteur() {
+		return false;
 	}
 }

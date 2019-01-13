@@ -3,10 +3,6 @@ package fr.univ_nantes.slightstone.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.univ_nantes.slightstone.model.exceptions.ValeurNegativeException;
-
-import static org.mockito.Mockito.*;
-
 public class TestJoueur {
 	private Joueur joueur;
 
@@ -47,7 +43,7 @@ public class TestJoueur {
 		// When
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		this.joueur.invoquerServiteur(descServiteur);
 		// Then
 		assert (this.joueur.getServiteurs().stream().anyMatch( carte -> {
@@ -114,11 +110,11 @@ public class TestJoueur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		// When
 		boolean b = this.joueur.possedeCarte(descServiteur);
 		// Then
-		assert (b = this.joueur.getMainJoueur().contains(descServiteur));
+		assert (b == this.joueur.getMainJoueur().contains(descServiteur));
 	}
 	
 	@Test
@@ -126,12 +122,12 @@ public class TestJoueur {
 		// With
 		DescripteurServiteur descServiteur = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		CarteServiteur serv = new CarteServiteur(descServiteur);
 		// When
 		boolean b = this.joueur.possedeServiteur(serv);
 		// Then
-		assert (b = this.joueur.getServiteurs().contains(serv));
+		assert (b == this.joueur.getServiteurs().contains(serv));
 	}
 	
 	@Test
@@ -139,7 +135,7 @@ public class TestJoueur {
 		// With
 		DescripteurServiteur descServiteur1 = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, false, false, false, true);
+				3, true, 2, 2, false, false, false, true);
 		// When
 		this.joueur.invoquerServiteur(descServiteur1);
 		// Then
@@ -148,7 +144,7 @@ public class TestJoueur {
 		// With
 		DescripteurServiteur descServiteur2 = new DescripteurServiteur("Chef de raid",
 				"Serviteur 2/2", "chefDeRaid.png", ClasseHeros.COMMUN,
-				3, 2, 2, true, false, false, true);
+				3, true, 2, 2, true, false, false, true);
 		// When
 		this.joueur.invoquerServiteur(descServiteur2);
 		// Then
