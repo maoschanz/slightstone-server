@@ -57,7 +57,7 @@ public class EtatPartie {
 		etatHeros.put("image", heros.getDescripteur().getUrlImage());
 		etatHeros.put("pointsVie", heros.getPointsDeVie());
 		etatHeros.put("pointsArmure", heros.getPointsArmure());
-		etatHeros.put("idenfitiant", this.partie.getIdentifiantCible(heros));
+		etatHeros.put("identifiant", this.partie.getIdentifiantCible(heros));
 		if(!estAdversaire) {
 			etatHeros.put("actionSpeciale", this.getActionSpecialeHeros(heros));
 		}
