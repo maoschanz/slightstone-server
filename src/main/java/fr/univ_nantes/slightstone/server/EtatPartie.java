@@ -59,6 +59,7 @@ public class EtatPartie {
 		etatHeros.put("pointsArmure", heros.getPointsArmure());
 		etatHeros.put("identifiant", this.partie.getIdentifiantCible(heros));
 		if(!estAdversaire) {
+			etatHeros.put("actionChargee", heros.estActionChargee());
 			etatHeros.put("actionSpeciale", this.getActionSpecialeHeros(heros));
 		}
 		return etatHeros;

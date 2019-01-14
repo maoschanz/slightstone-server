@@ -11,6 +11,7 @@ public class Heros implements Ciblable {
 	private Integer pointsDeVie;
 	private Integer pointsArmure;
 	private DescripteurHeros descripteur;
+	private boolean actionChargee; // sert à restreindre l'action spéciale à une utilisation par tour
 
 	/* *********************************** */
 	/* ********** Constructeurs ********** */
@@ -20,6 +21,7 @@ public class Heros implements Ciblable {
 		this.pointsDeVie = descripteur.getPointsVie();
 		this.pointsArmure = descripteur.getPointsArmure();
 		this.descripteur = descripteur;
+		this.actionChargee = true;
 	}
 	
 	/* ******************************** */
@@ -90,6 +92,25 @@ public class Heros implements Ciblable {
 		return this.descripteur.getActionSpeciale();
 	}
 	
+	/**
+	 * Vérifie si l'action spéciale du héros est rechargée
+	 * 
+	 * @return : true si l'action peut être utilisée; false sinon
+	 */
+	public boolean estActionChargee() {
+		return this.actionChargee;
+	}
+	
+	/**
+	 * Modifie l'état de l'action spéciale
+	 * 
+	 * @param actionChargee : true pour permettre l'utilisation de l'action
+	 * spéciale; false pour l'interdire
+	 */
+	void setActionChargee(boolean actionChargee) {
+		this.actionChargee = actionChargee;
+	}
+	
 	/* ****************************** */
 	/* ********** Méthodes ********** */
 	/* ****************************** */
@@ -131,6 +152,7 @@ public class Heros implements Ciblable {
 	 */
 	void jouerActionSpeciale(Jeu jeu) {
 		this.descripteur.getActionSpeciale().lancerActions(jeu);
+		this.setActionChargee(false); // l'action spéciale ne peut être lancée qu'une fois par tour
 	}
 	
 	/**

@@ -169,12 +169,14 @@ public class Jeu {
 	 * - la capacité du stock de mana augmente de 1 et est entièrement rechargé
 	 * - les serviteurs invoqués au tour précédent (qui n'étaient alors pas
 	 * tous jouables) deviennent jouables
+	 * - l'action spéciale du héros est rechargée
 	 */
 	void terminerTour() {
 		Joueur joueurCourant = this.getJoueurCourant();
 		joueurCourant.piocherCarte();
 		joueurCourant.augmenterCapaciteMana();
 		joueurCourant.actualiserJouabiliteServiteurs();
+		joueurCourant.getHeros().setActionChargee(true);
 		this.tourJoueur1 = !this.tourJoueur1;
 	}
 

@@ -94,22 +94,28 @@ public class InterfaceModele {
 	}
 
 	public void lancerActionHeros(Joueur joueur) throws ViolationReglesException {
-		DescripteurSort actionHeros = joueur.getHeros().getActionSpeciale();
+		Heros heros = joueur.getHeros();
+		DescripteurSort actionHeros = heros.getActionSpeciale();
 		if(!this.estJoueurCourant(joueur)) {
 			throw new ViolationReglesException("Un joueur ne peut jouer que lorsque c'est son tour");
+		} else if(!heros.estActionChargee()) {
+			throw new ViolationReglesException("Un joueur ne peut jouer l'action spéciale du héros qu'une fois par tour");
 		} else if(!actionHeros.estManaSuffisante(joueur.getQuantiteMana())) {
-			throw new ViolationReglesException("Un joueur ne peut lancer l'action spécial du héros que s'il dispose de la quantité de mana suffisante");
+			throw new ViolationReglesException("Un joueur ne peut lancer l'action spéciale du héros que s'il dispose de la quantité de mana suffisante");
 		}
 		this.jeu.lancerActionHeros();	
 	}
 
 	public void lancerActionHeros(Joueur joueur, Ciblable cible) throws ViolationReglesException {
 		Joueur adversaire = this.jeu.getJoueurAdverse();
-		DescripteurSort actionHeros = joueur.getHeros().getActionSpeciale();
+		Heros heros = joueur.getHeros();
+		DescripteurSort actionHeros = heros.getActionSpeciale();
 		if(!this.estJoueurCourant(joueur)) {
 			throw new ViolationReglesException("Un joueur ne peut jouer que lorsque c'est son tour");
+		} else if(!heros.estActionChargee()) {
+			throw new ViolationReglesException("Un joueur ne peut jouer l'action spéciale du héros qu'une fois par tour");
 		} else if(!actionHeros.estManaSuffisante(joueur.getQuantiteMana())) {
-			throw new ViolationReglesException("Un joueur ne peut lancer l'action spécial du héros que s'il dispose de la quantité de mana suffisante");
+			throw new ViolationReglesException("Un joueur ne peut lancer l'action spéciale du héros que s'il dispose de la quantité de mana suffisante");
 		} else if(!this.jeu.estCibleValide(actionHeros.typeCibleAttendu(), cible)) {
 			throw new ViolationReglesException("Un joueur ne peut sélectionner une cible qui lui est interdite");
 		} else if(adversaire.aServiteurAvecProvocation() && !cible.aProvocation()) {

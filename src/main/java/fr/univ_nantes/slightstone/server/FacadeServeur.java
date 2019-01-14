@@ -169,7 +169,7 @@ public class FacadeServeur implements IServeur {
 			String pseudoVainqueur = partie.getVainqueur().getPseudo();
 			MessageFinPartie message = new MessageFinPartie(pseudoVainqueur);
 			Joueur joueur1 = partie.getJoueur1();
-			Joueur joueur2 = partie.getJoueur1();
+			Joueur joueur2 = partie.getJoueur2();
 			this.messagingTemplate.convertAndSendToUser(this.mappeurJoueurId.getClef(joueur1), "/queue/finPartie", message);
 			this.messagingTemplate.convertAndSendToUser(this.mappeurJoueurId.getClef(joueur2), "/queue/finPartie", message);
 		} catch (ViolationReglesException e) {
