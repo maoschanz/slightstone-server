@@ -30,7 +30,7 @@ public class TestJeu {
 		// When
 		jeu.initialiserMainJoueurs();
 		// Then
-		assert (joueur1.getMainJoueur().size() == 3);
-		assert (joueur2.getMainJoueur().size() == 4);
+		assert (joueur1.getMainJoueur().size() == 4);
+		assert (joueur2.getMainJoueur().size() == 3);
 	}
 }

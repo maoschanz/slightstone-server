@@ -104,11 +104,11 @@ public class Jeu {
 	 */
 	void initialiserMainJoueurs() {
 		Joueur joueurCourant = this.getJoueurCourant();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			joueurCourant.piocherCarte();
 		}
 		Joueur joueurAdverse = this.getJoueurAdverse();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			joueurAdverse.piocherCarte();
 		}
 	}
@@ -172,12 +172,12 @@ public class Jeu {
 	 * - l'action spéciale du héros est rechargée
 	 */
 	void terminerTour() {
+		this.tourJoueur1 = !this.tourJoueur1;
 		Joueur joueurCourant = this.getJoueurCourant();
 		joueurCourant.piocherCarte();
 		joueurCourant.augmenterCapaciteMana();
 		joueurCourant.actualiserJouabiliteServiteurs();
 		joueurCourant.getHeros().setActionChargee(true);
-		this.tourJoueur1 = !this.tourJoueur1;
 	}
 
 	/**

@@ -40,9 +40,18 @@ public class ServiceJpaSlightstone {
 	}
 	
 	public void resetDonnees() {
-		this.hRepository.deleteAll();
-		this.cRepository.deleteAll();
-		this.aRepository.deleteAll();
+		this.aRepository.supprimerActionsAttaque();
+		this.aRepository.supprimerActionsBoostArmure();
+		this.aRepository.supprimerActionsBoostDegats();
+		this.aRepository.supprimerActionsInvocation();
+		this.aRepository.supprimerActionsMouton();
+		this.aRepository.supprimerActionsPioche();
+		this.cRepository.supprimerActionsSorts();
+		this.aRepository.supprimerActions();
+		this.hRepository.supprimerHeros();
+		this.cRepository.supprimerSorts();
+		this.cRepository.supprimerServiteurs();
+		this.cRepository.supprimerCartes();
 	}
 	
 	public void sauvegarderAction(Action action) {

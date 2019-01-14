@@ -1,6 +1,8 @@
 package fr.univ_nantes.slightstone.server;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import fr.univ_nantes.slightstone.model.CarteServiteur;
@@ -17,7 +19,7 @@ import fr.univ_nantes.slightstone.model.exceptions.ViolationReglesException;
  * Elle fait le lien entre les informations envoyées aux clients et
  * les objets java du modèle à l'aide d'identifiants.
  */
-public class Partie {
+public class Partie extends Observable implements Observer {
 	
 	/* ******************************* */
 	/* ********** Attributs ********** */
@@ -25,6 +27,7 @@ public class Partie {
 	
 	private InterfaceModele modele;
 	private EtatPartie generateurEtatPartie;
+	private Sablier sablier;
 	
 	private Random generateurIdentifiant = new Random(); // sert à générer un identifiant unique pour chaque objet du modèle
 	
@@ -46,6 +49,9 @@ public class Partie {
 		this.generateurEtatPartie = new EtatPartie(this.modele, this);
 		this.mappeurIdentifiantsCartes = new Mappeur<Integer, DescripteurCarte>();
 		this.mappeurIdentifiantsCiblables = new Mappeur<Integer, Ciblable>();
+		this.sablier = new Sablier(130);
+		this.sablier.addObserver(this);
+		this.sablier.retourner();
 	}
 	
 	/* ******************************** */
@@ -150,7 +156,9 @@ public class Partie {
 	}
 	
 	public void terminerTour(Joueur joueur) throws ViolationReglesException {
+		this.sablier.arreter();
 		this.modele.terminerTour(joueur);
+		this.sablier.retourner();
 	}
 
 	public void lancerActionHeros(Joueur joueur) throws ViolationReglesException {
@@ -174,5 +182,11 @@ public class Partie {
 		if(serviteur instanceof CarteServiteur) { //TODO: laisser faire le controleur
 			this.modele.attaquer(joueur, (CarteServiteur) serviteur, cible);
 		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		this.setChanged();
+		this.notifyObservers(this.modele.getJeu().getJoueurCourant());
 	}
 }

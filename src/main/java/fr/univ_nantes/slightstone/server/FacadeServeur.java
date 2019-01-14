@@ -3,6 +3,8 @@ package fr.univ_nantes.slightstone.server;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.Semaphore;
 
 import org.slf4j.Logger;
@@ -42,7 +44,7 @@ import fr.univ_nantes.slightstone.server.messages.*;
  * 		- /user/queue/erreur : une erreur est survenue (est censée servir que lors de la phase de développement)
  */
 @Controller
-public class FacadeServeur implements IServeur {
+public class FacadeServeur implements IServeur, Observer {
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
@@ -135,6 +137,7 @@ public class FacadeServeur implements IServeur {
 	private void creerNouvellePartie(Joueur joueur1, Joueur joueur2) {
 		logger.warn("--> Création d'une nouvelle partie");
 		Partie partie = new Partie(joueur1, joueur2);
+		partie.addObserver(this);
 		this.parties.put(this.mappeurJoueurId.getClef(joueur1), partie);
 		this.parties.put(this.mappeurJoueurId.getClef(joueur2), partie);
 		this.envoyerEtatPartie(partie, "/queue/debutPartie");
@@ -153,9 +156,9 @@ public class FacadeServeur implements IServeur {
 	private void envoyerEtatPartie(Partie partie, String destination) {
 		Joueur joueur1 = partie.getJoueur1();
 		MessageEtatPartie etatPartieJoueur1 = new MessageEtatPartie(partie.getEtatPartie(joueur1));
-		this.messagingTemplate.convertAndSendToUser(this.mappeurJoueurId.getClef(joueur1), destination, etatPartieJoueur1);
 		Joueur joueur2 = partie.getJoueur2();
 		MessageEtatPartie etatPartieJoueur2 = new MessageEtatPartie(partie.getEtatPartie(joueur2));
+		this.messagingTemplate.convertAndSendToUser(this.mappeurJoueurId.getClef(joueur1), destination, etatPartieJoueur1);
 		this.messagingTemplate.convertAndSendToUser(this.mappeurJoueurId.getClef(joueur2), destination, etatPartieJoueur2);
 	}
 	
@@ -428,5 +431,20 @@ public class FacadeServeur implements IServeur {
 			logger.warn("le joueur n'avait encore lancé aucune partie");
 		}
 		logger.warn("Client with username {} disconnected", idSocket);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		Joueur joueur = (Joueur)arg;
+		Partie partie = this.parties.get(this.mappeurJoueurId.getClef(joueur));
+		if(partie != null && joueur != null) {
+			try {
+				logger.warn("==> nouveau tour forcé");
+				partie.terminerTour(joueur);
+				this.envoyerEtatPartie(partie, "/queue/nouveauTour");
+			} catch (ViolationReglesException e) {
+				logger.warn(e.getMessage());
+			}
+		}
 	}
 }
